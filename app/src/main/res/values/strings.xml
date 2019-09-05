@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">InsuranceApp</string>
+    <string name="exit_message">Are you sure, You want to Exit ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+
+</resources>
