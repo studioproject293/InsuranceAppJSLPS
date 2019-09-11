@@ -1,18 +1,14 @@
 package com.example.insuranceapp.activity
 
-import android.content.DialogInterface
 import android.os.Bundle
-import android.widget.Button
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentManager
 import com.example.insuranceapp.R
 import com.example.insuranceapp.listener.OnFragmentInteractionListener
-
+import com.jslps.aaganbariapp.Constant
+import com.jslps.aaganbariapp.fragment.HomeFragment
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -23,7 +19,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
     private var mFragmentManager: FragmentManager? = null
     private var mFragmentTag: String? = null
     private var mCurrentFragment: Int = 0
-    internal var toolbar_home: Toolbar?=null
+    internal var toolbar_home: Toolbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +33,11 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
         mCurrentFragment = fragmentId
         mFragmentTag = fragmentId.toString()
         when (fragmentId) {
-
+            Constant.HOME_FRAGMENT -> {
+                mFragmentManager?.beginTransaction()!!.addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, HomeFragment(), mFragmentTag).commitAllowingStateLoss()
+            }
+            
         }
     }
 
@@ -60,9 +60,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
     fun closeApp() {
         val alertDialogBuilder = AlertDialog.Builder(this)
         alertDialogBuilder.setMessage(getString(R.string.exit_message))
-
         alertDialogBuilder.setPositiveButton(getString(R.string.yes)) { arg0, arg1 -> finish() }
-
         alertDialogBuilder.setNegativeButton(getString(R.string.no)) { dialog, which -> dialog.dismiss() }
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
@@ -74,7 +72,6 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
         fun copyFile(sourceFile: File, destFile: File): Boolean {
             //        if (!destFile.exists()) {
             destFile.createNewFile()
-
             var source: FileChannel? = null
             var destination: FileChannel? = null
             try {
@@ -86,8 +83,6 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                 destination?.close()
             }
             return true
-            //        }
-            //        return false;
         }
     }
 
