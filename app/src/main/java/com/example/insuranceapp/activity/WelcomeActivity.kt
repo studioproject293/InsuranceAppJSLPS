@@ -2,6 +2,7 @@ package com.example.insuranceapp.activity
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
@@ -139,7 +140,7 @@ class WelcomeActivity : AppCompatActivity() {
                 editTextPassword.transformationMethod = PasswordTransformationMethod.getInstance()
         }
         sigiin.setOnClickListener {
-            if (editTextUserName.text.toString().trim { it <= ' ' }.isEmpty()) {
+            /*if (editTextUserName.text.toString().trim { it <= ' ' }.isEmpty()) {
                 editTextUserName.error = "Please enter user name"
                 editTextUserName.requestFocus()
                 showError(editTextUserName)
@@ -148,8 +149,11 @@ class WelcomeActivity : AppCompatActivity() {
                 editTextPassword.requestFocus()
                 showError(editTextPassword)
             } else {
-
-            }
+              val intent=Intent(this@WelcomeActivity,MainActivity::class.java)
+                startActivity(intent)
+            }*/
+            val intent=Intent(this@WelcomeActivity,MainActivity::class.java)
+            startActivity(intent)
         }
         closeButton.setOnClickListener { dialog.cancel() }
         dialog.setCancelable(false)

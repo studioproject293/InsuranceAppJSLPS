@@ -7,8 +7,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentManager
 import com.example.insuranceapp.R
 import com.example.insuranceapp.listener.OnFragmentInteractionListener
+import com.example.insuranceapp.ui.home.HomeFragment
+import com.example.insuranceapp.ui.scheme.SchemeDetailsFragment
 import com.jslps.aaganbariapp.Constant
-import com.jslps.aaganbariapp.fragment.HomeFragment
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         toolbar_home = findViewById(R.id.toolbar_home)
+        onFragmentInteraction(Constant.HOME_FRAGMENT, "")
     }
 
 
@@ -36,6 +38,10 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
             Constant.HOME_FRAGMENT -> {
                 mFragmentManager?.beginTransaction()!!.addToBackStack(mFragmentTag)
                     .replace(R.id.fragment_main, HomeFragment(), mFragmentTag).commitAllowingStateLoss()
+            }
+            Constant.SCHEME_DETAILS_FRAGMENT -> {
+                mFragmentManager?.beginTransaction()!!.addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, SchemeDetailsFragment(), mFragmentTag).commitAllowingStateLoss()
             }
             
         }
