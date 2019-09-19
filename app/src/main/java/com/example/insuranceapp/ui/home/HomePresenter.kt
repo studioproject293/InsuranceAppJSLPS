@@ -13,7 +13,7 @@ import com.twidpay.beta.model.ApiRequest
 class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presenter(), OnFragmentListItemSelectListener {
     override fun onListItemSelected(itemId: Int, data: Any) {
      Toast.makeText(context,"Item Clicked",Toast.LENGTH_SHORT).show()
-        view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT,"")
+        view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT,data)
     }
 
     override fun onListItemLongClicked(itemId: Int, data: Any) {

@@ -215,9 +215,13 @@ class WelcomeActivity : AppCompatActivity() {
 
                             override fun onFailure(call: Call<String>, t: Throwable) {
                                 DialogUtil.stopProgressDisplay()
+                                val toast = Toast.makeText(this@WelcomeActivity, t.toString(), Toast.LENGTH_SHORT)
+                                toast.show()
                             }
                         })
                     } else {
+                        val toast = Toast.makeText(this@WelcomeActivity, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
+                        toast.show()
                     }
 
                    /* val intent = Intent(this@WelcomeActivity, MainActivity::class.java)

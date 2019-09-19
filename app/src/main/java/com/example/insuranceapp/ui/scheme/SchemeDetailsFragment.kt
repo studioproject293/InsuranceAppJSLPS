@@ -54,7 +54,7 @@ class SchemeDetailsFragment : BaseFragment(), SchemeDetailsView, OnFragmentListI
     var presenter: SchemeDetailsPresenter? = null
     override fun onResume() {
         super.onResume()
-        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, "Dashboard"))
+        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, insuranceName!!))
     }
 
 

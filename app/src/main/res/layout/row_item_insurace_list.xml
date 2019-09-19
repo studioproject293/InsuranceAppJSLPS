@@ -3,10 +3,17 @@
 <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="5dp"
+        app:cardPreventCornerOverlap="false"
+        app:contentPadding="0dp">
     <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
+            android:background="#Fff"
             android:layout_height="wrap_content">
         <LinearLayout
                 android:orientation="horizontal"
@@ -131,6 +138,9 @@
         <LinearLayout
                 android:orientation="vertical"
                 android:id="@+id/buttonLayout"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -147,7 +157,6 @@
                         android:layout_weight="0.4"
                         android:layout_height="wrap_content"
                         android:padding="1dp"
-                        android:gravity="center"
                         android:text="Village :"
                         android:textColor="#000"
                         android:textSize="18sp"/>
@@ -173,7 +182,6 @@
                         android:layout_height="wrap_content"
                         android:padding="1dp"
                         android:text="Block :"
-                        android:gravity="center"
                         android:textColor="#000"
                         android:textSize="18sp"/>
                 <TextView
@@ -198,7 +206,6 @@
                         android:layout_height="wrap_content"
                         android:padding="1dp"
                         android:text="Bank Branch :"
-                        android:gravity="center"
                         android:textColor="#000"
                         android:textSize="18sp"/>
                 <TextView

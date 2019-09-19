@@ -41,15 +41,18 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
         mFragmentTag = fragmentId.toString()
         when (fragmentId) {
             Constant.HOME_FRAGMENT -> {
-                mFragmentManager?.beginTransaction()!!.addToBackStack(mFragmentTag)
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                    .addToBackStack(mFragmentTag)
                     .replace(R.id.fragment_main, HomeFragment(), mFragmentTag).commitAllowingStateLoss()
             }
             Constant.SCHEME_DETAILS_FRAGMENT -> {
-                mFragmentManager?.beginTransaction()!!.addToBackStack(mFragmentTag)
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                    .addToBackStack(mFragmentTag)
                     .replace(R.id.fragment_main, SchemeDetailsFragment.getInstance(data as String), mFragmentTag).commitAllowingStateLoss()
             }
             Constant.INSURANCE_LIST_FRAGMENT -> {
-                mFragmentManager?.beginTransaction()!!.addToBackStack(mFragmentTag)
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                    .addToBackStack(mFragmentTag)
                     .replace(R.id.fragment_main, InsuranceListFragment.getInstance(data as String), mFragmentTag).commitAllowingStateLoss()
             }
             
