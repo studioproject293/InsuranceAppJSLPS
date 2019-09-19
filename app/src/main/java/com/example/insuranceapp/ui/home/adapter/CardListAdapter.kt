@@ -25,7 +25,7 @@ class CardListAdapter( items: ArrayList<String>, activity: Context) : RecyclerVi
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         p0.title.text= itemList!![p1]
-        p0.view.setOnClickListener { mListner?.onListItemSelected(p1,"") }
+        p0.view.setOnClickListener { mListner?.onListItemSelected(p1,itemList!![p1]) }
     }
 
     inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {

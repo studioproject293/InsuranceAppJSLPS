@@ -1,4 +1,4 @@
-package com.example.insuranceapp.ui.scheme
+package com.example.insuranceapp.ui.scheme.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.insuranceapp.R
 import com.example.insuranceapp.listener.OnFragmentListItemSelectListener
 
-class SchemeListAdapter(items: ArrayList<String>, activity: Context) : RecyclerView.Adapter<SchemeListAdapter.ViewHolder>() {
+class SchemeListAdapter(items: ArrayList<String>, activity: Context, insuranceName: String) :
+    RecyclerView.Adapter<SchemeListAdapter.ViewHolder>() {
 
     var itemList: ArrayList<String>? = items
     var context: Context? = activity
-
+    var insuranceName: String = insuranceName
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): SchemeListAdapter.ViewHolder {
         val row = LayoutInflater.from(p0.context).inflate(R.layout.home_adapter_row, p0, false)
         return ViewHolder(row)
@@ -24,8 +25,8 @@ class SchemeListAdapter(items: ArrayList<String>, activity: Context) : RecyclerV
     }
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-        p0.title.text= itemList!![p1]
-
+        p0.title.text = itemList!![p1]
+        p0.view.setOnClickListener { mListner?.onListItemSelected(p1, insuranceName) }
 
     }
 

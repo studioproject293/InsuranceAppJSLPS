@@ -1,4 +1,4 @@
-package com.jslps.aaganbariapp
+package com.example.insuranceapp
 
 import android.Manifest
 import android.annotation.TargetApi
@@ -6,17 +6,14 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.insuranceapp.R
 
 
 object DialogUtil {

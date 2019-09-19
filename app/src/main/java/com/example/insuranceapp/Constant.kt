@@ -1,4 +1,4 @@
-package com.jslps.aaganbariapp
+package com.example.insuranceapp
 
 import android.app.Activity
 import androidx.fragment.app.FragmentActivity
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 object Constant {
     val HOME_FRAGMENT = 101
     var SCHEME_DETAILS_FRAGMENT=102
+    var INSURANCE_LIST_FRAGMENT=103
     val setTitle = 1111
     const val UPDATE__NO_INTERNET = 209
      val API_BASE_URL = "http://swalekha.in/webServiceModalPopup.asmx/"

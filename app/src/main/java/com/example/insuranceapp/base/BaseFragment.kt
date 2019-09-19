@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.insuranceapp.cache.AppCache
 import com.example.insuranceapp.listener.OnFragmentInteractionListener
-import com.jslps.aaganbariapp.Constant
-import com.jslps.aaganbariapp.DialogUtil
+import com.example.insuranceapp.Constant
+import com.example.insuranceapp.DialogUtil
 import com.twidpay.beta.cache.PrefManager
 
 open class BaseFragment : Fragment() {

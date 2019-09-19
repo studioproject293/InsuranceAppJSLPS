@@ -5,7 +5,7 @@ import android.net.ConnectivityManager
 import com.example.insuranceapp.BuildConfig
 import com.example.insuranceapp.base.BaseInterface
 import com.google.gson.GsonBuilder
-import com.jslps.aaganbariapp.Constant
+import com.example.insuranceapp.Constant
 import com.twidpay.beta.model.ApiRequest
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.Interceptor
@@ -43,7 +43,7 @@ class TransportManager {
     }
 
     companion object {
-        private var apiServices: NetworkService? = null
+        //private var apiServices: NetworkService? = null
         private var manager: TransportManager? = null
         private var context: Context? = null
         fun getInstance(conlistener: BaseInterface, context: Context?): TransportManager {
@@ -70,29 +70,6 @@ class TransportManager {
         }
 
 
-        fun create(): NetworkService? {
-            if (apiServices == null) {
-                val gson = GsonBuilder().setLenient().create()
-
-                val interceptor = HttpLoggingInterceptor()
-                interceptor.level = HttpLoggingInterceptor.Level.BODY
-
-                val builder = OkHttpClient.Builder()
-                if (BuildConfig.DEBUG)
-                    builder.interceptors().add(interceptor)
-
-                builder.interceptors().add(header)
-                builder.connectTimeout(30, TimeUnit.SECONDS)
-                builder.readTimeout(90, TimeUnit.SECONDS)
-
-                val client = builder.build()
-                val retrofit = Retrofit.Builder().addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(Constant.API_BASE_URL)
-                    .client(client).build()
-                apiServices = retrofit.create<NetworkService>(NetworkService::class.java)
-            }
-            return this.apiServices
-        }
 
 
     }

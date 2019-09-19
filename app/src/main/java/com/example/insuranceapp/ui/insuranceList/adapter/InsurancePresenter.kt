@@ -1,25 +1,25 @@
-package com.example.insuranceapp.ui.scheme
+package com.example.insuranceapp.ui.insuranceList.adapter
 
 import android.app.Activity
 import android.widget.Toast
-import com.example.insuranceapp.Constant
 import com.example.insuranceapp.base.BasePresenter
 import com.example.insuranceapp.base.Presenter
 import com.example.insuranceapp.listener.OnFragmentListItemSelectListener
+import com.example.insuranceapp.model.Master
 import com.example.insuranceapp.network.ServiceUpdateListner
 import com.twidpay.beta.model.ApiRequest
 
 
-class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BasePresenter, Presenter(), OnFragmentListItemSelectListener {
+class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter, Presenter(), OnFragmentListItemSelectListener {
     override fun onListItemSelected(itemId: Int, data: Any) {
-     view?.gotoScreen(Constant.INSURANCE_LIST_FRAGMENT,data)
+     Toast.makeText(context,"Item Clicked",Toast.LENGTH_SHORT).show()
     }
 
     override fun onListItemLongClicked(itemId: Int, data: Any) {
     }
 
 
-    var view: SchemeDetailsView? = view
+    var view: InsuranceView? = view
     var context: Activity? = context
 
     override fun init() {
@@ -28,13 +28,8 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
 
 
     override fun resume() {
-        val schemedata = ArrayList<String>()
-        schemedata.add("Registered")
-        schemedata.add("Under Process")
-        schemedata.add("Claim Settled")
-        schemedata.add("Rejected")
-        schemedata.add("Total Claim")
-        view?.loadData(schemedata)
+        val master=getAppCache().loginPojo?.Master as ArrayList<Master>
+        view?.loadData(master)
     }
 
     override fun onDestroy() {

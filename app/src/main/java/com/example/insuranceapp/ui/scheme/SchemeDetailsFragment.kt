@@ -6,16 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.insuranceapp.Constant
 import com.example.insuranceapp.R
 import com.example.insuranceapp.listener.OnFragmentListItemSelectListener
 import com.example.insuranceapp.model.HeaderData
 import com.example.insuranceapp.ui.BaseFragment
-
-import com.jslps.aaganbariapp.Constant
+import com.example.insuranceapp.ui.scheme.adapter.SchemeListAdapter
 
 class SchemeDetailsFragment : BaseFragment(), SchemeDetailsView, OnFragmentListItemSelectListener {
     var homeRecyclerviewAdapter: SchemeListAdapter? = null
     override fun gotoScreen(fragmentID: Int, message: Any?) {
+        mListener?.onFragmentInteraction(fragmentID,message as String)
     }
 
     override fun loadData(cardInitResponse: ArrayList<String>?) {
@@ -23,7 +24,7 @@ class SchemeDetailsFragment : BaseFragment(), SchemeDetailsView, OnFragmentListI
         if (cardInitResponse != null) {
             recycleview?.visibility = View.VISIBLE
             if (homeRecyclerviewAdapter == null)
-                homeRecyclerviewAdapter = SchemeListAdapter(cardInitResponse,getmActivity() as Activity)
+                homeRecyclerviewAdapter = SchemeListAdapter(cardInitResponse,getmActivity() as Activity, insuranceName!!)
             else
                 homeRecyclerviewAdapter?.updateList(cardInitResponse)
             homeRecyclerviewAdapter?.setListner(presenter?.getListner())
@@ -66,6 +67,12 @@ class SchemeDetailsFragment : BaseFragment(), SchemeDetailsView, OnFragmentListI
         presenter?.resume()
         return rootView!!
     }
-
+    companion object {
+        var insuranceName: String? = null
+        fun getInstance(insuranceNamee: String): SchemeDetailsFragment {
+            insuranceName = insuranceNamee
+            return SchemeDetailsFragment()
+        }
+    }
 }
 

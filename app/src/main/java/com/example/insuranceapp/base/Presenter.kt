@@ -2,7 +2,7 @@ package com.example.insuranceapp.base
 
 import android.app.Activity
 import com.example.insuranceapp.cache.AppCache
-import com.jslps.aaganbariapp.Constant
+import com.example.insuranceapp.Constant
 import com.twidpay.beta.cache.PrefManager
 
 

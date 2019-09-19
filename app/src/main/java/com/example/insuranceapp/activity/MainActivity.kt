@@ -1,6 +1,7 @@
 package com.example.insuranceapp.activity
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -9,23 +10,27 @@ import com.example.insuranceapp.R
 import com.example.insuranceapp.listener.OnFragmentInteractionListener
 import com.example.insuranceapp.ui.home.HomeFragment
 import com.example.insuranceapp.ui.scheme.SchemeDetailsFragment
-import com.jslps.aaganbariapp.Constant
+import com.example.insuranceapp.Constant
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.nio.channels.FileChannel
+import com.example.insuranceapp.model.HeaderData
+import com.example.insuranceapp.ui.insuranceList.adapter.InsuranceListFragment
+
 
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
     private var mFragmentManager: FragmentManager? = null
     private var mFragmentTag: String? = null
     private var mCurrentFragment: Int = 0
     internal var toolbar_home: Toolbar? = null
-
+    internal var toolbar_title:TextView?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         toolbar_home = findViewById(R.id.toolbar_home)
+        toolbar_title = findViewById(R.id.toolbar_title)
         onFragmentInteraction(Constant.HOME_FRAGMENT, "")
     }
 
@@ -41,7 +46,11 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
             }
             Constant.SCHEME_DETAILS_FRAGMENT -> {
                 mFragmentManager?.beginTransaction()!!.addToBackStack(mFragmentTag)
-                    .replace(R.id.fragment_main, SchemeDetailsFragment(), mFragmentTag).commitAllowingStateLoss()
+                    .replace(R.id.fragment_main, SchemeDetailsFragment.getInstance(data as String), mFragmentTag).commitAllowingStateLoss()
+            }
+            Constant.INSURANCE_LIST_FRAGMENT -> {
+                mFragmentManager?.beginTransaction()!!.addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, InsuranceListFragment.getInstance(data as String), mFragmentTag).commitAllowingStateLoss()
             }
             
         }
@@ -49,7 +58,10 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
 
     override fun onFragmentUpdate(type: Int, data: Any) {
         when (type) {
-
+              Constant.setTitle ->{
+                  val headerData = data as HeaderData
+                  toolbar_title?.setText(headerData.text)
+              }
         }
     }
 

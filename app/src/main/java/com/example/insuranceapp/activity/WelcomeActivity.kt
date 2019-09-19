@@ -11,6 +11,7 @@ import android.os.Handler
 import android.text.TextUtils
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +21,28 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.chootdev.csnackbar.Align
+import com.chootdev.csnackbar.Duration
+import com.chootdev.csnackbar.Snackbar
+import com.chootdev.csnackbar.Type
+import com.example.insuranceapp.Constant
+import com.example.insuranceapp.DialogUtil
 import com.example.insuranceapp.R
 import com.example.insuranceapp.activity.adapter.MyCustomPagerAdapter
+import com.example.insuranceapp.cache.AppCache
+import com.example.insuranceapp.model.LoginPojo
+import com.example.insuranceapp.network.LoginService
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class WelcomeActivity : AppCompatActivity() {
     internal var images = intArrayOf(R.mipmap.ic_launcher)
@@ -33,10 +53,10 @@ class WelcomeActivity : AppCompatActivity() {
     private val dots: Array<TextView>? = null
     private val layouts: IntArray? = null
     internal var currentPage = 0
-    internal var timer: Timer?=null
-    internal var checkBox: CheckBox?=null
-    internal var checkboxRember: CheckBox?=null
-    internal var preferences: SharedPreferences?=null
+    internal var timer: Timer? = null
+    internal var checkBox: CheckBox? = null
+    internal var checkboxRember: CheckBox? = null
+    internal var preferences: SharedPreferences? = null
     internal val DELAY_MS: Long = 500//delay in milliseconds before task is to be executed
     internal val PERIOD_MS: Long = 3000 // time in milliseconds between successive task executions.
     private var logIn: TextView? = null
@@ -140,20 +160,70 @@ class WelcomeActivity : AppCompatActivity() {
                 editTextPassword.transformationMethod = PasswordTransformationMethod.getInstance()
         }
         sigiin.setOnClickListener {
-            /*if (editTextUserName.text.toString().trim { it <= ' ' }.isEmpty()) {
-                editTextUserName.error = "Please enter user name"
-                editTextUserName.requestFocus()
-                showError(editTextUserName)
-            } else if (editTextPassword.text.toString().trim { it <= ' ' }.isEmpty()) {
-                editTextPassword.error = "Please enter user name"
-                editTextPassword.requestFocus()
-                showError(editTextPassword)
-            } else {
-              val intent=Intent(this@WelcomeActivity,MainActivity::class.java)
-                startActivity(intent)
-            }*/
-            val intent=Intent(this@WelcomeActivity,MainActivity::class.java)
-            startActivity(intent)
+            when {
+                editTextUserName.text.toString().trim { it <= ' ' }.isEmpty() -> {
+                    editTextUserName.error = "Please enter user name"
+                    editTextUserName.requestFocus()
+                    showError(editTextUserName)
+                }
+                editTextPassword.text.toString().trim { it <= ' ' }.isEmpty() -> {
+                    editTextPassword.error = "Please enter user name"
+                    editTextPassword.requestFocus()
+                    showError(editTextPassword)
+                }
+                else -> {
+                    if (DialogUtil.isConnectionAvailable(this@WelcomeActivity)) {
+                        DialogUtil.displayProgress(this@WelcomeActivity)
+                        val gson = GsonBuilder().setLenient().create()
+                        val interceptor = HttpLoggingInterceptor()
+                        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+                        val builder = OkHttpClient.Builder()
+                        //comment in live build and uncomment in uat
+                        builder.interceptors().add(interceptor)
+                        builder.connectTimeout(120, TimeUnit.SECONDS)
+                        builder.readTimeout(120, TimeUnit.SECONDS)
+                        val client = builder.build()
+                        val retrofit = Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
+                            ScalarsConverterFactory.create()
+                        ).client(client).build()
+                        val apiServices = retrofit.create(LoginService::class.java)
+                        val changePhotoResponseModelCall =
+                            apiServices.getTabletDownloadDataBCsakhi("callcenter", editTextUserName.getText().toString()," ")
+                        changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                            override fun onResponse(call: Call<String>, response: Response<String>) {
+                                val gson = Gson()
+                                Log.v("Response prof :", "hgfgfrhgs" + response.body())
+                                if (checkboxRember!!.isChecked()) {
+                                    val pref =
+                                        getApplicationContext().getSharedPreferences("MyPref", 0) // 0 - for private mode
+                                    val editor = pref.edit()
+                                    editor.putString("userName", editTextUserName.getText().toString())
+                                    editor.putString("Password", editTextPassword.getText().toString())
+                                    editor.apply()
+                                }
+                                val fullResponse = response.body()
+                                val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                val result = XmlString?.replace(("</string>").toRegex(), "")
+                                print("fhrjfghf" + result)
+                                val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
+                                System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                                val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+
+                            override fun onFailure(call: Call<String>, t: Throwable) {
+                                DialogUtil.stopProgressDisplay()
+                            }
+                        })
+                    } else {
+                    }
+
+                   /* val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
+                    startActivity(intent)*/
+                }
+            }
         }
         closeButton.setOnClickListener { dialog.cancel() }
         dialog.setCancelable(false)

@@ -6,7 +6,7 @@ import com.example.insuranceapp.base.BasePresenter
 import com.example.insuranceapp.base.Presenter
 import com.example.insuranceapp.listener.OnFragmentListItemSelectListener
 import com.example.insuranceapp.network.ServiceUpdateListner
-import com.jslps.aaganbariapp.Constant
+import com.example.insuranceapp.Constant
 import com.twidpay.beta.model.ApiRequest
 
 
