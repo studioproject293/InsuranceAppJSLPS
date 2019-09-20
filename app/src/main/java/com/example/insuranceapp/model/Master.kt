@@ -21,5 +21,6 @@ data class Master(
     val Villagename: String,
     val blockcode: String,
     val districtcode: String,
-    val villagecode: String
+    val villagecode: String,
+    var insuranceNamee:String
 )

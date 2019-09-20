@@ -2,10 +2,10 @@
 
 <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_margin="5dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         app:cardCornerRadius="2dp"
         app:cardElevation="5dp"
         app:cardPreventCornerOverlap="false"
@@ -22,8 +22,7 @@
                 android:layout_height="wrap_content">
 
             <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="0.85"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:background="#fff"
@@ -103,7 +102,7 @@
                 </LinearLayout>
 
             </LinearLayout>
-            <LinearLayout
+            <!--<LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="right"
@@ -133,7 +132,7 @@
 
                 </FrameLayout>
 
-            </LinearLayout>
+            </LinearLayout>-->
         </LinearLayout>
         <LinearLayout
                 android:orientation="vertical"
@@ -216,6 +215,35 @@
                         android:padding="1dp"
                         android:textColor="#000"
                         android:textSize="18sp"/>
+            </LinearLayout>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:text="Writing information submitted at bank ."
+                      android:textColor="#000"
+                      android:layout_margin="10dp"
+                      android:padding="10dp"
+                      android:textSize="18sp"/>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_height="wrap_content">
+
+                <ImageView android:layout_width="0dp"
+                           android:layout_weight="0.6"
+                           android:layout_margin="5dp"
+                           android:id="@+id/doucment"
+                           android:layout_height="130dp"/>
+                <Button android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:text="Upload"
+                        android:id="@+id/uploadDocument"
+                        android:textSize="16sp"
+
+                        android:textColor="#000"
+                        android:padding="10dp"
+
+                        android:layout_gravity="center"
+                        android:background="@drawable/custom_circle_black_border"/>
             </LinearLayout>
             <Button android:layout_width="130dp" android:layout_height="wrap_content"
                     android:text="Action"

@@ -17,7 +17,9 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.nio.channels.FileChannel
 import com.example.insuranceapp.model.HeaderData
-import com.example.insuranceapp.ui.insuranceList.adapter.InsuranceListFragment
+import com.example.insuranceapp.model.Master
+import com.example.insuranceapp.ui.insuranceList.InsuranceDetailsFragment
+import com.example.insuranceapp.ui.insuranceList.InsuranceListFragment
 
 
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
@@ -54,8 +56,12 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                 mFragmentManager?.beginTransaction()!!.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                     .addToBackStack(mFragmentTag)
                     .replace(R.id.fragment_main, InsuranceListFragment.getInstance(data as String), mFragmentTag).commitAllowingStateLoss()
-            }
-            
+            } Constant.INSURANCE_DETAILS_FRAGMENT -> {
+            mFragmentManager?.beginTransaction()!!.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                .addToBackStack(mFragmentTag)
+                .replace(R.id.fragment_main, InsuranceDetailsFragment.getInstance(data as Master), mFragmentTag).commitAllowingStateLoss()
+        }
+
         }
     }
 
