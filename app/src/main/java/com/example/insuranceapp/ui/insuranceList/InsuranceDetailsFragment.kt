@@ -7,24 +7,52 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.annotation.NonNull
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.FragmentActivity
+import com.example.insuranceapp.Constant
+import com.example.insuranceapp.DialogUtil
+import com.example.insuranceapp.R
 import com.example.insuranceapp.listener.OnFragmentListItemSelectListener
 import com.example.insuranceapp.model.HeaderData
-import com.example.insuranceapp.ui.BaseFragment
-import com.example.insuranceapp.Constant
-import android.net.Uri
-import androidx.fragment.app.FragmentActivity
-import com.example.insuranceapp.R
-import java.io.*
-import androidx.annotation.NonNull
 import com.example.insuranceapp.model.Master
-class InsuranceDetailsFragment : BaseFragment(), OnFragmentListItemSelectListener {
+import com.example.insuranceapp.ui.BaseFragment
+import java.io.*
+
+class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListItemSelectListener {
+    override fun showMessage(message: Any?) {
+        val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
+        toast.show()
+    }
+
+    override fun gotoScreen(fragmentID: Int, message: Any?) {
+
+    }
+
+    override fun loadData(cardInitResponse: ArrayList<Master>?) {
+
+    }
+
+    override fun showProgress() {
+        DialogUtil.displayProgress(activity)
+    }
+
+    override fun hideProgress() {
+        DialogUtil.stopProgressDisplay()
+    }
+
+    override fun noInternet() {
+        val toast = Toast.makeText(context, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
+        toast.show()
+    }
 
     override fun onListItemSelected(itemId: Int, data: Any) {
     }
@@ -36,6 +64,7 @@ class InsuranceDetailsFragment : BaseFragment(), OnFragmentListItemSelectListene
     var encodedBase64: String? = null
     var REQUEST_CAMERA = 0
     var SELECT_FILE = 1
+    var presenter: InsurancePresenter? = null
     private var rootView: View? = null
     override fun onResume() {
         super.onResume()
@@ -120,10 +149,20 @@ class InsuranceDetailsFragment : BaseFragment(), OnFragmentListItemSelectListene
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
         nomineeName?.text = insuranceNameeee?.Name
         block?.text = insuranceNameeee?.BlockName
+        // block?.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.move));
         village?.text = insuranceNameeee?.Villagename
         contactNo?.text = insuranceNameeee?.Phno_ofNominee
         bankbranch?.text = insuranceNameeee?.BranchName
         nameOfInsurance?.text = insuranceNameeee?.insuranceNamee
+        presenter = InsurancePresenter(this, activity as Activity)
+        actionButton?.setOnClickListener {
+            if (TextUtils.isEmpty(encodedBase64)) {
+                val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
+                toast.show()
+            } else {
+                presenter?.uploadRegisterDocument(insuranceNameeee,encodedBase64)
+            }
+        }
         uploadDocument?.setOnClickListener {
             if (ActivityCompat.checkSelfPermission(
                     context as Activity,
@@ -147,7 +186,17 @@ class InsuranceDetailsFragment : BaseFragment(), OnFragmentListItemSelectListene
                     ),
                     0
                 )
-                if (ActivityCompat.checkSelfPermission(context as Activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(context as Activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(context as Activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.CAMERA
+                    ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
                     val toast = Toast.makeText(context as Activity, "Permission not given", Toast.LENGTH_SHORT)
                     toast.show()
                 } else {
@@ -207,12 +256,12 @@ class InsuranceDetailsFragment : BaseFragment(), OnFragmentListItemSelectListene
                     val imageUri = data.data as Uri
                     val imageStream = getmActivity()?.contentResolver?.openInputStream(imageUri) as InputStream
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
-                     document?.setImageBitmap(selectedImage)
+                    document?.setImageBitmap(selectedImage)
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
                     val imagedata = byteArrayOutputStream.toByteArray()
                     val encodedImage = Base64.encodeToString(imagedata, Base64.DEFAULT)
-                    Log.d("mdfmwrgsdig","dfhgjsg"+encodedImage)
+                    Log.d("mdfmwrgsdig", "dfhgjsg" + encodedImage)
                 }
             } else if (requestCode == REQUEST_CAMERA) {
                 try {
@@ -223,8 +272,8 @@ class InsuranceDetailsFragment : BaseFragment(), OnFragmentListItemSelectListene
                         val byteArrayOutputStream = ByteArrayOutputStream()
                         photo.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
                         val imagedata = byteArrayOutputStream.toByteArray()
-                        val encodedImage =  Base64.encodeToString(imagedata, Base64.DEFAULT)
-                        Log.d("mdfmwrgsdig","dfhgjsg"+encodedImage)
+                        val encodedImage = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                        Log.d("mdfmwrgsdig", "dfhgjsg" + encodedImage)
                     }
                 } catch (e: IOException) {
                     e.printStackTrace()
