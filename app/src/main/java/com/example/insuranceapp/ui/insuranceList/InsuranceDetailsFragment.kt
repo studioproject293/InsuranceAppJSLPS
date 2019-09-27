@@ -258,10 +258,10 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
                     document?.setImageBitmap(selectedImage)
                     val byteArrayOutputStream = ByteArrayOutputStream()
-                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
                     val imagedata = byteArrayOutputStream.toByteArray()
-                    val encodedImage = Base64.encodeToString(imagedata, Base64.DEFAULT)
-                    Log.d("mdfmwrgsdig", "dfhgjsg" + encodedImage)
+                     encodedBase64 = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                    Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64)
                 }
             } else if (requestCode == REQUEST_CAMERA) {
                 try {
@@ -270,10 +270,10 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
                         val photo = data.extras!!.get("data") as Bitmap
                         document?.setImageBitmap(photo)
                         val byteArrayOutputStream = ByteArrayOutputStream()
-                        photo.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+                        photo.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
                         val imagedata = byteArrayOutputStream.toByteArray()
-                        val encodedImage = Base64.encodeToString(imagedata, Base64.DEFAULT)
-                        Log.d("mdfmwrgsdig", "dfhgjsg" + encodedImage)
+                        encodedBase64 = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                        Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64)
                     }
                 } catch (e: IOException) {
                     e.printStackTrace()

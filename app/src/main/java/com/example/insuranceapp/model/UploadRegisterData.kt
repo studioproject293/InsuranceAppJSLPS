@@ -13,6 +13,7 @@ data class UploadRegisterData(
     val Image_CS: String,
     val Flag_CS: String,
     val Created_CS: String,
-    val Amount: Float
-
+    val Amount: Float,
+    val Step:String,
+    val RejectReason:String
 )
