@@ -160,6 +160,7 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
                 val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
                 toast.show()
             } else {
+                showProgress()
                 presenter?.uploadRegisterDocument(insuranceNameeee,encodedBase64)
             }
         }

@@ -10,13 +10,14 @@ import com.example.insuranceapp.Constant
 import com.example.insuranceapp.R
 import com.example.insuranceapp.listener.OnFragmentListItemSelectListener
 import com.example.insuranceapp.model.HeaderData
+import com.example.insuranceapp.model.Master
 import com.example.insuranceapp.ui.BaseFragment
 import com.example.insuranceapp.ui.scheme.adapter.SchemeListAdapter
 
 class SchemeDetailsFragment : BaseFragment(), SchemeDetailsView, OnFragmentListItemSelectListener {
     var homeRecyclerviewAdapter: SchemeListAdapter? = null
     override fun gotoScreen(fragmentID: Int, message: Any?) {
-        mListener?.onFragmentInteraction(fragmentID,message as String)
+        mListener?.onFragmentInteraction(fragmentID,message as List<Master>)
     }
 
     override fun loadData(cardInitResponse: ArrayList<String>?) {

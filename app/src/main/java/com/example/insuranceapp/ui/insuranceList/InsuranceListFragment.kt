@@ -25,7 +25,7 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
             recycleview?.visibility = View.VISIBLE
             if (homeRecyclerviewAdapter == null)
                 homeRecyclerviewAdapter =
-                    InsuranceListAdapter(cardInitResponse, getmActivity() as Activity, insuranceName!!)
+                    InsuranceListAdapter(cardInitResponse, getmActivity() as Activity, "")
             else
                 homeRecyclerviewAdapter?.updateList(cardInitResponse)
             homeRecyclerviewAdapter?.setListner(presenter?.getListner())
@@ -63,7 +63,7 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
     var presenter: InsurancePresenter? = null
     override fun onResume() {
         super.onResume()
-        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, insuranceName!!))
+        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, ""))
     }
 
 
@@ -78,8 +78,8 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
     }
 
     companion object {
-        var insuranceName: String? = null
-        fun getInstance(insuranceNamee: String): InsuranceListFragment {
+        var insuranceName: List<Master>? = null
+        fun getInstance(insuranceNamee: List<Master>): InsuranceListFragment {
             insuranceName = insuranceNamee
             return InsuranceListFragment()
         }

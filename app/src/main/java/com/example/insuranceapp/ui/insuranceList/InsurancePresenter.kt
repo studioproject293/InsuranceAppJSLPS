@@ -79,7 +79,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
     }
 
     fun uploadRegisterDocument(insuranceNameeee: Master?, encodedBase64: String?) {
-        view?.showProgress()
+
         if (DialogUtil.isConnectionAvailable(context)) {
             DialogUtil.displayProgress(context)
             val gson = GsonBuilder().setLenient().create()
@@ -98,8 +98,8 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
             val id = UUID.randomUUID().toString()
             val uploadRegisterData = UploadRegisterData(insuranceNameeee?.Call_Id.toString(),
                 insuranceNameeee?.CreatedBy.toString(),id, encodedBase64.toString(),
-                insuranceNameeee?.CreatedOn.toString(),"1","","","","","","", 0.0F,
-            "1","")
+                insuranceNameeee?.CreatedOn.toString(),"1", encodedBase64.toString(),"1","",encodedBase64.toString(),"1","", 10.0F,
+            "3","hello")
             val data = "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
             println("jdfjhjds$data")
             val changePhotoResponseModelCall =

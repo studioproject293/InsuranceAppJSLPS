@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
             Constant.INSURANCE_LIST_FRAGMENT -> {
                 mFragmentManager?.beginTransaction()!!.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                     .addToBackStack(mFragmentTag)
-                    .replace(R.id.fragment_main, InsuranceListFragment.getInstance(data as String), mFragmentTag).commitAllowingStateLoss()
+                    .replace(R.id.fragment_main, InsuranceListFragment.getInstance(data as List<Master>), mFragmentTag).commitAllowingStateLoss()
             } Constant.INSURANCE_DETAILS_FRAGMENT -> {
             mFragmentManager?.beginTransaction()!!.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                 .addToBackStack(mFragmentTag)
