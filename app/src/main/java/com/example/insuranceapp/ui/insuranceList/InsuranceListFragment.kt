@@ -12,6 +12,7 @@ import com.example.insuranceapp.model.HeaderData
 import com.example.insuranceapp.ui.BaseFragment
 
 import com.example.insuranceapp.Constant
+import com.example.insuranceapp.cache.AppCache
 import com.example.insuranceapp.model.Master
 import com.example.insuranceapp.ui.insuranceList.adapter.InsuranceListAdapter
 
@@ -63,7 +64,7 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
     var presenter: InsurancePresenter? = null
     override fun onResume() {
         super.onResume()
-        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, ""))
+        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, AppCache.getCache().insurancetype.toString()))
     }
 
 

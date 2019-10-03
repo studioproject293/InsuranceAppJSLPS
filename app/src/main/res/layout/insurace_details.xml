@@ -168,6 +168,7 @@
                     android:layout_height="wrap_content"
                     android:text="Written information submitted at bank ."
                     android:textColor="#000"
+                    android:id="@+id/textHeading"
                     android:gravity="center"
                     android:layout_margin="10dp"
                     android:padding="20dp"

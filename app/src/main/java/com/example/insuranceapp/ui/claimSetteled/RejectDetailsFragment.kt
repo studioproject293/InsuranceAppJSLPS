@@ -1,6 +1,5 @@
-package com.example.insuranceapp.ui.insuranceList
+package com.example.insuranceapp.ui.claimSetteled
 
-import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -16,7 +15,6 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.annotation.NonNull
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import com.example.insuranceapp.Constant
 import com.example.insuranceapp.DialogUtil
@@ -26,10 +24,12 @@ import com.example.insuranceapp.listener.OnFragmentListItemSelectListener
 import com.example.insuranceapp.model.HeaderData
 import com.example.insuranceapp.model.Master
 import com.example.insuranceapp.ui.BaseFragment
-
+import com.example.insuranceapp.ui.underProcess.ClaimSetteledDetailsPresenter
+import com.example.insuranceapp.ui.underProcess.UnderProcessDetailsPresenter
+import com.example.insuranceapp.ui.underProcess.UnderProcessDetailsView
 import java.io.*
 
-class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListItemSelectListener {
+class RejectDetailsFragment : BaseFragment(), UnderProcessDetailsView, OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
         val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
         toast.show()
@@ -66,55 +66,14 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
     var encodedBase64: String? = null
     var REQUEST_CAMERA = 0
     var SELECT_FILE = 1
-    var presenter: InsurancePresenter? = null
+    var presenter : ClaimSetteledDetailsPresenter? = null
     private var rootView: View? = null
     override fun onResume() {
         super.onResume()
         mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, AppCache.getCache().insurancetype.toString()))
     }
 
-    private fun onSelectFromGalleryResult(data: Intent) {
-        val selectedImageUri = data.getData()
-        val projection = arrayOf<String>(MediaStore.MediaColumns.DATA)
-        val cursor = activity?.managedQuery(selectedImageUri, projection, null, null, null)
-        val column_index = cursor?.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
-        cursor?.moveToFirst()
-        val selectedImagePath = column_index?.let { cursor.getString(it) }
-        val bm: Bitmap
-        val options = BitmapFactory.Options()
-        options.inJustDecodeBounds = true
-        BitmapFactory.decodeFile(selectedImagePath, options)
-        val REQUIRED_SIZE = 200
-        var scale = 1
-        while ((options.outWidth / scale / 2 >= REQUIRED_SIZE && options.outHeight / scale / 2 >= REQUIRED_SIZE))
-            scale *= 2
-        options.inSampleSize = scale
-        options.inJustDecodeBounds = false
-        bm = BitmapFactory.decodeFile(selectedImagePath, options)
-        document?.setImageBitmap(bm)
-        val imgFile = File(selectedImagePath)
-        if (imgFile.exists()) {
-            val fileInputStreamReader: FileInputStream
-            try {
-                fileInputStreamReader = FileInputStream(imgFile)
-                val fileSizeInBytes = fileInputStreamReader.available()
-                val bytes = ByteArray(imgFile.length().toInt())
-                fileInputStreamReader.read(bytes)
-                if (fileSizeInBytes < 5000000) {
-                    encodedBase64 = Base64.encodeToString(bytes, Base64.DEFAULT)
-                } else {
-                    encodedBase64 = null
-                    Toast.makeText(context as Activity, "Your pic size more than 5 mb", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: FileNotFoundException) {
-                e.printStackTrace()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            } catch (e: Error) {
 
-            }
-        }
-    }
 
     override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -139,78 +98,33 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        rootView = inflater.inflate(R.layout.insurace_details, container, false)
+        rootView = inflater.inflate(R.layout.reject_details, container, false)
         val nameOfInsurance: TextView? = rootView?.findViewById(R.id.insuranceName)
-        val textHeading: TextView? = rootView?.findViewById(R.id.textHeading)
         val nomineeName: TextView? = rootView?.findViewById(R.id.nomineeInsurance)
         val contactNo: TextView? = rootView?.findViewById(R.id.contactNo)
         val block: TextView? = rootView?.findViewById(R.id.block)
         val village: TextView? = rootView?.findViewById(R.id.village)
+        val rejectReason: EditText? = rootView?.findViewById(R.id.rejectReason)
         document = rootView?.findViewById(R.id.doucment)
         var actionButton: Button? = rootView?.findViewById(R.id.actionButton)
         val uploadDocument: Button? = rootView?.findViewById(R.id.uploadDocument)
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
         nomineeName?.text = insuranceNameeee?.Name
         block?.text = insuranceNameeee?.Blockname
-        // block?.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.move));
         village?.text = insuranceNameeee?.Villagename
         contactNo?.text = insuranceNameeee?.Phno_ofNominee
         bankbranch?.text = insuranceNameeee?.BranchName
         nameOfInsurance?.text = insuranceNameeee?.insuranceNamee
-        presenter = InsurancePresenter(this, activity as Activity)
-        actionButton?.setText("Under Process")
         actionButton?.setOnClickListener {
             if (TextUtils.isEmpty(encodedBase64)) {
-                val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
+                val toast = Toast.makeText(activity, "Please Write Reject Reason", Toast.LENGTH_SHORT)
                 toast.show()
             } else {
                 showProgress()
-                presenter?.uploadRegisterDocument(insuranceNameeee,encodedBase64)
+                presenter?.uploadClaimejected(ClaimSetteledDetailsFragment.insuranceNameeee, rejectReason?.text.toString())
             }
         }
-        uploadDocument?.setOnClickListener {
-            if (ActivityCompat.checkSelfPermission(
-                    context as Activity,
-                    Manifest.permission.CAMERA
-                ) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(
-                    context as Activity,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(
-                    context as Activity,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    context as Activity,
-                    arrayOf(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    ),
-                    0
-                )
-                if (ActivityCompat.checkSelfPermission(
-                        context as Activity,
-                        Manifest.permission.CAMERA
-                    ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
-                        context as Activity,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
-                        context as Activity,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    val toast = Toast.makeText(context as Activity, "Permission not given", Toast.LENGTH_SHORT)
-                    toast.show()
-                } else {
-                    attchmemntPopup(context as Activity)
-                }
-            } else {
-                attchmemntPopup(context as Activity)
-            }
-        }
+
         return rootView!!
     }
 
@@ -329,9 +243,9 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
 
     companion object {
         var insuranceNameeee: Master? = null
-        fun getInstance(insuranceNamee: Master): InsuranceDetailsFragment {
+        fun getInstance(insuranceNamee: Master): RejectDetailsFragment {
             insuranceNameeee = insuranceNamee
-            return InsuranceDetailsFragment()
+            return RejectDetailsFragment()
         }
     }
 }

@@ -1,11 +1,10 @@
-package com.example.insuranceapp.ui.insuranceList
+package com.example.insuranceapp.ui.underProcess
 
 import android.app.Activity
 import com.example.insuranceapp.Constant
 import com.example.insuranceapp.DialogUtil
 import com.example.insuranceapp.base.BasePresenter
 import com.example.insuranceapp.base.Presenter
-import com.example.insuranceapp.cache.AppCache
 import com.example.insuranceapp.listener.OnFragmentListItemSelectListener
 import com.example.insuranceapp.model.Master
 import com.example.insuranceapp.model.UploadRegisterData
@@ -27,27 +26,10 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter, Presenter(),
+class UnderProcessDetailsPresenter(view: UnderProcessDetailsView, context: Activity) : BasePresenter, Presenter(),
     OnFragmentListItemSelectListener {
     override fun onListItemSelected(itemId: Int, data: Any) {
 
-        when {
-            AppCache.getCache().insuranceStep == "Registered" -> {
-                view?.gotoScreen(Constant.INSURANCE_DETAILS_FRAGMENT, data as Master)
-            }
-            AppCache.getCache().insuranceStep == "Under Process" -> {
-                view?.gotoScreen(Constant.UNDER_PROCESS_DETAILS_FRAGMENT, data as Master)
-            }
-            AppCache.getCache().insuranceStep == "Claim Settled" -> {
-                view?.gotoScreen(Constant.CLAIM_SETTELED_DETAILS_FRAGMENT, data as Master)
-            }
-            AppCache.getCache().insuranceStep == "Rejected" -> {
-
-            }
-            AppCache.getCache().insuranceStep == "Total Claim" -> {
-
-            }
-        }
 
     }
 
@@ -55,7 +37,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
     }
 
 
-    var view: InsuranceView? = view
+    var view: UnderProcessDetailsView? = view
     var context: Activity? = context
 
     override fun init() {
@@ -64,8 +46,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
 
 
     override fun resume() {
-        val master = getAppCache().loginPojo?.Master as ArrayList<Master>
-        view?.loadData(master)
+
     }
 
     override fun onDestroy() {
@@ -81,10 +62,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
     }
 
     override fun onFailureResponse(request: ApiRequest, data: Any) {
-        view?.hideProgress()
-        /*if (chkIntenrnetIssue(data.message))
-            view?.noInternet()*/
-        view?.loadData(null)
+
     }
 
     override fun onFragmentInteraction(fragmentId: Int, data: Any?) {
@@ -95,8 +73,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
         return this
     }
 
-    fun uploadRegisterDocument(insuranceNameeee: Master?, encodedBase64: String?) {
-
+    fun uploadUnderProcess(insuranceNameeee: Master?, encodedBase64: String?) {
         if (DialogUtil.isConnectionAvailable(context)) {
             this!!.context?.let { DialogUtil.displayProgress(it) }
             val gson = GsonBuilder().setLenient().create()
@@ -117,18 +94,17 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
                 insuranceNameeee?.Call_Id.toString(),
                 insuranceNameeee?.CreatedBy.toString(),
                 id,
-                encodedBase64.toString(),
+               "",
                 insuranceNameeee?.CreatedOn.toString(),
+                "0",
+                encodedBase64.toString(),
                 "1",
                 "",
-                "0",
                 "",
                 "",
-                "0",
                 "",
                 "",
-                "1",
-                ""
+                "2", ""
             )
             val data = "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
             println("jdfjhjds$data")
@@ -137,7 +113,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
             changePhotoResponseModelCall.enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>, response: Response<String>) {
                     if (response.isSuccessful) {
-                       DialogUtil.stopProgressDisplay()
+                        context?.let { DialogUtil.displayProgress(it) }
                         val fullResponse = response.body()
                         val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                         val result = XmlString?.replace(("</string>").toRegex(), "")
@@ -152,7 +128,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
                             val jsonObject = categoryObject?.getJSONObject(0)
                             val Result = jsonObject?.getString("RetValue")
                             if (Result.equals("1", ignoreCase = true)) {
-                             view?.showMessage("Insurance Update Successfully")
+                             view?.showMessage("Insurnace Update Sucessfully")
                             } else {
                                 /* Snackbar.with(getActivity(), null)
                                      .type(Type.ERROR)
@@ -180,5 +156,6 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
             view?.noInternet()
         }
     }
+
 }
 

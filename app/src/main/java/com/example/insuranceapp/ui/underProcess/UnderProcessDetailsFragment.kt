@@ -1,4 +1,4 @@
-package com.example.insuranceapp.ui.insuranceList
+package com.example.insuranceapp.ui.underProcess
 
 import android.Manifest
 import android.app.Activity
@@ -26,10 +26,9 @@ import com.example.insuranceapp.listener.OnFragmentListItemSelectListener
 import com.example.insuranceapp.model.HeaderData
 import com.example.insuranceapp.model.Master
 import com.example.insuranceapp.ui.BaseFragment
-
 import java.io.*
 
-class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListItemSelectListener {
+class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView, OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
         val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
         toast.show()
@@ -66,7 +65,7 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
     var encodedBase64: String? = null
     var REQUEST_CAMERA = 0
     var SELECT_FILE = 1
-    var presenter: InsurancePresenter? = null
+    var presenter: UnderProcessDetailsPresenter? = null
     private var rootView: View? = null
     override fun onResume() {
         super.onResume()
@@ -142,6 +141,7 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
         rootView = inflater.inflate(R.layout.insurace_details, container, false)
         val nameOfInsurance: TextView? = rootView?.findViewById(R.id.insuranceName)
         val textHeading: TextView? = rootView?.findViewById(R.id.textHeading)
+        textHeading?.text="Claim Document Submitted at Bank. "
         val nomineeName: TextView? = rootView?.findViewById(R.id.nomineeInsurance)
         val contactNo: TextView? = rootView?.findViewById(R.id.contactNo)
         val block: TextView? = rootView?.findViewById(R.id.block)
@@ -157,15 +157,15 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
         contactNo?.text = insuranceNameeee?.Phno_ofNominee
         bankbranch?.text = insuranceNameeee?.BranchName
         nameOfInsurance?.text = insuranceNameeee?.insuranceNamee
-        presenter = InsurancePresenter(this, activity as Activity)
-        actionButton?.setText("Under Process")
+        presenter = UnderProcessDetailsPresenter(this, activity as Activity)
+        actionButton?.setText("Claim Settled")
         actionButton?.setOnClickListener {
             if (TextUtils.isEmpty(encodedBase64)) {
                 val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
                 toast.show()
             } else {
                 showProgress()
-                presenter?.uploadRegisterDocument(insuranceNameeee,encodedBase64)
+                presenter?.uploadUnderProcess(insuranceNameeee,encodedBase64)
             }
         }
         uploadDocument?.setOnClickListener {
@@ -329,9 +329,9 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
 
     companion object {
         var insuranceNameeee: Master? = null
-        fun getInstance(insuranceNamee: Master): InsuranceDetailsFragment {
+        fun getInstance(insuranceNamee: Master): UnderProcessDetailsFragment {
             insuranceNameeee = insuranceNamee
-            return InsuranceDetailsFragment()
+            return UnderProcessDetailsFragment()
         }
     }
 }

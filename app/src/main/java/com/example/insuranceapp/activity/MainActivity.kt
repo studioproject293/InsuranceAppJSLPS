@@ -18,8 +18,10 @@ import java.io.IOException
 import java.nio.channels.FileChannel
 import com.example.insuranceapp.model.HeaderData
 import com.example.insuranceapp.model.Master
+import com.example.insuranceapp.ui.claimSetteled.ClaimSetteledDetailsFragment
 import com.example.insuranceapp.ui.insuranceList.InsuranceDetailsFragment
 import com.example.insuranceapp.ui.insuranceList.InsuranceListFragment
+import com.example.insuranceapp.ui.underProcess.UnderProcessDetailsFragment
 
 
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
     private var mFragmentTag: String? = null
     private var mCurrentFragment: Int = 0
     internal var toolbar_home: Toolbar? = null
-    internal var toolbar_title:TextView?=null
+    internal var toolbar_title: TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,34 +45,68 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
         mFragmentTag = fragmentId.toString()
         when (fragmentId) {
             Constant.HOME_FRAGMENT -> {
-                mFragmentManager?.beginTransaction()!!.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
                     .addToBackStack(mFragmentTag)
                     .replace(R.id.fragment_main, HomeFragment(), mFragmentTag).commitAllowingStateLoss()
             }
             Constant.SCHEME_DETAILS_FRAGMENT -> {
-                mFragmentManager?.beginTransaction()!!.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
                     .addToBackStack(mFragmentTag)
-                    .replace(R.id.fragment_main, SchemeDetailsFragment.getInstance(data as String), mFragmentTag).commitAllowingStateLoss()
+                    .replace(R.id.fragment_main, SchemeDetailsFragment.getInstance(data as String), mFragmentTag)
+                    .commitAllowingStateLoss()
             }
             Constant.INSURANCE_LIST_FRAGMENT -> {
-                mFragmentManager?.beginTransaction()!!.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
                     .addToBackStack(mFragmentTag)
-                    .replace(R.id.fragment_main, InsuranceListFragment.getInstance(data as List<Master>), mFragmentTag).commitAllowingStateLoss()
-            } Constant.INSURANCE_DETAILS_FRAGMENT -> {
-            mFragmentManager?.beginTransaction()!!.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                .addToBackStack(mFragmentTag)
-                .replace(R.id.fragment_main, InsuranceDetailsFragment.getInstance(data as Master), mFragmentTag).commitAllowingStateLoss()
-        }
+                    .replace(R.id.fragment_main, InsuranceListFragment.getInstance(data as List<Master>), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
+            Constant.INSURANCE_DETAILS_FRAGMENT -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                    .addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, InsuranceDetailsFragment.getInstance(data as Master), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
+            Constant.UNDER_PROCESS_DETAILS_FRAGMENT -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                    .addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, UnderProcessDetailsFragment.getInstance(data as Master), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
+            Constant.CLAIM_SETTELED_DETAILS_FRAGMENT -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                    .addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, ClaimSetteledDetailsFragment.getInstance(data as Master), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
 
         }
     }
 
     override fun onFragmentUpdate(type: Int, data: Any) {
         when (type) {
-              Constant.setTitle ->{
-                  val headerData = data as HeaderData
-                  toolbar_title?.setText(headerData.text)
-              }
+            Constant.setTitle -> {
+                val headerData = data as HeaderData
+                toolbar_title?.setText(headerData.text)
+            }
         }
     }
 

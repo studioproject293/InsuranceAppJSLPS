@@ -21,10 +21,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.chootdev.csnackbar.Align
-import com.chootdev.csnackbar.Duration
-import com.chootdev.csnackbar.Snackbar
-import com.chootdev.csnackbar.Type
 import com.example.insuranceapp.Constant
 import com.example.insuranceapp.DialogUtil
 import com.example.insuranceapp.R

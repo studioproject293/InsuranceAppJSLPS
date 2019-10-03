@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.insuranceapp.R
+import com.example.insuranceapp.cache.AppCache
 import com.example.insuranceapp.listener.OnFragmentListItemSelectListener
 import com.example.insuranceapp.model.Master
 
@@ -34,12 +35,12 @@ class InsuranceListAdapter(items: ArrayList<Master>, activity: Context, insuranc
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         var masterModel = itemList?.get(p1)
         p0.nomineeName.text = masterModel?.Name
-        p0.block.text = masterModel?.BlockName
+        p0.block.text = masterModel?.Blockname
         p0.village.text = masterModel?.Villagename
         p0.contactNo.text = masterModel?.Phno_ofNominee
         p0.bankbranch.text = masterModel?.BranchName
-        p0.nameOfInsurance.text = insuranceNamee
-        masterModel?.insuranceNamee = insuranceNamee
+        p0.nameOfInsurance.text =  AppCache.getCache().insurancetype
+        masterModel?.insuranceNamee = AppCache.getCache().insurancetype.toString()
         p0.view.setOnClickListener {
             if (masterModel != null) {
                 mListner?.onListItemSelected(p1, masterModel)

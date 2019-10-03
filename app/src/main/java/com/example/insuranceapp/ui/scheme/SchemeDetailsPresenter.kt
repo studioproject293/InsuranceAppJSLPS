@@ -28,116 +28,134 @@ import java.util.concurrent.TimeUnit
 class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BasePresenter, Presenter(),
     OnFragmentListItemSelectListener {
     override fun onListItemSelected(itemId: Int, data: Any) {
-        DialogUtil.displayProgress(context)
+
         val gson = GsonBuilder().setLenient().create()
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         val builder = OkHttpClient.Builder()
         //comment in live build and uncomment in uat
         builder.interceptors().add(interceptor)
-        builder.connectTimeout(120, TimeUnit.SECONDS)
-        builder.readTimeout(120, TimeUnit.SECONDS)
+        builder.connectTimeout(180, TimeUnit.SECONDS)
+        builder.readTimeout(180, TimeUnit.SECONDS)
         val client = builder.build()
         val retrofit = Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
             ScalarsConverterFactory.create()
         ).client(client).build()
         val apiServices = retrofit.create(LoginService::class.java)
-        if (itemId == 0) {
-            val changePhotoResponseModelCall =
-                apiServices.getTabletDownloadDataBCsakhi("regproces", "0", " ")
-            changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    val gson = Gson()
-                    Log.v("Response prof :", "hgfgfrhgs" + response.body())
+        when (itemId) {
+            0 -> {
+                AppCache.getCache().insuranceStep="Registered"
+                DialogUtil.displayProgress(this!!.context!!)
+                val changePhotoResponseModelCall =
+                    apiServices.getTabletDownloadDataBCsakhi("regproces", "0", " ")
+                changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        DialogUtil.stopProgressDisplay()
+                        val gson = Gson()
+                        Log.v("Response prof :", "hgfgfrhgs" + response.body())
 
-                    val fullResponse = response.body()
-                    val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                    val result = XmlString?.replace(("</string>").toRegex(), "")
-                    print("fhrjfghf" + result)
-                    val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
-                    System.out.println("vvh" + gson.toJson(mStudentObject1))
-                    AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
-                    view?.gotoScreen(Constant.INSURANCE_LIST_FRAGMENT, mStudentObject1.Master)
-                }
+                        val fullResponse = response.body()
+                        val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                        val result = XmlString?.replace(("</string>").toRegex(), "")
+                        print("fhrjfghf" + result)
+                        val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    DialogUtil.stopProgressDisplay()
-                    val toast = Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT)
-                    toast.show()
-                }
-            })
-        } else if (itemId == 1) {
-            val changePhotoResponseModelCall =
-                apiServices.getTabletDownloadDataBCsakhi("underproces", "0", " ")
-            changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    val gson = Gson()
-                    Log.v("Response prof :", "hgfgfrhgs" + response.body())
+                        System.out.println("vvh" + gson.toJson(mStudentObject1))
+                        AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
 
-                    val fullResponse = response.body()
-                    val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                    val result = XmlString?.replace(("</string>").toRegex(), "")
-                    print("fhrjfghf" + result)
-                    val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
-                    System.out.println("vvh" + gson.toJson(mStudentObject1))
-                    AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
-                    view?.gotoScreen(Constant.INSURANCE_LIST_FRAGMENT, mStudentObject1.Master)
-                }
+                        view?.gotoScreen(Constant.INSURANCE_LIST_FRAGMENT, mStudentObject1.Master)
+                    }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    DialogUtil.stopProgressDisplay()
-                    val toast = Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT)
-                    toast.show()
-                }
-            })
-        } else if (itemId == 2) {
-            val changePhotoResponseModelCall =
-                apiServices.getTabletDownloadDataBCsakhi("cs", "1", " ")
-            changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    val gson = Gson()
-                    Log.v("Response prof :", "hgfgfrhgs" + response.body())
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        DialogUtil.stopProgressDisplay()
+                        val toast = Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT)
+                        toast.show()
+                    }
+                })
+            }
+            1 -> {
+                AppCache.getCache().insuranceStep="Under Process"
+                DialogUtil.displayProgress(this!!.context!!)
+                val changePhotoResponseModelCall =
+                    apiServices.getTabletDownloadDataBCsakhi("underproces", "0", " ")
+                changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        DialogUtil.stopProgressDisplay()
+                        val gson = Gson()
+                        Log.v("Response prof :", "hgfgfrhgs" + response.body())
 
-                    val fullResponse = response.body()
-                    val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                    val result = XmlString?.replace(("</string>").toRegex(), "")
-                    print("fhrjfghf" + result)
-                    val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
-                    System.out.println("vvh" + gson.toJson(mStudentObject1))
-                    AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
-                    view?.gotoScreen(Constant.INSURANCE_LIST_FRAGMENT, mStudentObject1.Master)
-                }
+                        val fullResponse = response.body()
+                        val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                        val result = XmlString?.replace(("</string>").toRegex(), "")
+                        print("fhrjfghf" + result)
+                        val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
+                        System.out.println("vvh" + gson.toJson(mStudentObject1))
+                        AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                        view?.gotoScreen(Constant.INSURANCE_LIST_FRAGMENT, mStudentObject1.Master)
+                    }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    DialogUtil.stopProgressDisplay()
-                    val toast = Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT)
-                    toast.show()
-                }
-            })
-        } else if (itemId == 3) {
-            val changePhotoResponseModelCall =
-                apiServices.getTabletDownloadDataBCsakhi("rej", "2", " ")
-            changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    val gson = Gson()
-                    Log.v("Response prof :", "hgfgfrhgs" + response.body())
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        DialogUtil.stopProgressDisplay()
+                        val toast = Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT)
+                        toast.show()
+                    }
+                })
+            }
+            2 -> {
+                AppCache.getCache().insuranceStep="Claim Settled"
+                DialogUtil.displayProgress(this!!.context!!)
+                val changePhotoResponseModelCall =
+                    apiServices.getTabletDownloadDataBCsakhi("cs", "0", " ")
+                changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        val gson = Gson()
+                        Log.v("Response prof :", "hgfgfrhgs" + response.body())
+                        DialogUtil.stopProgressDisplay()
+                        val fullResponse = response.body()
+                        val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                        val result = XmlString?.replace(("</string>").toRegex(), "")
+                        print("fhrjfghf" + result)
+                        val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
+                        System.out.println("vvh" + gson.toJson(mStudentObject1))
+                        AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                        view?.gotoScreen(Constant.INSURANCE_LIST_FRAGMENT, mStudentObject1.Master)
+                    }
 
-                    val fullResponse = response.body()
-                    val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                    val result = XmlString?.replace(("</string>").toRegex(), "")
-                    print("fhrjfghf" + result)
-                    val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
-                    System.out.println("vvh" + gson.toJson(mStudentObject1))
-                    AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
-                    view?.gotoScreen(Constant.INSURANCE_LIST_FRAGMENT, mStudentObject1.Master)
-                }
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        DialogUtil.stopProgressDisplay()
+                        val toast = Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT)
+                        toast.show()
+                    }
+                })
+            }
+            3 -> {
+                AppCache.getCache().insuranceStep="Rejected"
+                DialogUtil.displayProgress(this!!.context!!)
+                val changePhotoResponseModelCall =
+                    apiServices.getTabletDownloadDataBCsakhi("rej", "2", " ")
+                changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        val gson = Gson()
+                        Log.v("Response prof :", "hgfgfrhgs" + response.body())
+                        DialogUtil.stopProgressDisplay()
+                        val fullResponse = response.body()
+                        val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                        val result = XmlString?.replace(("</string>").toRegex(), "")
+                        print("fhrjfghf" + result)
+                        val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
+                        System.out.println("vvh" + gson.toJson(mStudentObject1))
+                        AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                        view?.gotoScreen(Constant.INSURANCE_LIST_FRAGMENT, mStudentObject1.Master)
+                    }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    DialogUtil.stopProgressDisplay()
-                    val toast = Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT)
-                    toast.show()
-                }
-            })
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        DialogUtil.stopProgressDisplay()
+                        val toast = Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT)
+                        toast.show()
+                    }
+                })
+            }
+            else -> AppCache.getCache().insuranceStep="Total Claim"
         }
 
     }

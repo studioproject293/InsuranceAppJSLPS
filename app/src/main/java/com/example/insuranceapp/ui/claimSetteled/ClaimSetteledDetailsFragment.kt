@@ -1,4 +1,4 @@
-package com.example.insuranceapp.ui.insuranceList
+package com.example.insuranceapp.ui.claimSetteled
 
 import android.Manifest
 import android.app.Activity
@@ -26,10 +26,10 @@ import com.example.insuranceapp.listener.OnFragmentListItemSelectListener
 import com.example.insuranceapp.model.HeaderData
 import com.example.insuranceapp.model.Master
 import com.example.insuranceapp.ui.BaseFragment
-
+import com.example.insuranceapp.ui.underProcess.ClaimSetteledDetailsPresenter
 import java.io.*
 
-class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListItemSelectListener {
+class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView, OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
         val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
         toast.show()
@@ -66,7 +66,7 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
     var encodedBase64: String? = null
     var REQUEST_CAMERA = 0
     var SELECT_FILE = 1
-    var presenter: InsurancePresenter? = null
+    var presenter: ClaimSetteledDetailsPresenter? = null
     private var rootView: View? = null
     override fun onResume() {
         super.onResume()
@@ -139,34 +139,78 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        rootView = inflater.inflate(R.layout.insurace_details, container, false)
+        rootView = inflater.inflate(R.layout.claim_details, container, false)
         val nameOfInsurance: TextView? = rootView?.findViewById(R.id.insuranceName)
         val textHeading: TextView? = rootView?.findViewById(R.id.textHeading)
         val nomineeName: TextView? = rootView?.findViewById(R.id.nomineeInsurance)
         val contactNo: TextView? = rootView?.findViewById(R.id.contactNo)
         val block: TextView? = rootView?.findViewById(R.id.block)
         val village: TextView? = rootView?.findViewById(R.id.village)
+        val claimReject: Button? = rootView?.findViewById(R.id.claimReject)
+        val claimSetteled: Button? = rootView?.findViewById(R.id.claimSetteled)
+        val buttonlayout: LinearLayout? = rootView?.findViewById(R.id.buttonlayout)
+        val imageLayout: LinearLayout? = rootView?.findViewById(R.id.imageLayout)
+
+        val rejectReason: EditText? = rootView?.findViewById(R.id.rejectReason)
+        val amount: EditText? = rootView?.findViewById(R.id.amount)
         document = rootView?.findViewById(R.id.doucment)
         var actionButton: Button? = rootView?.findViewById(R.id.actionButton)
         val uploadDocument: Button? = rootView?.findViewById(R.id.uploadDocument)
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
         nomineeName?.text = insuranceNameeee?.Name
         block?.text = insuranceNameeee?.Blockname
+        uploadDocument?.setText("Upload Receipt")
+        buttonlayout?.visibility = View.VISIBLE
+        amount?.visibility = View.VISIBLE
+        imageLayout?.visibility = View.VISIBLE
+        rejectReason?.visibility = View.GONE
+        actionButton?.visibility = View.GONE
+        textHeading?.setText("Service Charged recived")
         // block?.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.move));
         village?.text = insuranceNameeee?.Villagename
         contactNo?.text = insuranceNameeee?.Phno_ofNominee
         bankbranch?.text = insuranceNameeee?.BranchName
         nameOfInsurance?.text = insuranceNameeee?.insuranceNamee
-        presenter = InsurancePresenter(this, activity as Activity)
-        actionButton?.setText("Under Process")
+        presenter = ClaimSetteledDetailsPresenter(this, activity as Activity)
         actionButton?.setOnClickListener {
-            if (TextUtils.isEmpty(encodedBase64)) {
-                val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
+            if (TextUtils.isEmpty(rejectReason?.text.toString())) {
+                val toast = Toast.makeText(activity, "Please Write Reject Reason", Toast.LENGTH_SHORT)
                 toast.show()
             } else {
                 showProgress()
-                presenter?.uploadRegisterDocument(insuranceNameeee,encodedBase64)
+                presenter?.uploadClaimejected(insuranceNameeee, rejectReason?.text.toString())
             }
+        }
+        claimSetteled?.setOnClickListener {
+
+            if (TextUtils.isEmpty(encodedBase64)) {
+                val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
+                toast.show()
+            } else if (TextUtils.isEmpty(amount?.text.toString())) {
+                val toast = Toast.makeText(activity, "Please Enter Amount", Toast.LENGTH_SHORT)
+                toast.show()
+            } else {
+                showProgress()
+                presenter?.uploadClaimSetteled(insuranceNameeee, encodedBase64,amount?.text.toString())
+            }
+        }
+        claimReject?.setOnClickListener {
+            rejectReason?.visibility = View.VISIBLE
+            imageLayout?.visibility = View.GONE
+            buttonlayout?.visibility = View.GONE
+            amount?.visibility = View.GONE
+            actionButton?.visibility = View.VISIBLE
+            textHeading?.setText("Write Reject Reason for Rejection")
+            /* if (TextUtils.isEmpty(encodedBase64)) {
+                 val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
+                 toast.show()
+             } else if (TextUtils.isEmpty(amount?.text.toString())) {
+                 val toast = Toast.makeText(activity, "Please Enter Amount", Toast.LENGTH_SHORT)
+                 toast.show()
+             } else {
+                 showProgress()
+                 presenter?.uploadUnderProcess(insuranceNameeee, encodedBase64)
+             }*/
         }
         uploadDocument?.setOnClickListener {
             if (ActivityCompat.checkSelfPermission(
@@ -265,7 +309,7 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
                     val imagedata = byteArrayOutputStream.toByteArray()
-                     encodedBase64 = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                    encodedBase64 = Base64.encodeToString(imagedata, Base64.DEFAULT)
                     Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64)
                 }
             } else if (requestCode == REQUEST_CAMERA) {
@@ -329,9 +373,9 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
 
     companion object {
         var insuranceNameeee: Master? = null
-        fun getInstance(insuranceNamee: Master): InsuranceDetailsFragment {
+        fun getInstance(insuranceNamee: Master): ClaimSetteledDetailsFragment {
             insuranceNameeee = insuranceNamee
-            return InsuranceDetailsFragment()
+            return ClaimSetteledDetailsFragment()
         }
     }
 }

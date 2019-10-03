@@ -2,7 +2,7 @@ package com.example.insuranceapp.model
 
 data class Master(
     val BankBranch: String,
-    val BlockName: String,
+    val Blockname: String,
     val BranchName: String,
     val Call_Id: Int,
     val ClusterCode: String,

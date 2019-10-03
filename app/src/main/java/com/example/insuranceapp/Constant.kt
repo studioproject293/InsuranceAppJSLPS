@@ -11,6 +11,8 @@ object Constant {
     var SCHEME_DETAILS_FRAGMENT = 102
     var INSURANCE_LIST_FRAGMENT = 103
     var INSURANCE_DETAILS_FRAGMENT = 104
+    var UNDER_PROCESS_DETAILS_FRAGMENT = 105
+    var CLAIM_SETTELED_DETAILS_FRAGMENT = 106
     val setTitle = 1111
     const val UPDATE__NO_INTERNET = 209
     val API_BASE_URL = "http://swalekha.in/webServiceModalPopup.asmx/"
