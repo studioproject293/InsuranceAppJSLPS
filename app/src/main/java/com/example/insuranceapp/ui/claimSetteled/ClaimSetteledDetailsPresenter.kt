@@ -203,7 +203,7 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
             changePhotoResponseModelCall.enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>, response: Response<String>) {
                     if (response.isSuccessful) {
-                        context?.let { DialogUtil.displayProgress(it) }
+                        DialogUtil.stopProgressDisplay()
                         val fullResponse = response.body()
                         val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                         val result = XmlString?.replace(("</string>").toRegex(), "")

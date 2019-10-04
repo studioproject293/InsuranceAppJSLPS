@@ -133,11 +133,7 @@ class WelcomeActivity : AppCompatActivity() {
         val sigiin = dialog.findViewById<Button>(R.id.sigiin)
         checkBox = dialog.findViewById(R.id.checkbox)
         checkboxRember = dialog.findViewById(R.id.checkboxRember)
-        preferences = getSharedPreferences(
-            "MyPref",
-            Context.MODE_PRIVATE
-        )
-
+        preferences = getSharedPreferences("MyPref",Context.MODE_PRIVATE)
         val value = preferences?.getString("userName", "")
         val value1 = preferences?.getString("Password", "")
         if (!TextUtils.isEmpty(value) && !TextUtils.isEmpty(value1)) {

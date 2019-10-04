@@ -200,17 +200,8 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView, O
             buttonlayout?.visibility = View.GONE
             amount?.visibility = View.GONE
             actionButton?.visibility = View.VISIBLE
-            textHeading?.setText("Write Reject Reason for Rejection")
-            /* if (TextUtils.isEmpty(encodedBase64)) {
-                 val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
-                 toast.show()
-             } else if (TextUtils.isEmpty(amount?.text.toString())) {
-                 val toast = Toast.makeText(activity, "Please Enter Amount", Toast.LENGTH_SHORT)
-                 toast.show()
-             } else {
-                 showProgress()
-                 presenter?.uploadUnderProcess(insuranceNameeee, encodedBase64)
-             }*/
+            textHeading?.text = "Write Reject Reason for Rejection"
+
         }
         uploadDocument?.setOnClickListener {
             if (ActivityCompat.checkSelfPermission(
