@@ -1,4 +1,4 @@
-package com.example.insuranceapp.ui.underProcess
+package com.example.insuranceapp.ui.claimSetteled
 
 import android.app.Activity
 import com.example.insuranceapp.Constant
@@ -29,14 +29,9 @@ import java.util.concurrent.TimeUnit
 
 class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Activity) : BasePresenter, Presenter(),
     OnFragmentListItemSelectListener {
-    override fun onListItemSelected(itemId: Int, data: Any) {
+    override fun onListItemSelected(itemId: Int, data: Any) {}
 
-
-    }
-
-    override fun onListItemLongClicked(itemId: Int, data: Any) {
-    }
-
+    override fun onListItemLongClicked(itemId: Int, data: Any) {}
 
     var view: ClaimSetteledDetailsView? = view
     var context: Activity? = context
@@ -79,7 +74,7 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
         encodedBase64: String?,
         amount: String) {
         if (DialogUtil.isConnectionAvailable(context)) {
-            this!!.context?.let { DialogUtil.displayProgress(it) }
+            DialogUtil.displayProgress(context!!)
             val gson = GsonBuilder().setLenient().create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -148,7 +143,7 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
                             e.printStackTrace()
                         }
                     } else {
-                        context?.let { DialogUtil.displayProgress(it) }
+                       DialogUtil.stopProgressDisplay()
                         view?.showMessage(response.message())
                     }
                 }
@@ -165,10 +160,10 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
 
     fun uploadClaimejected(insuranceNameeee: Master?, reason: String?) {
         if (DialogUtil.isConnectionAvailable(context)) {
-            this!!.context?.let { DialogUtil.displayProgress(it) }
+            DialogUtil.displayProgress(context!!)
             val gson = GsonBuilder().setLenient().create()
             val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
             val builder = OkHttpClient.Builder()
             //comment in live build and uncomment in uat
             builder.interceptors().add(interceptor)
@@ -218,7 +213,7 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
                             val jsonObject = categoryObject?.getJSONObject(0)
                             val Result = jsonObject?.getString("RetValue")
                             if (Result.equals("1", ignoreCase = true)) {
-                                view?.showMessage("Insurnace Update Sucessfully")
+                                view?.showMessage("Insurance Update Successfully")
                             } else {
                                 /* Snackbar.with(getActivity(), null)
                                      .type(Type.ERROR)
@@ -236,7 +231,6 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
                         view?.showMessage(response.message())
                     }
                 }
-
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     DialogUtil.stopProgressDisplay()
                     view?.showMessage(t.localizedMessage)

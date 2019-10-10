@@ -98,7 +98,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
     fun uploadRegisterDocument(insuranceNameeee: Master?, encodedBase64: String?) {
 
         if (DialogUtil.isConnectionAvailable(context)) {
-            this!!.context?.let { DialogUtil.displayProgress(it) }
+            DialogUtil.displayProgress(context!!)
             val gson = GsonBuilder().setLenient().create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -166,11 +166,10 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
                             e.printStackTrace()
                         }
                     } else {
-                        context?.let { DialogUtil.displayProgress(it) }
+                        DialogUtil.stopProgressDisplay()
                         view?.showMessage(response.message())
                     }
                 }
-
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     DialogUtil.stopProgressDisplay()
                     view?.showMessage(t.localizedMessage)

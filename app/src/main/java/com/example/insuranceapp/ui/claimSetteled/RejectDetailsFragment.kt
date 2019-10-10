@@ -24,8 +24,6 @@ import com.example.insuranceapp.listener.OnFragmentListItemSelectListener
 import com.example.insuranceapp.model.HeaderData
 import com.example.insuranceapp.model.Master
 import com.example.insuranceapp.ui.BaseFragment
-import com.example.insuranceapp.ui.underProcess.ClaimSetteledDetailsPresenter
-import com.example.insuranceapp.ui.underProcess.UnderProcessDetailsPresenter
 import com.example.insuranceapp.ui.underProcess.UnderProcessDetailsView
 import java.io.*
 

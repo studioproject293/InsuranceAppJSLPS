@@ -21,6 +21,7 @@ import com.example.insuranceapp.model.Master
 import com.example.insuranceapp.ui.claimSetteled.ClaimSetteledDetailsFragment
 import com.example.insuranceapp.ui.insuranceList.InsuranceDetailsFragment
 import com.example.insuranceapp.ui.insuranceList.InsuranceListFragment
+import com.example.insuranceapp.ui.reports.SchemeDetailsFragmentReport
 import com.example.insuranceapp.ui.underProcess.UnderProcessDetailsFragment
 
 
@@ -97,7 +98,15 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                     .replace(R.id.fragment_main, ClaimSetteledDetailsFragment.getInstance(data as Master), mFragmentTag)
                     .commitAllowingStateLoss()
             }
-
+            Constant.REPORTS_DETAILS_FRAGMENT -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                    .addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, SchemeDetailsFragmentReport.getInstance(), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
         }
     }
 

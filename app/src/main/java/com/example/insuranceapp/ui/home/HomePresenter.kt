@@ -12,6 +12,7 @@ import com.twidpay.beta.model.ApiRequest
 
 class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presenter(), OnFragmentListItemSelectListener {
     override fun onListItemSelected(itemId: Int, data: Any) {
+
         getAppCache().insurancetype = data.toString()
         view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
     }

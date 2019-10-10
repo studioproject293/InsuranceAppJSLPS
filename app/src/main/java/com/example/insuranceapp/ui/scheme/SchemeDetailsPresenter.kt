@@ -45,7 +45,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
         when (itemId) {
             0 -> {
                 AppCache.getCache().insuranceStep="Registered"
-                DialogUtil.displayProgress(this!!.context!!)
+                DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi("regproces", "0", " ")
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
@@ -75,7 +75,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
             }
             1 -> {
                 AppCache.getCache().insuranceStep="Under Process"
-                DialogUtil.displayProgress(this!!.context!!)
+                DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi("underproces", "0", " ")
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
@@ -103,7 +103,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
             }
             2 -> {
                 AppCache.getCache().insuranceStep="Claim Settled"
-                DialogUtil.displayProgress(this!!.context!!)
+                DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi("cs", "0", " ")
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
@@ -130,7 +130,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
             }
             3 -> {
                 AppCache.getCache().insuranceStep="Rejected"
-                DialogUtil.displayProgress(this!!.context!!)
+                DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi("rej", "2", " ")
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
@@ -155,7 +155,10 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                     }
                 })
             }
-            else -> AppCache.getCache().insuranceStep="Total Claim"
+            else -> {
+                AppCache.getCache().insuranceStep = "Total Claim"
+                view?.gotoScreen(Constant.REPORTS_DETAILS_FRAGMENT, "")
+            }
         }
 
     }

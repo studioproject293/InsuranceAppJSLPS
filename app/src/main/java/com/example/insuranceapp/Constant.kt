@@ -7,15 +7,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 object Constant {
-    val HOME_FRAGMENT = 101
-    var SCHEME_DETAILS_FRAGMENT = 102
-    var INSURANCE_LIST_FRAGMENT = 103
-    var INSURANCE_DETAILS_FRAGMENT = 104
-    var UNDER_PROCESS_DETAILS_FRAGMENT = 105
-    var CLAIM_SETTELED_DETAILS_FRAGMENT = 106
-    val setTitle = 1111
+    const val HOME_FRAGMENT = 101
+    const val SCHEME_DETAILS_FRAGMENT = 102
+    const val INSURANCE_LIST_FRAGMENT = 103
+    const val INSURANCE_DETAILS_FRAGMENT = 104
+    const val UNDER_PROCESS_DETAILS_FRAGMENT = 105
+    const val CLAIM_SETTELED_DETAILS_FRAGMENT = 106
+    const val REPORTS_DETAILS_FRAGMENT = 107
+    const val setTitle = 1111
     const val UPDATE__NO_INTERNET = 209
-    val API_BASE_URL = "http://swalekha.in/webServiceModalPopup.asmx/"
+    const val API_BASE_URL = "http://swalekha.in/webServiceModalPopup.asmx/"
     const val NO_INTERNET = "No Internet Connection"
     fun getHorizontalLayout(context: Activity): RecyclerView.LayoutManager {
         return LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
