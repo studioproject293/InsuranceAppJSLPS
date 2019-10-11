@@ -14,7 +14,7 @@ import com.example.insuranceapp.ui.home.adapter.CardListAdapter
 import com.example.insuranceapp.Constant
 
 class HomeFragment : BaseFragment(),HomeView, OnFragmentListItemSelectListener {
-    var homeRecyclerviewAdapter: CardListAdapter? = null
+    private var homeRecyclerviewAdapter: CardListAdapter? = null
     override fun gotoScreen(fragmentID: Int, message: Any?) {
         mListener?.onFragmentInteraction(fragmentID,message as String)
     }

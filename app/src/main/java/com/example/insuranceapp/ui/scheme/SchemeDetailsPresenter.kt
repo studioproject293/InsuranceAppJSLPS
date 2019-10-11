@@ -31,7 +31,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
 
         val gson = GsonBuilder().setLenient().create()
         val interceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
         val builder = OkHttpClient.Builder()
         //comment in live build and uncomment in uat
         builder.interceptors().add(interceptor)

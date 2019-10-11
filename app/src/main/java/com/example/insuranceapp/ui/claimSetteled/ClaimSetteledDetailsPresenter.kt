@@ -213,6 +213,7 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
                             val jsonObject = categoryObject?.getJSONObject(0)
                             val Result = jsonObject?.getString("RetValue")
                             if (Result.equals("1", ignoreCase = true)) {
+
                                 view?.showMessage("Insurance Update Successfully")
                             } else {
                                 /* Snackbar.with(getActivity(), null)

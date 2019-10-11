@@ -11,6 +11,8 @@ import com.example.insuranceapp.R
 import com.example.insuranceapp.cache.AppCache
 import com.example.insuranceapp.listener.OnFragmentListItemSelectListener
 import com.example.insuranceapp.model.HeaderData
+import com.example.insuranceapp.model.MasterX
+
 import com.example.insuranceapp.ui.BaseFragment
 import com.example.insuranceapp.ui.reports.adapter.SchemeListAdapterReport
 
@@ -20,7 +22,7 @@ class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnF
         mListener?.onFragmentInteraction(fragmentID,message as List<*>)
     }
 
-    override fun loadData(cardInitResponse: ArrayList<String>?) {
+    override fun loadData(cardInitResponse: ArrayList<MasterX>) {
 
         if (cardInitResponse != null) {
             recycleview?.visibility = View.VISIBLE

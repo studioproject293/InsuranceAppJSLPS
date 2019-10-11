@@ -7,9 +7,9 @@ import com.example.insuranceapp.Constant
 import com.example.insuranceapp.DialogUtil
 import com.example.insuranceapp.base.BasePresenter
 import com.example.insuranceapp.base.Presenter
-import com.example.insuranceapp.cache.AppCache
 import com.example.insuranceapp.listener.OnFragmentListItemSelectListener
-import com.example.insuranceapp.model.LoginPojo
+import com.example.insuranceapp.model.MasterX
+import com.example.insuranceapp.model.ReportModel
 import com.example.insuranceapp.network.LoginService
 import com.example.insuranceapp.network.ServiceUpdateListner
 import com.google.gson.Gson
@@ -27,14 +27,10 @@ import java.util.concurrent.TimeUnit
 
 class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activity) : BasePresenter, Presenter(),
     OnFragmentListItemSelectListener {
-    override fun onListItemSelected(itemId: Int, data: Any) {
-
-
-    }
+    override fun onListItemSelected(itemId: Int, data: Any) {}
 
     override fun onListItemLongClicked(itemId: Int, data: Any) {
     }
-
 
     var view: SchemeDetailsViewReport? = view
     var context: Activity? = context
@@ -45,12 +41,56 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
 
 
     override fun resume() {
-        val schemedata = ArrayList<String>()
+        DialogUtil.displayProgress(context!!)
+       /* val schemedata = ArrayList<String>()
         schemedata.add("Registered (10)")
         schemedata.add("Under Process (10)")
         schemedata.add("Claim Settled (10)")
         schemedata.add("Rejected (10)")
-        view?.loadData(schemedata)
+        view?.loadData(schemedata)*/
+        val gson = GsonBuilder().setLenient().create()
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        val builder = OkHttpClient.Builder()
+        //comment in live build and uncomment in uat
+        builder.interceptors().add(interceptor)
+        builder.connectTimeout(180, TimeUnit.SECONDS)
+        builder.readTimeout(180, TimeUnit.SECONDS)
+        val client = builder.build()
+        val retrofit = Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
+            ScalarsConverterFactory.create()
+        ).client(client).build()
+
+        val apiServices = retrofit.create(LoginService::class.java)
+        val changePhotoResponseModelCall = apiServices.getTabletDownloadDataBCsakhi("reportreg", " ", " ")
+        changePhotoResponseModelCall.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                DialogUtil.stopProgressDisplay()
+                val gson = Gson()
+                Log.v("Response prof :", "hgfgfrhgs" + response.body())
+
+                val fullResponse = response.body()
+                val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                val result = XmlString?.replace(("</string>").toRegex(), "")
+                print("fhrjfghf" + result)
+                val mStudentObject1 = gson.fromJson(result, ReportModel::class.java)
+                for (item in mStudentObject1.Master) {
+                    mStudentObject1.Master.get(index = 0).Column2="Registered ("
+                    mStudentObject1.Master.get(index = 1).Column2="Under Process ("
+                    mStudentObject1.Master.get(index = 2).Column2="Claim Settled ("
+                    mStudentObject1.Master.get(index = 3).Column2="Rejected ("
+                }
+                System.out.println("vvh" + gson.toJson(mStudentObject1))
+                view?.loadData(mStudentObject1.Master as ArrayList<MasterX>)
+               // view?.gotoScreen(Constant.INSURANCE_LIST_FRAGMENT, mStudentObject1.Master)
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                DialogUtil.stopProgressDisplay()
+                val toast = Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT)
+                toast.show()
+            }
+        })
     }
 
     override fun onDestroy() {

@@ -30,6 +30,7 @@ import com.example.insuranceapp.model.LoginPojo
 import com.example.insuranceapp.network.LoginService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.irozon.sneaker.Sneaker
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -164,6 +165,8 @@ class WelcomeActivity : AppCompatActivity() {
                     showError(editTextPassword)
                 }
                 else -> {
+                    DialogUtil.hideKeyboard(sigiin,this@WelcomeActivity)
+                    dialog.cancel()
                     if (DialogUtil.isConnectionAvailable(this@WelcomeActivity)) {
                         DialogUtil.displayProgress(this@WelcomeActivity)
                         val gson = GsonBuilder().setLenient().create()
@@ -197,6 +200,7 @@ class WelcomeActivity : AppCompatActivity() {
                                 val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                                 val result = XmlString?.replace(("</string>").toRegex(), "")
                                 print("fhrjfghf" + result)
+
                                 val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
                                 System.out.println("vvh" + gson.toJson(mStudentObject1))
                                 AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
@@ -207,13 +211,20 @@ class WelcomeActivity : AppCompatActivity() {
 
                             override fun onFailure(call: Call<String>, t: Throwable) {
                                 DialogUtil.stopProgressDisplay()
-                                val toast = Toast.makeText(this@WelcomeActivity, t.toString(), Toast.LENGTH_SHORT)
-                                toast.show()
+                                /*val toast = Toast.makeText(this@WelcomeActivity, t.toString(), Toast.LENGTH_SHORT)
+                                toast.show()*/
+                                Sneaker.with(this@WelcomeActivity) // Activity, Fragment or ViewGroup
+                                    .setTitle(t.toString())
+                                    .sneakError()
                             }
                         })
                     } else {
-                        val toast = Toast.makeText(this@WelcomeActivity, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
-                        toast.show()
+                        /*val toast = Toast.makeText(this@WelcomeActivity, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
+                        toast.show()*/
+                        Sneaker.with(this@WelcomeActivity) // Activity, Fragment or ViewGroup
+                            .setTitle(Constant.NO_INTERNET)
+                            /*.setMessage(Constant.NO_INTERNET)*/
+                            .sneakError()
                     }
 
                    /* val intent = Intent(this@WelcomeActivity, MainActivity::class.java)

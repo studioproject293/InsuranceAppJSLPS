@@ -25,12 +25,16 @@ import com.example.insuranceapp.model.HeaderData
 import com.example.insuranceapp.model.Master
 import com.example.insuranceapp.ui.BaseFragment
 import com.example.insuranceapp.ui.underProcess.UnderProcessDetailsView
+import com.irozon.sneaker.Sneaker
 import java.io.*
 
 class RejectDetailsFragment : BaseFragment(), UnderProcessDetailsView, OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
-        val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
-        toast.show()
+        Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
+            .setTitle(message.toString())
+            .sneakSuccess()
+       /* val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
+        toast.show()*/
     }
 
     override fun gotoScreen(fragmentID: Int, message: Any?) {
@@ -42,7 +46,7 @@ class RejectDetailsFragment : BaseFragment(), UnderProcessDetailsView, OnFragmen
     }
 
     override fun showProgress() {
-        activity?.let { DialogUtil.displayProgress(it) }
+        DialogUtil.displayProgress(activity!!)
     }
 
     override fun hideProgress() {
@@ -50,6 +54,7 @@ class RejectDetailsFragment : BaseFragment(), UnderProcessDetailsView, OnFragmen
     }
 
     override fun noInternet() {
+
         val toast = Toast.makeText(context, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
         toast.show()
     }
