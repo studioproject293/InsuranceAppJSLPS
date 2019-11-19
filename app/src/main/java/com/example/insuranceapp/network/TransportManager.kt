@@ -88,7 +88,7 @@ class TransportManager {
     }
 
 
-    fun onFailure(request: ApiRequest, data: String) {
+    private fun onFailure(request: ApiRequest, data: String) {
         val response = ResultResponse<Void>()
         if (data.equals(Constant.NO_INTERNET, true))
             response.message = data
@@ -96,7 +96,6 @@ class TransportManager {
             response.message = "Unable to process your request"
         response.data = null
         response.error_code = "-99"
-
         listener?.onFailureResponse(request, response)
     }
 

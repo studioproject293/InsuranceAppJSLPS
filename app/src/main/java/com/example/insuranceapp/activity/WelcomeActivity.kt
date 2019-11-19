@@ -42,7 +42,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 class WelcomeActivity : AppCompatActivity() {
-    internal var images = intArrayOf(R.mipmap.ic_launcher)
+    internal var images = intArrayOf(R.drawable.pmjby,R.drawable.pmsby,R.drawable.apy)
 
     private var viewPager: ViewPager? = null
     private val myViewPagerAdapter: MyViewPagerAdapter? = null
