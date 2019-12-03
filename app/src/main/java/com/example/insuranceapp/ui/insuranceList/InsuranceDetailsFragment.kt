@@ -263,7 +263,7 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
                     document?.setImageBitmap(selectedImage)
                     val byteArrayOutputStream = ByteArrayOutputStream()
-                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
+                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 10, byteArrayOutputStream)
                     val imagedata = byteArrayOutputStream.toByteArray()
                      encodedBase64 = Base64.encodeToString(imagedata, Base64.DEFAULT)
                     Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64)

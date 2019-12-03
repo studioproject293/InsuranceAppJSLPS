@@ -101,7 +101,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                     }
                 })
             }
-            2 -> {
+            3 -> {
                 AppCache.getCache().insuranceStep="Claim Settled"
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
@@ -128,7 +128,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                     }
                 })
             }
-            3 -> {
+            4 -> {
                 AppCache.getCache().insuranceStep="Rejected"
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
@@ -179,6 +179,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
         val schemedata = ArrayList<String>()
         schemedata.add("Registered")
         schemedata.add("Under Process")
+        schemedata.add("Document Ready Not Submitted")
         schemedata.add("Claim Settled")
         schemedata.add("Rejected")
         schemedata.add("Total Claim")
