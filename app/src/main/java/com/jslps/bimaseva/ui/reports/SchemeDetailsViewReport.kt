@@ -1,0 +1,9 @@
+package com.jslps.bimaseva.ui.reports
+
+import com.jslps.bimaseva.base.BaseView
+import com.jslps.bimaseva.model.MasterX
+
+interface SchemeDetailsViewReport : BaseView {
+    fun gotoScreen(fragmentID: Int, message: Any?)
+    fun loadData(cardInitResponse: ArrayList<MasterX>)
+}
