@@ -181,5 +181,91 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
             view?.noInternet()
         }
     }
+
+    fun documentReadyService(insuranceNameeee: Master?) {
+        if (DialogUtil.isConnectionAvailable(context)) {
+            DialogUtil.displayProgress(context!!)
+            val gson = GsonBuilder().setLenient().create()
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            val builder = OkHttpClient.Builder()
+            //comment in live build and uncomment in uat
+            builder.interceptors().add(interceptor)
+            builder.connectTimeout(120, TimeUnit.SECONDS)
+            builder.readTimeout(120, TimeUnit.SECONDS)
+            val client = builder.build()
+            val retrofit = Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
+                ScalarsConverterFactory.create()
+            ).client(client).build()
+            val apiServices = retrofit.create(UploadRegisterDocument::class.java)
+            val id = UUID.randomUUID().toString()
+            val uploadRegisterData = UploadRegisterData(
+                insuranceNameeee?.Call_Id.toString(),
+                insuranceNameeee?.CreatedBy.toString(),
+                id,
+                "",
+                insuranceNameeee?.CreatedOn.toString(),
+                "0",
+                "",
+                "0",
+                "",
+                "",
+                "0",
+                "",
+                "",
+                "2",
+                "",
+                "1",
+                ""
+            )
+            val data = "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
+            println("jdfjhjds$data")
+            val changePhotoResponseModelCall =
+                apiServices.uploadRegistedinsurance(data)
+            changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    if (response.isSuccessful) {
+                        DialogUtil.stopProgressDisplay()
+                        val fullResponse = response.body()
+                        val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                        val result = XmlString?.replace(("</string>").toRegex(), "")
+                        var jsonObj: JSONObject? = null
+                        try {
+                            jsonObj = JSONObject(result.toString())
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                        try {
+                            val categoryObject = jsonObj?.getJSONArray("Table")
+                            val jsonObject = categoryObject?.getJSONObject(0)
+                            val Result = jsonObject?.getString("RetValue")
+                            if (Result.equals("1", ignoreCase = true)) {
+                                view?.showMessage("Insurance Update Successfully")
+                            } else {
+                                /* Snackbar.with(getActivity(), null)
+                                     .type(Type.ERROR)
+                                     .message("Please try again")
+                                     .duration(Duration.SHORT)
+                                     .fillParent(true)
+                                     .textAlign(Align.CENTER)
+                                     .show()*/
+                            }
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                    } else {
+                        DialogUtil.stopProgressDisplay()
+                        view?.showMessage(response.message())
+                    }
+                }
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    DialogUtil.stopProgressDisplay()
+                    view?.showMessage(t.localizedMessage.toString())
+                }
+            })
+        } else {
+            view?.noInternet()
+        }
+    }
 }
 

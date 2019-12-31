@@ -31,6 +31,8 @@ import com.jslps.bimaseva.network.LoginService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.irozon.sneaker.Sneaker
+import com.jslps.bimaseva.model.LoginPojoNew
+import com.jslps.bimaseva.network.LoginServiceNew
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -181,9 +183,9 @@ class WelcomeActivity : AppCompatActivity() {
                         val retrofit = Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
                             ScalarsConverterFactory.create()
                         ).client(client).build()
-                        val apiServices = retrofit.create(LoginService::class.java)
+                        val apiServices = retrofit.create(LoginServiceNew::class.java)
                         val changePhotoResponseModelCall =
-                            apiServices.getTabletDownloadDataBCsakhi("callcenter", editTextUserName.getText().toString()," ")
+                            apiServices.getTabletDownloadDataBCsakhi("callcenter", editTextUserName.getText().toString(),editTextPassword.getText().toString())
                         changePhotoResponseModelCall.enqueue(object : Callback<String> {
                             override fun onResponse(call: Call<String>, response: Response<String>) {
                                 val gson = Gson()
@@ -201,9 +203,9 @@ class WelcomeActivity : AppCompatActivity() {
                                 val result = XmlString?.replace(("</string>").toRegex(), "")
                                 print("fhrjfghf" + result)
 
-                                val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
+                                val mStudentObject1 = gson.fromJson(result, LoginPojoNew::class.java)
                                 System.out.println("vvh" + gson.toJson(mStudentObject1))
-                                AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+
                                 val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
                                 startActivity(intent)
                                 finish()

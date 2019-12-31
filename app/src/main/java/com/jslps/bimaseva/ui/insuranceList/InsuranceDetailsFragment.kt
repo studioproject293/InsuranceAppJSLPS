@@ -158,6 +158,7 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
         val village: TextView? = rootView?.findViewById(R.id.village)
         document = rootView?.findViewById(R.id.doucment)
         var actionButton: Button? = rootView?.findViewById(R.id.actionButton)
+        var documentReadybutnotsubmit: Button? = rootView?.findViewById(R.id.documentReadybutnotsubmit)
         val uploadDocument: Button? = rootView?.findViewById(R.id.uploadDocument)
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
         nomineeName?.text = insuranceNameeee?.Name
@@ -169,6 +170,9 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
         nameOfInsurance?.text = insuranceNameeee?.insuranceNamee
         presenter = InsurancePresenter(this, activity as Activity)
         actionButton?.setText("Under Process")
+        documentReadybutnotsubmit?.setOnClickListener {
+            presenter?.documentReadyService(insuranceNameeee);
+        }
         actionButton?.setOnClickListener {
             if (TextUtils.isEmpty(encodedBase64)) {
                 val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
