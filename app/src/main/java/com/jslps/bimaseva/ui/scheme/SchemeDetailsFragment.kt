@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.R
@@ -15,6 +16,11 @@ import com.jslps.bimaseva.ui.BaseFragment
 import com.jslps.bimaseva.ui.scheme.adapter.SchemeListAdapter
 
 class SchemeDetailsFragment : BaseFragment(), SchemeDetailsView, OnFragmentListItemSelectListener {
+    override fun showMessage(message: String) {
+        val toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT)
+        toast.show()
+    }
+
     var homeRecyclerviewAdapter: SchemeListAdapter? = null
     override fun gotoScreen(fragmentID: Int, message: Any?) {
         if (fragmentID == 107)

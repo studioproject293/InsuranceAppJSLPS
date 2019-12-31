@@ -25,7 +25,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BasePresenter, Presenter(),
+class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BasePresenter,
+    Presenter(),
     OnFragmentListItemSelectListener {
     override fun onListItemSelected(itemId: Int, data: Any) {
 
@@ -44,10 +45,14 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
         val apiServices = retrofit.create(LoginService::class.java)
         when (itemId) {
             0 -> {
-                AppCache.getCache().insuranceStep="Registered"
+                AppCache.getCache().insuranceStep = "Registered"
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
-                    apiServices.getTabletDownloadDataBCsakhi("regproces", "0", "")
+                    apiServices.getTabletDownloadDataBCsakhi(
+                        "regproces", "0",
+                        "1",
+                        AppCache.getCache().loginPojonew?.Table1?.get(0)?.BlockCode!!
+                    )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
                         DialogUtil.stopProgressDisplay()
@@ -59,11 +64,18 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                         val result = XmlString?.replace(("</string>").toRegex(), "")
                         print("fhrjfghf" + result)
                         val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
-
                         System.out.println("vvh" + gson.toJson(mStudentObject1))
-                        AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
-
-                        view?.gotoScreen(Constant.INSURANCE_LIST_FRAGMENT, mStudentObject1.Master)
+                        if (mStudentObject1 != null) {
+                            if (mStudentObject1.Master.size != 0) {
+                                AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                                view?.gotoScreen(
+                                    Constant.INSURANCE_LIST_FRAGMENT,
+                                    mStudentObject1.Master
+                                )
+                            } else view?.showMessage("You don't have any insurance,Please Add it.")
+                        } else {
+                            view?.showMessage("You don't have any insurance,Please Add it.")
+                        }
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
@@ -74,10 +86,13 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 })
             }
             2 -> {
-                AppCache.getCache().insuranceStep="Under Process"
+                AppCache.getCache().insuranceStep = "Under Process"
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
-                    apiServices.getTabletDownloadDataBCsakhi("underproces", "0", "")
+                    apiServices.getTabletDownloadDataBCsakhi(
+                        "underproces", "0", getAppCache().insurancetype!!,
+                        getAppCache().loginPojonew?.Table1?.get(0)?.BlockCode!!
+                    )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
                         DialogUtil.stopProgressDisplay()
@@ -90,8 +105,19 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                         print("fhrjfghf" + result)
                         val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
                         System.out.println("vvh" + gson.toJson(mStudentObject1))
-                        AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
-                        view?.gotoScreen(Constant.INSURANCE_LIST_FRAGMENT, mStudentObject1.Master)
+                        if (mStudentObject1 != null) {
+                            if (mStudentObject1.Master.size != 0) {
+                                AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                                view?.gotoScreen(
+                                    Constant.INSURANCE_LIST_FRAGMENT,
+                                    mStudentObject1.Master
+                                )
+                            } else
+                                view?.showMessage("You don't have any insurance,Please Add it.")
+                        } else {
+                            view?.showMessage("You don't have any insurance,Please Add it.")
+
+                        }
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
@@ -102,10 +128,13 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 })
             }
             3 -> {
-                AppCache.getCache().insuranceStep="Claim Settled"
+                AppCache.getCache().insuranceStep = "Claim Settled"
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
-                    apiServices.getTabletDownloadDataBCsakhi("cs", "0", "")
+                    apiServices.getTabletDownloadDataBCsakhi(
+                        "cs", "0", getAppCache().insurancetype!!,
+                        getAppCache().loginPojonew?.Table1?.get(0)?.BlockCode!!
+                    )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
                         val gson = Gson()
@@ -117,8 +146,18 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                         print("fhrjfghf" + result)
                         val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
                         System.out.println("vvh" + gson.toJson(mStudentObject1))
-                        AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
-                        view?.gotoScreen(Constant.INSURANCE_LIST_FRAGMENT, mStudentObject1.Master)
+                        if (mStudentObject1 != null) {
+                            if (mStudentObject1.Master.size != 0) {
+                                AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                                view?.gotoScreen(
+                                    Constant.INSURANCE_LIST_FRAGMENT,
+                                    mStudentObject1.Master
+                                )
+                            } else view?.showMessage("You don't have any insurance,Please Add it.")
+                        } else {
+                            view?.showMessage("You don't have any insurance,Please Add it.")
+
+                        }
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
@@ -129,10 +168,13 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 })
             }
             4 -> {
-                AppCache.getCache().insuranceStep="Rejected"
+                AppCache.getCache().insuranceStep = "Rejected"
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
-                    apiServices.getTabletDownloadDataBCsakhi("rej", "2", "")
+                    apiServices.getTabletDownloadDataBCsakhi(
+                        "rej", "2", "1",
+                        getAppCache().loginPojonew?.Table1?.get(0)?.BlockCode!!
+                    )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
                         val gson = Gson()
@@ -144,8 +186,17 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                         print("fhrjfghf" + result)
                         val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
                         System.out.println("vvh" + gson.toJson(mStudentObject1))
-                        AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
-                        view?.gotoScreen(Constant.INSURANCE_LIST_FRAGMENT, mStudentObject1.Master)
+                        if (mStudentObject1 != null) {
+                            if (mStudentObject1.Master.size != 0) {
+                                AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                                view?.gotoScreen(
+                                    Constant.INSURANCE_LIST_FRAGMENT,
+                                    mStudentObject1.Master
+                                )
+                            } else view?.showMessage("You don't have any insurance,Please Add it.")
+                        } else {
+                            view?.showMessage("You don't have any insurance,Please Add it.")
+                        }
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
@@ -155,10 +206,11 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                     }
                 })
             }
-            else -> {
+            5 -> {
                 AppCache.getCache().insuranceStep = "Total Claim"
                 view?.gotoScreen(Constant.REPORTS_DETAILS_FRAGMENT, "")
             }
+
         }
 
     }

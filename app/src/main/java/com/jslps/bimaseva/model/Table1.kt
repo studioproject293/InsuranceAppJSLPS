@@ -1,7 +1,7 @@
 package com.jslps.bimaseva.model
 
-data class Table1(private val blockCode:String,
-                  private val blockName:String,
-                  private val districtCode:String
+data class Table1( val BlockCode:String,
+                   val BlockName:String,
+                   val DistrictCode:String
 
 )

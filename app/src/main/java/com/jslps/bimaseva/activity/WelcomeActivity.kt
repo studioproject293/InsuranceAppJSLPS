@@ -92,7 +92,7 @@ class WelcomeActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.view_pager)
         logIn = findViewById(R.id.logIn)
         versionNo = findViewById(R.id.versionNo)
-        versionNo!!.text = "Version No: 1.1"
+        versionNo!!.text = "Version No: 1.2"
         // making notification bar transparent
         changeStatusBarColor()
         val myCustomPagerAdapter = MyCustomPagerAdapter(this@WelcomeActivity, images)
@@ -185,7 +185,7 @@ class WelcomeActivity : AppCompatActivity() {
                         ).client(client).build()
                         val apiServices = retrofit.create(LoginServiceNew::class.java)
                         val changePhotoResponseModelCall =
-                            apiServices.getTabletDownloadDataBCsakhi("callcenter", editTextUserName.getText().toString(),editTextPassword.getText().toString())
+                            apiServices.getTabletDownloadDataBCsakhi("Login", editTextUserName.getText().toString(),editTextPassword.getText().toString())
                         changePhotoResponseModelCall.enqueue(object : Callback<String> {
                             override fun onResponse(call: Call<String>, response: Response<String>) {
                                 val gson = Gson()
@@ -205,7 +205,10 @@ class WelcomeActivity : AppCompatActivity() {
 
                                 val mStudentObject1 = gson.fromJson(result, LoginPojoNew::class.java)
                                 System.out.println("vvh" + gson.toJson(mStudentObject1))
-
+                                AppCache.getCache().loginPojonew=null
+                                AppCache.getCache().loginPojo=null
+                                AppCache.getCache().loginPojonew = mStudentObject1 as LoginPojoNew
+                                System.out.println("schdhjk"+AppCache.getCache().loginPojonew)
                                 val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
                                 startActivity(intent)
                                 finish()

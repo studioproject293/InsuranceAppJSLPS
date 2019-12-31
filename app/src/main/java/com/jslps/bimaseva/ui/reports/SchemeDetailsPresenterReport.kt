@@ -42,12 +42,6 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
 
     override fun resume() {
         DialogUtil.displayProgress(context!!)
-       /* val schemedata = ArrayList<String>()
-        schemedata.add("Registered (10)")
-        schemedata.add("Under Process (10)")
-        schemedata.add("Claim Settled (10)")
-        schemedata.add("Rejected (10)")
-        view?.loadData(schemedata)*/
         val gson = GsonBuilder().setLenient().create()
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -62,7 +56,8 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
         ).client(client).build()
 
         val apiServices = retrofit.create(LoginService::class.java)
-        val changePhotoResponseModelCall = apiServices.getTabletDownloadDataBCsakhi("reportreg", " ", " ")
+        val changePhotoResponseModelCall = apiServices.getTabletDownloadDataBCsakhi("reportreg", "0", getAppCache().insurancetype!!,
+            getAppCache().loginPojonew?.Table1?.get(0)?.BlockCode!!)
         changePhotoResponseModelCall.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 DialogUtil.stopProgressDisplay()

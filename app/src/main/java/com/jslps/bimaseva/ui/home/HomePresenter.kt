@@ -64,20 +64,6 @@ class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presente
         return this
     }
 
-    fun getCardList() {
-        /* val otpRequest = UserDetailRequest()
-         otpRequest.unique_id = Utils.getDeviceIMEI(context as Activity)
-         otpRequest.app_version = Utils.getAppVersion(context as Activity)
-         otpRequest.os = Utils.getDeviceOS()
-         otpRequest.version = Utils.getDeviceSdk()
-         otpRequest.customer_id = getPref(context as Activity).getUserToken()!!.customer_id
-         otpRequest.auth_token = getPref(context as Activity).getUserToken()!!.token
-         val apiRequest = ApiRequest()
-         apiRequest.context = context
-         apiRequest.apiRequestData = otpRequest
-         apiRequest.requestType = NetworkService.REQUEST_CARD_INIT
-         view?.showProgress()
-         ServiceUpdateListner.getInstance(context as Activity).passData(apiRequest)*/
-    }
+
 }
 
