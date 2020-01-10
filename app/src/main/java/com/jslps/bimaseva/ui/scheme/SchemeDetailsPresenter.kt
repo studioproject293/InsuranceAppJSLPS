@@ -50,7 +50,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi(
                         "regproces", "0",
-                        "1",
+                        getAppCache().insuranceStepSend.toString(),
                         AppCache.getCache().loginPojonew?.Table1?.get(0)?.BlockCode!!
                     )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
@@ -58,15 +58,13 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                         DialogUtil.stopProgressDisplay()
                         val gson = Gson()
                         Log.v("Response prof :", "hgfgfrhgs" + response.body())
-
                         val fullResponse = response.body()
                         val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                         val result = XmlString?.replace(("</string>").toRegex(), "")
-                        print("fhrjfghf" + result)
                         val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
                         System.out.println("vvh" + gson.toJson(mStudentObject1))
                         if (mStudentObject1 != null) {
-                            if (mStudentObject1.Master.size != 0) {
+                            if (mStudentObject1.Master.isNotEmpty()) {
                                 AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
                                 view?.gotoScreen(
                                     Constant.INSURANCE_LIST_FRAGMENT,
@@ -91,7 +89,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi(
                         "underproces", "0", getAppCache().insurancetype!!,
-                        getAppCache().loginPojonew?.Table1?.get(0)?.BlockCode!!
+                        getAppCache().insuranceStepSend.toString()
                     )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -102,11 +100,10 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                         val fullResponse = response.body()
                         val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                         val result = XmlString?.replace(("</string>").toRegex(), "")
-                        print("fhrjfghf" + result)
                         val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
                         System.out.println("vvh" + gson.toJson(mStudentObject1))
                         if (mStudentObject1 != null) {
-                            if (mStudentObject1.Master.size != 0) {
+                            if (mStudentObject1.Master.isNotEmpty()) {
                                 AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
                                 view?.gotoScreen(
                                     Constant.INSURANCE_LIST_FRAGMENT,
@@ -132,7 +129,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi(
-                        "cs", "0", getAppCache().insurancetype!!,
+                        "cs", "0", getAppCache().insuranceStepSend.toString(),
                         getAppCache().loginPojonew?.Table1?.get(0)?.BlockCode!!
                     )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
@@ -147,7 +144,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                         val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
                         System.out.println("vvh" + gson.toJson(mStudentObject1))
                         if (mStudentObject1 != null) {
-                            if (mStudentObject1.Master.size != 0) {
+                            if (mStudentObject1.Master.isNotEmpty()) {
                                 AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
                                 view?.gotoScreen(
                                     Constant.INSURANCE_LIST_FRAGMENT,
@@ -172,8 +169,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi(
-                        "rej", "2", "1",
-                        getAppCache().loginPojonew?.Table1?.get(0)?.BlockCode!!
+                        "rej", "2", getAppCache().insuranceStepSend.toString(), getAppCache().loginPojonew?.Table1?.get(0)?.BlockCode!!
                     )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -183,11 +179,11 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                         val fullResponse = response.body()
                         val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                         val result = XmlString?.replace(("</string>").toRegex(), "")
-                        print("fhrjfghf" + result)
+
                         val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
                         System.out.println("vvh" + gson.toJson(mStudentObject1))
                         if (mStudentObject1 != null) {
-                            if (mStudentObject1.Master.size != 0) {
+                            if (mStudentObject1.Master.isNotEmpty()) {
                                 AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
                                 view?.gotoScreen(
                                     Constant.INSURANCE_LIST_FRAGMENT,

@@ -9,10 +9,19 @@ import com.jslps.bimaseva.Constant
 import com.twidpay.beta.model.ApiRequest
 
 
-class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presenter(), OnFragmentListItemSelectListener {
+class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presenter(),
+    OnFragmentListItemSelectListener {
     override fun onListItemSelected(itemId: Int, data: Any) {
 
         getAppCache().insurancetype = data.toString()
+        if (data.toString().equals("PMSBY"))
+            getAppCache().insuranceStepSend = "1"
+        else if (data.toString().equals("PMJJY"))
+            getAppCache().insuranceStepSend = "2"
+        else if (data.toString().equals("PMJAY"))
+            getAppCache().insuranceStepSend = "3"
+        else if (data.toString().equals("ASSET Insurance"))
+            getAppCache().insuranceStepSend = "4"
         view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
     }
 
