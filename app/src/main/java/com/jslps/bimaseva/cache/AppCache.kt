@@ -1,11 +1,12 @@
 package com.jslps.bimaseva.cache
 
+import BaseClass
 import com.jslps.bimaseva.model.LoginPojo
 import com.jslps.bimaseva.model.LoginPojoNew
 
 class AppCache {
     var loginPojo: LoginPojo? = null
-    var loginPojonew: LoginPojoNew? = null
+    var loginPojonew: BaseClass? = null
     var insurancetype: String? = null
     var insuranceStep: String? = null
     var insuranceStepSend: String? = null

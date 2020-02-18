@@ -101,7 +101,7 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
                 encodedBase64.toString(),
                 "1",
                 "",
-                amount,
+                    amount,
                 "3", "",
                 "0",
                 ""
@@ -190,7 +190,7 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
                 "2",
                 "",
                 "",
-                "4", reason.toString(),
+                "4",reason.toString(),
                 "0",
                 ""
             )

@@ -18,6 +18,7 @@ import java.io.IOException
 import java.nio.channels.FileChannel
 import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.Master
+import com.jslps.bimaseva.ui.NewInsuranceForm
 import com.jslps.bimaseva.ui.claimSetteled.ClaimSetteledDetailsFragment
 import com.jslps.bimaseva.ui.insuranceList.InsuranceDetailsFragment
 import com.jslps.bimaseva.ui.insuranceList.InsuranceListFragment
@@ -105,6 +106,15 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                 )
                     .addToBackStack(mFragmentTag)
                     .replace(R.id.fragment_main, SchemeDetailsFragmentReport.getInstance(), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
+            Constant.ENTRY_FORM_INSURANCE -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                    .addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, NewInsuranceForm.getInstance(), mFragmentTag)
                     .commitAllowingStateLoss()
             }
         }

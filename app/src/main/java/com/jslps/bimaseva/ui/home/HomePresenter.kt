@@ -66,7 +66,6 @@ class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presente
     }
 
     override fun onFragmentInteraction(fragmentId: Int, data: Any?) {
-
     }
 
     fun getListner(): OnFragmentListItemSelectListener {

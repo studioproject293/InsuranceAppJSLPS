@@ -57,7 +57,7 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
 
         val apiServices = retrofit.create(LoginService::class.java)
         val changePhotoResponseModelCall = apiServices.getTabletDownloadDataBCsakhi("reportreg", "0", getAppCache().insurancetype!!,
-            getAppCache().loginPojonew?.Table1?.get(0)?.BlockCode!!)
+            "")
         changePhotoResponseModelCall.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 DialogUtil.stopProgressDisplay()

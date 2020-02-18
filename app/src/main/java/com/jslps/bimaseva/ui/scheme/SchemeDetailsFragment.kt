@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.jslps.bimaseva.Constant
@@ -62,6 +63,7 @@ class SchemeDetailsFragment : BaseFragment(), SchemeDetailsView, OnFragmentListI
 
     private var rootView: View? = null
     private var recycleview: RecyclerView? = null
+    private var entryForm:Button?=null
     var presenter: SchemeDetailsPresenter? = null
     override fun onResume() {
         super.onResume()
@@ -73,8 +75,13 @@ class SchemeDetailsFragment : BaseFragment(), SchemeDetailsView, OnFragmentListI
         super.onCreateView(inflater, container, savedInstanceState)
         rootView = inflater.inflate(R.layout.fragment_home, container, false)
         recycleview = rootView?.findViewById(R.id.recycleview)
+        entryForm = rootView?.findViewById(R.id.entryForm)
         presenter = SchemeDetailsPresenter(this, activity as Activity)
         recycleview?.layoutManager = Constant.gridLayout(activity, 2)
+        entryForm?.visibility=View.VISIBLE
+        entryForm?.setOnClickListener {
+           mListener?.onFragmentInteraction(Constant.ENTRY_FORM_INSURANCE,"")
+        }
         presenter?.resume()
         return rootView!!
     }

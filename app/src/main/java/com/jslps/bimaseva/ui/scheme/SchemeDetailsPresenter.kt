@@ -51,7 +51,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                     apiServices.getTabletDownloadDataBCsakhi(
                         "regproces", "0",
                         getAppCache().insuranceStepSend.toString(),
-                        AppCache.getCache().loginPojonew?.Table1?.get(0)?.BlockCode!!
+                        ""
                     )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -62,7 +62,6 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                         val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                         val result = XmlString?.replace(("</string>").toRegex(), "")
                         val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
-                        System.out.println("vvh" + gson.toJson(mStudentObject1))
                         if (mStudentObject1 != null) {
                             if (mStudentObject1.Master.isNotEmpty()) {
                                 AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
@@ -95,13 +94,10 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                     override fun onResponse(call: Call<String>, response: Response<String>) {
                         DialogUtil.stopProgressDisplay()
                         val gson = Gson()
-                        Log.v("Response prof :", "hgfgfrhgs" + response.body())
-
                         val fullResponse = response.body()
                         val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                         val result = XmlString?.replace(("</string>").toRegex(), "")
                         val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
-                        System.out.println("vvh" + gson.toJson(mStudentObject1))
                         if (mStudentObject1 != null) {
                             if (mStudentObject1.Master.isNotEmpty()) {
                                 AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
@@ -130,7 +126,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi(
                         "cs", "0", getAppCache().insuranceStepSend.toString(),
-                        getAppCache().loginPojonew?.Table1?.get(0)?.BlockCode!!
+                        ""
                     )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -140,7 +136,6 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                         val fullResponse = response.body()
                         val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                         val result = XmlString?.replace(("</string>").toRegex(), "")
-                        print("fhrjfghf" + result)
                         val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
                         System.out.println("vvh" + gson.toJson(mStudentObject1))
                         if (mStudentObject1 != null) {
@@ -169,7 +164,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi(
-                        "rej", "2", getAppCache().insuranceStepSend.toString(), getAppCache().loginPojonew?.Table1?.get(0)?.BlockCode!!
+                        "rej", "2", getAppCache().insuranceStepSend.toString(), ""
                     )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -261,20 +256,6 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
         return this
     }
 
-    fun getCardList() {
-        /* val otpRequest = UserDetailRequest()
-         otpRequest.unique_id = Utils.getDeviceIMEI(context as Activity)
-         otpRequest.app_version = Utils.getAppVersion(context as Activity)
-         otpRequest.os = Utils.getDeviceOS()
-         otpRequest.version = Utils.getDeviceSdk()
-         otpRequest.customer_id = getPref(context as Activity).getUserToken()!!.customer_id
-         otpRequest.auth_token = getPref(context as Activity).getUserToken()!!.token
-         val apiRequest = ApiRequest()
-         apiRequest.context = context
-         apiRequest.apiRequestData = otpRequest
-         apiRequest.requestType = NetworkService.REQUEST_CARD_INIT
-         view?.showProgress()
-         ServiceUpdateListner.getInstance(context as Activity).passData(apiRequest)*/
-    }
+
 }
 

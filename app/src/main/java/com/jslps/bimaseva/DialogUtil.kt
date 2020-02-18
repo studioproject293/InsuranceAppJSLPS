@@ -8,6 +8,7 @@ import android.net.ConnectivityManager
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.jslps.bimaseva.CustomProgressDialog
 import com.jslps.bimaseva.listener.DialogListner
 
 
@@ -48,7 +49,38 @@ class DialogUtil {
             }
         }
 
+//        fun showDialogWithOneButton(isCancel: Boolean, pContext: Activity, title: String?, msg: String?, okBtnText: String, okListener: View.OnClickListener) {
+//            //        showIconDialogWithOneButton(pContext,title,msg,false,okBtnText,okListener);
+//            showDialogWithOneButton(isCancel, pContext, title, msg, okBtnText, okListener)
+//        }
+
+//        fun showDialogWithOneButton(isCancel: Boolean, pContext: Activity?, title: String?, msg: String?, okBtnText: String, okListener: View.OnClickListener) {
+//            //        showIconDialogWithOneButton(pContext,title,msg,false,okBtnText,okListener);
+//            if (pContext == null) {
+//                return
+//            }
+//            if (TextUtils.isEmpty(msg))
+//                return
 //
+//            if (TextUtils.isEmpty(title))
+//                return
+//
+//            try {
+//                if (dialogFragment != null)
+//                    return
+//
+//                val singleButtonDialog = SingleButtonDialog.newInstance()
+//                singleButtonDialog.setTitle(title)
+//                singleButtonDialog.setMessage(msg)
+//                singleButtonDialog.setOkListner(okListener)
+//                singleButtonDialog.setOkBtnText(okBtnText)
+//                singleButtonDialog.setCancelable(isCancel)
+//                singleButtonDialog.show(pContext.fragmentManager, singleButtonDialog.javaClass.name)
+//                dialogFragment = singleButtonDialog
+//            } catch (e: Exception) {
+//            }
+//
+//        }
 
         fun showToast(context: Context, message: String?) {
             if (message.isNullOrEmpty())

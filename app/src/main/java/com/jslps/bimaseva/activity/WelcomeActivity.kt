@@ -1,9 +1,18 @@
 package com.jslps.bimaseva.activity
 
+import BaseClass
+import MasterLoginDb
+import Table1LoginDb
+import Table2Db
+import Table3Db
+import Table4Db
+import Table5Db
+import Table6Db
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -21,18 +30,17 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.irozon.sneaker.Sneaker
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.R
 import com.jslps.bimaseva.activity.adapter.MyCustomPagerAdapter
-import com.jslps.bimaseva.cache.AppCache
-import com.jslps.bimaseva.model.LoginPojo
-import com.jslps.bimaseva.network.LoginService
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.irozon.sneaker.Sneaker
-import com.jslps.bimaseva.model.LoginPojoNew
 import com.jslps.bimaseva.network.LoginServiceNew
+import com.orm.SugarRecord
+import com.orm.query.Condition
+import com.orm.query.Select
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -44,8 +52,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 class WelcomeActivity : AppCompatActivity() {
-    internal var images = intArrayOf(R.drawable.pmjby,R.drawable.pmsby,R.drawable.apy)
-
+    internal var images = intArrayOf(R.drawable.pmjby, R.drawable.pmsby, R.drawable.apy)
     private var viewPager: ViewPager? = null
     private val myViewPagerAdapter: MyViewPagerAdapter? = null
     private val dotsLayout: LinearLayout? = null
@@ -62,25 +69,29 @@ class WelcomeActivity : AppCompatActivity() {
     private var versionNo: TextView? = null
 
 
-    internal var viewPagerPageChangeListener: ViewPager.OnPageChangeListener = object : ViewPager.OnPageChangeListener {
+    internal var viewPagerPageChangeListener: ViewPager.OnPageChangeListener =
+        object : ViewPager.OnPageChangeListener {
 
-        override fun onPageSelected(position: Int) {
-            //addBottomDots(position);
+            override fun onPageSelected(position: Int) {
+                //addBottomDots(position);
+            }
+
+            override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
+
+            }
+
+            override fun onPageScrollStateChanged(arg0: Int) {
+
+            }
         }
-
-        override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
-
-        }
-
-        override fun onPageScrollStateChanged(arg0: Int) {
-
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar!!.hide()
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
             window.decorView.systemUiVisibility =
@@ -92,7 +103,13 @@ class WelcomeActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.view_pager)
         logIn = findViewById(R.id.logIn)
         versionNo = findViewById(R.id.versionNo)
-        versionNo!!.text = "Version No: 1.2"
+        try {
+            val pInfo = packageManager.getPackageInfo(packageName, 0)
+            val version = pInfo.versionName
+            versionNo?.setText("Version No: $version")
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
         // making notification bar transparent
         changeStatusBarColor()
         val myCustomPagerAdapter = MyCustomPagerAdapter(this@WelcomeActivity, images)
@@ -136,7 +153,7 @@ class WelcomeActivity : AppCompatActivity() {
         val sigiin = dialog.findViewById<Button>(R.id.sigiin)
         checkBox = dialog.findViewById(R.id.checkbox)
         checkboxRember = dialog.findViewById(R.id.checkboxRember)
-        preferences = getSharedPreferences("MyPref",Context.MODE_PRIVATE)
+        preferences = getSharedPreferences("MyPrefInsurance", Context.MODE_PRIVATE)
         val value = preferences?.getString("userName", "")
         val value1 = preferences?.getString("Password", "")
         if (!TextUtils.isEmpty(value) && !TextUtils.isEmpty(value1)) {
@@ -150,7 +167,8 @@ class WelcomeActivity : AppCompatActivity() {
         }
         checkBox?.setOnCheckedChangeListener { compoundButton, b ->
             if (compoundButton.isChecked)
-                editTextPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                editTextPassword.transformationMethod =
+                    HideReturnsTransformationMethod.getInstance()
             else
                 editTextPassword.transformationMethod = PasswordTransformationMethod.getInstance()
         }
@@ -167,73 +185,177 @@ class WelcomeActivity : AppCompatActivity() {
                     showError(editTextPassword)
                 }
                 else -> {
-                    DialogUtil.hideKeyboard(sigiin,this@WelcomeActivity)
+                    DialogUtil.hideKeyboard(sigiin, this@WelcomeActivity)
                     dialog.cancel()
-                    if (DialogUtil.isConnectionAvailable(this@WelcomeActivity)) {
-                        DialogUtil.displayProgress(this@WelcomeActivity)
-                        val gson = GsonBuilder().setLenient().create()
-                        val interceptor = HttpLoggingInterceptor()
-                        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                        val builder = OkHttpClient.Builder()
-                        //comment in live build and uncomment in uat
-                        builder.interceptors().add(interceptor)
-                        builder.connectTimeout(120, TimeUnit.SECONDS)
-                        builder.readTimeout(120, TimeUnit.SECONDS)
-                        val client = builder.build()
-                        val retrofit = Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
-                            ScalarsConverterFactory.create()
-                        ).client(client).build()
-                        val apiServices = retrofit.create(LoginServiceNew::class.java)
-                        val changePhotoResponseModelCall =
-                            apiServices.getTabletDownloadDataBCsakhi("Login", editTextUserName.getText().toString(),editTextPassword.getText().toString())
-                        changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                            override fun onResponse(call: Call<String>, response: Response<String>) {
-                                val gson = Gson()
-                                Log.v("Response prof :", "hgfgfrhgs" + response.body())
-                                if (checkboxRember!!.isChecked()) {
-                                    val pref =
-                                        getApplicationContext().getSharedPreferences("MyPref", 0) // 0 - for private mode
-                                    val editor = pref.edit()
-                                    editor.putString("userName", editTextUserName.getText().toString())
-                                    editor.putString("Password", editTextPassword.getText().toString())
-                                    editor.apply()
+                    val arrayListVillage1: ArrayList<MasterLoginDb> =
+                        Select.from<MasterLoginDb>(
+                            MasterLoginDb::class.java).list() as ArrayList<MasterLoginDb>
+                    println("LogInDbsdfsdfs" + Gson().toJson(arrayListVillage1))
+                    if(arrayListVillage1!=null && arrayListVillage1.size>0){
+                        if (checkboxRember!!.isChecked()) {
+                            val pref =
+                                getApplicationContext().getSharedPreferences(
+                                    "MyPrefInsurance",
+                                    0
+                                ) // 0 - for private mode
+                            val editor = pref.edit()
+                            editor.putString(
+                                "userName",
+                                editTextUserName.getText().toString()
+                            )
+                            editor.putString(
+                                "Password",
+                                editTextPassword.getText().toString()
+                            )
+                            editor.apply()
+
+                        }
+                        val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+
+                    }else{
+                        if (DialogUtil.isConnectionAvailable(this@WelcomeActivity)) {
+                            DialogUtil.displayProgress(this@WelcomeActivity)
+                            val gson = GsonBuilder().setLenient().create()
+                            val interceptor = HttpLoggingInterceptor()
+                            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+                            val builder = OkHttpClient.Builder()
+                            //comment in live build and uncomment in uat
+                            builder.interceptors().add(interceptor)
+                            builder.connectTimeout(120, TimeUnit.SECONDS)
+                            builder.readTimeout(120, TimeUnit.SECONDS)
+                            val client = builder.build()
+                            val retrofit =
+                                Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
+                                    ScalarsConverterFactory.create()
+                                ).client(client).build()
+                            val apiServices = retrofit.create(LoginServiceNew::class.java)
+                            val changePhotoResponseModelCall =
+                                apiServices.getTabletDownloadDataBCsakhi(
+                                    "Login",
+                                    editTextUserName.getText().toString(),
+                                    editTextPassword.getText().toString()
+                                )
+                            changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                override fun onResponse(
+                                    call: Call<String>,
+                                    response: Response<String>) {
+                                    val gson = Gson()
+                                    if (checkboxRember!!.isChecked()) {
+                                        val pref =
+                                            getApplicationContext().getSharedPreferences(
+                                                "MyPrefInsurance",
+                                                0
+                                            ) // 0 - for private mode
+                                        val editor = pref.edit()
+                                        editor.putString(
+                                            "userName",
+                                            editTextUserName.getText().toString()
+                                        )
+                                        editor.putString(
+                                            "Password",
+                                            editTextPassword.getText().toString()
+                                        )
+                                        editor.apply()
+                                    }
+                                    val fullResponse = response.body()
+                                    val XmlString =
+                                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                    val result = XmlString?.replace(("</string>").toRegex(), "")
+                                    val mStudentObject1 =
+                                        gson.fromJson(result, BaseClass::class.java)
+                                    System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                    SugarRecord.deleteAll(MasterLoginDb::class.java)
+                                    for (i in 0 until mStudentObject1.master.size) {
+                                        val stateModel1 = MasterLoginDb(
+                                            mStudentObject1.master.get(i).districtCode,
+                                            mStudentObject1.master.get(i).districtname,
+                                            mStudentObject1.master.get(i).districtName_H
+                                        )
+                                        stateModel1.save()
+                                    }
+                                    SugarRecord.deleteAll(Table1LoginDb::class.java)
+                                    for (i in 0 until mStudentObject1.table1.size) {
+                                        val stateModel1 = Table1LoginDb(
+                                            mStudentObject1.table1.get(i).blockname,
+                                            mStudentObject1.table1.get(i).blockCode,
+                                            mStudentObject1.table1.get(i).districtCode
+                                        )
+                                        stateModel1.save()
+                                    }
+
+                                    SugarRecord.deleteAll(Table2Db::class.java)
+                                    for (i in 0 until mStudentObject1.table2.size) {
+                                        val stateModel1 = Table2Db(
+                                            mStudentObject1.table2[i].ClusterCode,
+                                            mStudentObject1.table2[i].clustername)
+                                        stateModel1.save()
+                                    }
+                                    SugarRecord.deleteAll(Table3Db::class.java)
+                                    for (i in 0 until mStudentObject1.table3.size) {
+                                        val stateModel1 = Table3Db(
+                                            mStudentObject1.table3[i].villagename,
+                                            mStudentObject1.table3[i].VillageCode,
+                                            mStudentObject1.table3[i].clustercode)
+                                        stateModel1.save()
+                                    }
+                                    SugarRecord.deleteAll(Table4Db::class.java)
+                                    for (i in 0 until mStudentObject1.table4.size) {
+                                        val stateModel1 = Table4Db(
+                                            mStudentObject1.table4[i].ClusterCode,
+                                            mStudentObject1.table4[i].VillageCode,
+                                            mStudentObject1.table4[i].SHGCode,
+                                            mStudentObject1.table4[i].Group_Name)
+                                        stateModel1.save()
+                                    }
+                                    SugarRecord.deleteAll(Table5Db::class.java)
+                                    for (i in 0 until mStudentObject1.table5.size) {
+                                        val stateModel1 = Table5Db(
+                                            mStudentObject1.table5[i].bankCode,
+                                            mStudentObject1.table5[i].branchCode,
+                                            mStudentObject1.table5[i].branchName,
+                                            mStudentObject1.table5[i].branchName_Hindi,
+                                            mStudentObject1.table5[i].iFSCCode)
+                                        stateModel1.save()
+                                    }
+
+                                    SugarRecord.deleteAll(Table6Db::class.java)
+                                    for (i in 0 until mStudentObject1.table6.size) {
+                                        val stateModel1 = Table6Db(
+                                            mStudentObject1.table6[i].BankId,
+                                            mStudentObject1.table6[i].BankCode,
+                                            mStudentObject1.table6[i].BankName,
+                                            mStudentObject1.table6[i].BankType,
+                                            mStudentObject1.table6[i].IFSCCode,
+                                            mStudentObject1.table6[i].BankName_Hindi)
+                                        stateModel1.save()
+                                    }
+                                    val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
                                 }
-                                val fullResponse = response.body()
-                                val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                                val result = XmlString?.replace(("</string>").toRegex(), "")
-                                print("fhrjfghf" + result)
 
-                                val mStudentObject1 = gson.fromJson(result, LoginPojoNew::class.java)
-                                System.out.println("vvh" + gson.toJson(mStudentObject1))
-                                AppCache.getCache().loginPojonew=null
-                                AppCache.getCache().loginPojo=null
-                                AppCache.getCache().loginPojonew = mStudentObject1 as LoginPojoNew
-                                System.out.println("schdhjk"+AppCache.getCache().loginPojonew)
-                                val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                            }
+                                override fun onFailure(call: Call<String>, t: Throwable) {
+                                    DialogUtil.stopProgressDisplay()
+                                    /*val toast = Toast.makeText(this@WelcomeActivity, t.toString(), Toast.LENGTH_SHORT)
+                                    toast.show()*/
+                                    Sneaker.with(this@WelcomeActivity) // Activity, Fragment or ViewGroup
+                                        .setTitle(t.toString())
+                                        .sneakError()
+                                }
+                            })
+                        } else {
 
-                            override fun onFailure(call: Call<String>, t: Throwable) {
-                                DialogUtil.stopProgressDisplay()
-                                /*val toast = Toast.makeText(this@WelcomeActivity, t.toString(), Toast.LENGTH_SHORT)
-                                toast.show()*/
-                                Sneaker.with(this@WelcomeActivity) // Activity, Fragment or ViewGroup
-                                    .setTitle(t.toString())
-                                    .sneakError()
-                            }
-                        })
-                    } else {
-                        /*val toast = Toast.makeText(this@WelcomeActivity, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
-                        toast.show()*/
-                        Sneaker.with(this@WelcomeActivity) // Activity, Fragment or ViewGroup
-                            .setTitle(Constant.NO_INTERNET)
-                            /*.setMessage(Constant.NO_INTERNET)*/
-                            .sneakError()
+                            Sneaker.with(this@WelcomeActivity) // Activity, Fragment or ViewGroup
+                                .setTitle(Constant.NO_INTERNET)
+                                .sneakError()
+                        }
                     }
 
-                   /* val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
-                    startActivity(intent)*/
+
+                    /* val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
+                     startActivity(intent)*/
                 }
             }
         }
