@@ -24,9 +24,8 @@ import com.irozon.sneaker.Sneaker
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.R
+import com.jslps.bimaseva.activity.MainActivity
 import com.jslps.bimaseva.network.InsuranceCreate
-import com.jslps.bimaseva.network.LoginServiceNew
-
 import com.orm.query.Condition
 import com.orm.query.Select
 import okhttp3.OkHttpClient
@@ -103,81 +102,122 @@ class NewInsuranceForm : BaseFragment() {
         }
 
         buttonSave?.setOnClickListener {
-
-            val id = UUID.randomUUID().toString()
-            blockCode = arrayListBlock?.get(0)?.villagecode
-            print("fvfdList" + list)
-            val s = TextUtils.join(", ", list)
-            print("fvfdList" + s)
-            val prefs = activity?.getSharedPreferences(
-      "MyPrefInsurance", Context.MODE_PRIVATE);
-            val createdBy = prefs?.getString("userName", "");
-            val callCenter = CallCenter(
-                name?.text.toString(),
-                nameOfnomminee?.text.toString(),
-                contactnoofnominee?.text.toString(),
-                distirctCode!!,
-                blockCode!!,
-                clustercode!!,
-                viillagecode!!,
-                shgCode!!,
-                bankCode!!, branchCode!!, datePicker?.text.toString(), s, ""
-                , mobileofcaller?.text.toString(), nameofcaller?.text.toString(), id, createdBy!!
-            )
-
-            val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(callCenter) + "] } "
-            if (DialogUtil.isConnectionAvailable(activity!!)) {
-                DialogUtil.displayProgress(activity!!)
-                val gson = GsonBuilder().setLenient().create()
-                val interceptor = HttpLoggingInterceptor()
-                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                val builder = OkHttpClient.Builder()
-                //comment in live build and uncomment in uat
-                builder.interceptors().add(interceptor)
-                builder.connectTimeout(120, TimeUnit.SECONDS)
-                builder.readTimeout(120, TimeUnit.SECONDS)
-                val client = builder.build()
-                val retrofit =
-                    Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
-                        ScalarsConverterFactory.create()
-                    ).client(client).build()
-                val apiServices = retrofit.create(InsuranceCreate::class.java)
-                val createInsurance = apiServices.createInsurancei(data)
-                createInsurance.enqueue(object : Callback<String> {
-                    override fun onResponse(
-                        call: Call<String>,
-                        response: Response<String>) {
-                        val fullResponse = response.body()
-                        val XmlString =
-                            fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                        val result = XmlString?.replace(("</string>").toRegex(), "")
-                     if (result.equals("1")){
-                         Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                             .setTitle("Insurance Create Successfully ")
-                             .sneakSuccess()
-                     }else{
-                         Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                             .setTitle("Please Try Again")
-                             .sneakError()
-                     }
-                    }
-
-                    override fun onFailure(call: Call<String>, t: Throwable) {
-                        DialogUtil.stopProgressDisplay()
-                        val toast = Toast.makeText(activity, t.toString(), Toast.LENGTH_SHORT)
-                        toast.show()
-                        Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                            .setTitle(t.toString())
-                            .sneakError()
-                    }
-                })
+            if (name?.text.toString().isEmpty()) {
+                Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
+                    .setTitle("Please enter name")
+                    .sneakError()
+            } else if (nameOfnomminee?.text.toString().isEmpty()) {
+                Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
+                    .setTitle("Please enter name of nominee ")
+                    .sneakError()
+            } else if (contactnoofnominee?.text.toString().isEmpty()) {
+                Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
+                    .setTitle("Please enter mobile no of nominee ")
+                    .sneakError()
+            } else if (datePicker?.text.toString().isEmpty()) {
+                Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
+                    .setTitle("Please enter date")
+                    .sneakError()
+            } else if (list.size == 0) {
+                Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
+                    .setTitle("Please select type of insurance")
+                    .sneakError()
+            } else if (nameofcaller?.text.toString().isEmpty()) {
+                Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
+                    .setTitle("Please enter name of caller")
+                    .sneakError()
+            } else if (mobileofcaller?.text.toString().isEmpty()) {
+                Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
+                    .setTitle("Please enter mobile no of caller")
+                    .sneakError()
             } else {
 
-                Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                    .setTitle(Constant.NO_INTERNET)
-                    .sneakError()
-            }
+                val id = UUID.randomUUID().toString()
+                blockCode = arrayListBlock?.get(0)?.villagecode
+                print("fvfdList" + list)
+                val s = TextUtils.join(", ", list)
+                print("fvfdList" + s)
+                val prefs = activity?.getSharedPreferences(
+                    "MyPrefInsurance", Context.MODE_PRIVATE
+                );
+                val createdBy = prefs?.getString("userName", "");
+                val callCenter = CallCenter(
+                    name?.text.toString(),
+                    nameOfnomminee?.text.toString(),
+                    contactnoofnominee?.text.toString(),
+                    distirctCode!!,
+                    blockCode!!,
+                    clustercode!!,
+                    viillagecode!!,
+                    shgCode!!,
+                    bankCode!!,
+                    branchCode!!,
+                    datePicker?.text.toString(),
+                    s, "",
+                    mobileofcaller?.text.toString(),
+                    nameofcaller?.text.toString(),
+                    id,
+                    createdBy!!
+                )
+                val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(callCenter) + "] } "
+                if (DialogUtil.isConnectionAvailable(activity!!)) {
+                    DialogUtil.displayProgress(activity!!)
+                    val gson = GsonBuilder().setLenient().create()
+                    val interceptor = HttpLoggingInterceptor()
+                    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+                    val builder = OkHttpClient.Builder()
+                    //comment in live build and uncomment in uat
+                    builder.interceptors().add(interceptor)
+                    builder.connectTimeout(120, TimeUnit.SECONDS)
+                    builder.readTimeout(120, TimeUnit.SECONDS)
+                    val client = builder.build()
+                    val retrofit =
+                        Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
+                            ScalarsConverterFactory.create()
+                        ).client(client).build()
+                    val apiServices = retrofit.create(InsuranceCreate::class.java)
+                    val createInsurance = apiServices.createInsurancei(data)
+                    createInsurance.enqueue(object : Callback<String> {
+                        override fun onResponse(
+                            call: Call<String>,
+                            response: Response<String>
+                        ) {
+                            DialogUtil.stopProgressDisplay()
+                            val fullResponse = response.body()
+                            val XmlString =
+                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                            if (result.equals("\"1\"")) {
+                                Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
+                                    .setTitle("Insurance Create Successfully ")
+                                    .sneakSuccess()
+                                val intent = Intent(activity, MainActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                startActivity(intent)
 
+                            } else {
+                                Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
+                                    .setTitle("Please Try Again")
+                                    .sneakError()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<String>, t: Throwable) {
+                            DialogUtil.stopProgressDisplay()
+                            val toast = Toast.makeText(activity, t.toString(), Toast.LENGTH_SHORT)
+                            toast.show()
+                            Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
+                                .setTitle(t.toString())
+                                .sneakError()
+                        }
+                    })
+                } else {
+                    Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
+                        .setTitle(Constant.NO_INTERNET)
+                        .sneakError()
+                }
+            }
         }
         // create an OnDateSetListener
         val dateSetListener = object : DatePickerDialog.OnDateSetListener {
