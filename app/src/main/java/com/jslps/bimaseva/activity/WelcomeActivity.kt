@@ -43,6 +43,7 @@ import com.orm.query.Condition
 import com.orm.query.Select
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -67,6 +68,7 @@ class WelcomeActivity : AppCompatActivity() {
     internal val PERIOD_MS: Long = 3000 // time in milliseconds between successive task executions.
     private var logIn: TextView? = null
     private var versionNo: TextView? = null
+    private var reports: TextView? = null
 
 
     internal var viewPagerPageChangeListener: ViewPager.OnPageChangeListener =
@@ -101,6 +103,12 @@ class WelcomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_welcome)
 
         viewPager = findViewById(R.id.view_pager)
+        reports = findViewById(R.id.reports)
+        reports?.setOnClickListener {
+            val intent = Intent(this@WelcomeActivity, WelcomeActivityNew::class.java)
+            startActivity(intent)
+
+        }
         logIn = findViewById(R.id.logIn)
         versionNo = findViewById(R.id.versionNo)
         try {
@@ -223,8 +231,8 @@ class WelcomeActivity : AppCompatActivity() {
                             val builder = OkHttpClient.Builder()
                             //comment in live build and uncomment in uat
                             builder.interceptors().add(interceptor)
-                            builder.connectTimeout(120, TimeUnit.SECONDS)
-                            builder.readTimeout(120, TimeUnit.SECONDS)
+                            builder.connectTimeout(250, TimeUnit.SECONDS)
+                            builder.readTimeout(250, TimeUnit.SECONDS)
                             val client = builder.build()
                             val retrofit =
                                 Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
@@ -265,6 +273,7 @@ class WelcomeActivity : AppCompatActivity() {
                                     val result = XmlString?.replace(("</string>").toRegex(), "")
                                     val mStudentObject1 =
                                         gson.fromJson(result, BaseClass::class.java)
+
                                     System.out.println("vvh" + gson.toJson(mStudentObject1))
                                     SugarRecord.deleteAll(MasterLoginDb::class.java)
                                     for (i in 0 until mStudentObject1.master.size) {

@@ -1,5 +1,7 @@
 package com.jslps.bimaseva.ui.scheme
 
+import MasterLoginDb
+import Table1LoginDb
 import android.app.Activity
 import android.util.Log
 import android.widget.Toast
@@ -14,6 +16,7 @@ import com.jslps.bimaseva.network.LoginService
 import com.jslps.bimaseva.network.ServiceUpdateListner
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.orm.query.Select
 import com.twidpay.beta.model.ApiRequest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -29,7 +32,10 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
     Presenter(),
     OnFragmentListItemSelectListener {
     override fun onListItemSelected(itemId: Int, data: Any) {
-
+        val arraylistPanchyat: java.util.ArrayList<Table1LoginDb> =
+            Select.from<Table1LoginDb>(
+                Table1LoginDb::class.java
+            ).list() as java.util.ArrayList<Table1LoginDb>
         val gson = GsonBuilder().setLenient().create()
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -47,11 +53,49 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
             0 -> {
                 AppCache.getCache().insuranceStep = "Registered"
                 DialogUtil.displayProgress(context!!)
+            val changePhotoResponseModelCall =
+                apiServices.getTabletDownloadDataBCsakhi(
+                    "regproces", "0",
+                    getAppCache().insuranceStepSend.toString(),
+                    arraylistPanchyat.get(0).blockcode!!
+                )
+            changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    DialogUtil.stopProgressDisplay()
+                    val gson = Gson()
+                    Log.v("Response prof :", "hgfgfrhgs" + response.body())
+                    val fullResponse = response.body()
+                    val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                    val result = XmlString?.replace(("</string>").toRegex(), "")
+                    val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
+                    if (mStudentObject1 != null) {
+                        if (mStudentObject1.Master.isNotEmpty()) {
+                            AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                            view?.gotoScreen(
+                                Constant.INSURANCE_LIST_FRAGMENT,
+                                mStudentObject1.Master
+                            )
+                        } else view?.showMessage("You don't have any insurance,Please Add it.")
+                    } else {
+                        view?.showMessage("You don't have any insurance,Please Add it.")
+                    }
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    DialogUtil.stopProgressDisplay()
+                    val toast = Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT)
+                    toast.show()
+                }
+            })
+        }
+            1 -> {
+                AppCache.getCache().insuranceStep = "Document Ready Not Submitted"
+                DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi(
-                        "regproces", "0",
+                        "DocumentNotUp", "1",
                         getAppCache().insuranceStepSend.toString(),
-                        ""
+                        arraylistPanchyat.get(0).blockcode!!
                     )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -87,8 +131,8 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi(
-                        "underproces", "0", getAppCache().insurancetype!!,
-                        getAppCache().insuranceStepSend.toString()
+                        "underproces", "0", getAppCache().insuranceStepSend!!,
+                        arraylistPanchyat.get(0).blockcode!!
                     )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -125,8 +169,8 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi(
-                        "cs", "0", getAppCache().insuranceStepSend.toString(),
-                        ""
+                        "cs", "0",  getAppCache().insuranceStepSend!!,
+                        arraylistPanchyat.get(0).blockcode!!
                     )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -164,7 +208,8 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi(
-                        "rej", "2", getAppCache().insuranceStepSend.toString(), ""
+                        "rej", "2",  getAppCache().insuranceStepSend!!,
+                        arraylistPanchyat.get(0).blockcode!!
                     )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -174,7 +219,6 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                         val fullResponse = response.body()
                         val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                         val result = XmlString?.replace(("</string>").toRegex(), "")
-
                         val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
                         System.out.println("vvh" + gson.toJson(mStudentObject1))
                         if (mStudentObject1 != null) {
