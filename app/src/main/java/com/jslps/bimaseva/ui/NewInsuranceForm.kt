@@ -25,7 +25,9 @@ import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.R
 import com.jslps.bimaseva.activity.MainActivity
+import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.network.InsuranceCreate
+import com.jslps.bimaseva.ui.scheme.SchemeDetailsFragment
 import com.orm.query.Condition
 import com.orm.query.Select
 import okhttp3.OkHttpClient
@@ -68,6 +70,10 @@ class NewInsuranceForm : BaseFragment() {
     val list = arrayListOf<Int>()
     var arrayListBlock: ArrayList<Table3Db>? = null
     var arrayListShg: ArrayList<Table4Db>? = null
+    override fun onResume() {
+        super.onResume()
+        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, "Claim Registration"))
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

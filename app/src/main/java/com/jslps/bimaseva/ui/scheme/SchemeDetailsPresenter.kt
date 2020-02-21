@@ -249,16 +249,13 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
         }
 
     }
-
     override fun onListItemLongClicked(itemId: Int, data: Any) {
     }
     var view: SchemeDetailsView? = view
     var context: Activity? = context
-
     override fun init() {
         ServiceUpdateListner.getInstance().setListener(this)
     }
-
 
     override fun resume() {
         val schemedata = ArrayList<String>()
