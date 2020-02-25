@@ -69,7 +69,7 @@ class WelcomeActivity : AppCompatActivity() {
     private var logIn: TextView? = null
     private var versionNo: TextView? = null
     private var reports: TextView? = null
-
+    private var runningThread = true
 
     internal var viewPagerPageChangeListener: ViewPager.OnPageChangeListener =
         object : ViewPager.OnPageChangeListener {
@@ -275,96 +275,108 @@ class WelcomeActivity : AppCompatActivity() {
                                         gson.fromJson(result, BaseClass::class.java)
 
                                     System.out.println("vvh" + gson.toJson(mStudentObject1))
-                                    SugarRecord.deleteAll(MasterLoginDb::class.java)
-                                    for (i in 0 until mStudentObject1.master.size) {
-                                        val stateModel1 = MasterLoginDb(
-                                            mStudentObject1.master.get(i).districtCode,
-                                            mStudentObject1.master.get(i).districtname,
-                                            mStudentObject1.master.get(i).districtName_H
-                                        )
-                                        stateModel1.save()
-                                    }
-                                    SugarRecord.deleteAll(Table1LoginDb::class.java)
-                                    for (i in 0 until mStudentObject1.table1.size) {
-                                        val stateModel1 = Table1LoginDb(
-                                            mStudentObject1.table1.get(i).blockname,
-                                            mStudentObject1.table1.get(i).blockCode,
-                                            mStudentObject1.table1.get(i).districtCode
-                                        )
-                                        stateModel1.save()
-                                    }
+                                    Thread(object:Runnable {
+                                        public override fun run() {
+                                            while (true) {
+                                                try
+                                                {
+                                                    if (!runningThread) {
+                                                        val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
+                                                        startActivity(intent)
+                                                        finish()
+                                                        return
+                                                    }
+                                                    SugarRecord.deleteAll(MasterLoginDb::class.java)
+                                                    for (i in 0 until mStudentObject1.master.size) {
+                                                        val stateModel1 = MasterLoginDb(
+                                                            mStudentObject1.master.get(i).districtCode,
+                                                            mStudentObject1.master.get(i).districtname,
+                                                            mStudentObject1.master.get(i).districtName_H
+                                                        )
+                                                        stateModel1.save()
+                                                    }
+                                                    SugarRecord.deleteAll(Table1LoginDb::class.java)
+                                                    for (i in 0 until mStudentObject1.table1.size) {
+                                                        val stateModel1 = Table1LoginDb(
+                                                            mStudentObject1.table1.get(i).blockname,
+                                                            mStudentObject1.table1.get(i).blockCode,
+                                                            mStudentObject1.table1.get(i).districtCode
+                                                        )
+                                                        stateModel1.save()
+                                                    }
 
-                                    SugarRecord.deleteAll(Table2Db::class.java)
-                                    for (i in 0 until mStudentObject1.table2.size) {
-                                        val stateModel1 = Table2Db(
-                                            mStudentObject1.table2[i].ClusterCode,
-                                            mStudentObject1.table2[i].clustername)
-                                        stateModel1.save()
-                                    }
-                                    SugarRecord.deleteAll(Table3Db::class.java)
-                                    for (i in 0 until mStudentObject1.table3.size) {
-                                        val stateModel1 = Table3Db(
-                                            mStudentObject1.table3[i].villagename,
-                                            mStudentObject1.table3[i].VillageCode,
-                                            mStudentObject1.table3[i].clustercode)
-                                        stateModel1.save()
-                                    }
-                                    SugarRecord.deleteAll(Table4Db::class.java)
-                                    for (i in 0 until mStudentObject1.table4.size) {
-                                        val stateModel1 = Table4Db(
-                                            mStudentObject1.table4[i].ClusterCode,
-                                            mStudentObject1.table4[i].VillageCode,
-                                            mStudentObject1.table4[i].SHGCode,
-                                            mStudentObject1.table4[i].Group_Name)
-                                        stateModel1.save()
-                                    }
-                                    SugarRecord.deleteAll(Table5Db::class.java)
-                                    for (i in 0 until mStudentObject1.table5.size) {
-                                        val stateModel1 = Table5Db(
-                                            mStudentObject1.table5[i].bankCode,
-                                            mStudentObject1.table5[i].branchCode,
-                                            mStudentObject1.table5[i].branchName,
-                                            mStudentObject1.table5[i].branchName_Hindi,
-                                            mStudentObject1.table5[i].iFSCCode)
-                                        stateModel1.save()
-                                    }
+                                                    SugarRecord.deleteAll(Table2Db::class.java)
+                                                    for (i in 0 until mStudentObject1.table2.size) {
+                                                        val stateModel1 = Table2Db(
+                                                            mStudentObject1.table2[i].ClusterCode,
+                                                            mStudentObject1.table2[i].clustername)
+                                                        stateModel1.save()
+                                                    }
+                                                    SugarRecord.deleteAll(Table3Db::class.java)
+                                                    for (i in 0 until mStudentObject1.table3.size) {
+                                                        val stateModel1 = Table3Db(
+                                                            mStudentObject1.table3[i].villagename,
+                                                            mStudentObject1.table3[i].VillageCode,
+                                                            mStudentObject1.table3[i].clustercode)
+                                                        stateModel1.save()
+                                                    }
+                                                    SugarRecord.deleteAll(Table4Db::class.java)
+                                                    for (i in 0 until mStudentObject1.table4.size) {
+                                                        val stateModel1 = Table4Db(
+                                                            mStudentObject1.table4[i].ClusterCode,
+                                                            mStudentObject1.table4[i].VillageCode,
+                                                            mStudentObject1.table4[i].SHGCode,
+                                                            mStudentObject1.table4[i].Group_Name)
+                                                        stateModel1.save()
+                                                    }
+                                                    SugarRecord.deleteAll(Table5Db::class.java)
+                                                    for (i in 0 until mStudentObject1.table5.size) {
+                                                        val stateModel1 = Table5Db(
+                                                            mStudentObject1.table5[i].bankCode,
+                                                            mStudentObject1.table5[i].branchCode,
+                                                            mStudentObject1.table5[i].branchName,
+                                                            mStudentObject1.table5[i].branchName_Hindi,
+                                                            mStudentObject1.table5[i].iFSCCode)
+                                                        stateModel1.save()
+                                                    }
 
-                                    SugarRecord.deleteAll(Table6Db::class.java)
-                                    for (i in 0 until mStudentObject1.table6.size) {
-                                        val stateModel1 = Table6Db(
-                                            mStudentObject1.table6[i].BankId,
-                                            mStudentObject1.table6[i].BankCode,
-                                            mStudentObject1.table6[i].BankName,
-                                            mStudentObject1.table6[i].BankType,
-                                            mStudentObject1.table6[i].IFSCCode,
-                                            mStudentObject1.table6[i].BankName_Hindi)
-                                        stateModel1.save()
-                                    }
-                                    val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
-                                    startActivity(intent)
-                                    finish()
+                                                    SugarRecord.deleteAll(Table6Db::class.java)
+                                                    for (i in 0 until mStudentObject1.table6.size) {
+                                                        val stateModel1 = Table6Db(
+                                                            mStudentObject1.table6[i].BankId,
+                                                            mStudentObject1.table6[i].BankCode,
+                                                            mStudentObject1.table6[i].BankName,
+                                                            mStudentObject1.table6[i].BankType,
+                                                            mStudentObject1.table6[i].IFSCCode,
+                                                            mStudentObject1.table6[i].BankName_Hindi)
+                                                        stateModel1.save()
+                                                    }
+                                                    runningThread=false
+
+                                                }
+                                                catch (e:InterruptedException) {
+                                                    e.printStackTrace()
+                                                }
+                                            }
+                                        }
+                                    }).start()
+
                                 }
 
                                 override fun onFailure(call: Call<String>, t: Throwable) {
                                     DialogUtil.stopProgressDisplay()
-                                    /*val toast = Toast.makeText(this@WelcomeActivity, t.toString(), Toast.LENGTH_SHORT)
-                                    toast.show()*/
                                     Sneaker.with(this@WelcomeActivity) // Activity, Fragment or ViewGroup
                                         .setTitle(t.toString())
                                         .sneakError()
                                 }
                             })
                         } else {
-
                             Sneaker.with(this@WelcomeActivity) // Activity, Fragment or ViewGroup
                                 .setTitle(Constant.NO_INTERNET)
                                 .sneakError()
                         }
                     }
 
-
-                    /* val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
-                     startActivity(intent)*/
                 }
             }
         }

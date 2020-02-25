@@ -19,6 +19,6 @@
             android:background="@drawable/buttonshape"
             android:text="Register"
             android:textColor="#000"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
 </LinearLayout>

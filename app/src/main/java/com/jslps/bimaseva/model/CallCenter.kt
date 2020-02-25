@@ -1,6 +1,3 @@
-import com.google.gson.annotations.SerializedName
-
-
 data class CallCenter(
 
 	val Name: String,
@@ -19,6 +16,7 @@ data class CallCenter(
 	val Phno_claim: String,
 	val Name_Claim: String,
 	val guid: String,
-	val CreatedBy: String
+	val CreatedBy: String,
+	val Gender: String
 
 )

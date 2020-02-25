@@ -78,10 +78,7 @@ class SchemeDetailsFragment : BaseFragment(), SchemeDetailsView, OnFragmentListI
         entryForm = rootView?.findViewById(R.id.entryForm)
         presenter = SchemeDetailsPresenter(this, activity as Activity)
         recycleview?.layoutManager = Constant.gridLayout(activity, 2)
-        entryForm?.visibility=View.VISIBLE
-        entryForm?.setOnClickListener {
-           mListener?.onFragmentInteraction(Constant.ENTRY_FORM_INSURANCE,"")
-        }
+        entryForm?.visibility=View.GONE
         presenter?.resume()
         return rootView!!
     }

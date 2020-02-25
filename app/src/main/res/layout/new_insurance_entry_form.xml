@@ -51,6 +51,8 @@
                     android:layout_weight="0.5"
                     android:layout_height="match_parent"
                     android:text="Male"
+
+                    android:checked="true"
                    android:textColor="#000"
                     android:buttonTint="@color/colorAccent" />
 
@@ -58,6 +60,7 @@
                     android:id="@+id/radioFemale"
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
+
                     android:textColor="#000"
                     android:buttonTint="@color/colorAccent"
                     android:layout_height="wrap_content"

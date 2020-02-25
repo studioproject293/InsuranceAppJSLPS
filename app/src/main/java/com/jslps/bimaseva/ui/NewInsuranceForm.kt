@@ -70,10 +70,14 @@ class NewInsuranceForm : BaseFragment() {
     val list = arrayListOf<Int>()
     var arrayListBlock: ArrayList<Table3Db>? = null
     var arrayListShg: ArrayList<Table4Db>? = null
+    var radioButton: RadioButton? = null
+    var radioGroup: RadioGroup? = null
+    var genderId: Int? = null
     override fun onResume() {
         super.onResume()
         mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, "Claim Registration"))
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -82,6 +86,7 @@ class NewInsuranceForm : BaseFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val rootView = inflater.inflate(R.layout.new_insurance_entry_form, container, false)
         setId(rootView)
+
         checkBox1?.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked)
                 list.add(1)
@@ -137,12 +142,15 @@ class NewInsuranceForm : BaseFragment() {
                     .setTitle("Please enter mobile no of caller")
                     .sneakError()
             } else {
-
+                val selectedId = radioGroup?.getCheckedRadioButtonId();
+                radioButton = rootView.findViewById<RadioButton>(selectedId!!);
+                if (radioButton?.text.toString().equals("Male")) {
+                    genderId = 1
+                } else
+                    genderId = 2
                 val id = UUID.randomUUID().toString()
                 blockCode = arrayListBlock?.get(0)?.villagecode
-                print("fvfdList" + list)
                 val s = TextUtils.join(", ", list)
-                print("fvfdList" + s)
                 val prefs = activity?.getSharedPreferences(
                     "MyPrefInsurance", Context.MODE_PRIVATE
                 );
@@ -163,7 +171,8 @@ class NewInsuranceForm : BaseFragment() {
                     mobileofcaller?.text.toString(),
                     nameofcaller?.text.toString(),
                     id,
-                    createdBy!!
+                    createdBy!!,
+                    genderId?.toString()!!
                 )
                 val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(callCenter) + "] } "
                 if (DialogUtil.isConnectionAvailable(activity!!)) {
@@ -453,6 +462,9 @@ class NewInsuranceForm : BaseFragment() {
         spinnerBlock = rootView.findViewById<Spinner>(R.id.spinner_block)
         spinnerBranch = rootView.findViewById<Spinner>(R.id.sppiner_branch)
         spinnerShg = rootView.findViewById<Spinner>(R.id.sppiner_shg)
+        radioGroup = rootView.findViewById<RadioGroup>(R.id.radioSex)
+
+//        Toast.makeText(activity, radioButton?.getText(), Toast.LENGTH_SHORT).show();
 
     }
 
