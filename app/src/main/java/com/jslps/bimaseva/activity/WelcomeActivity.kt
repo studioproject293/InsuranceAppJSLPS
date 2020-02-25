@@ -287,7 +287,7 @@ class WelcomeActivity : AppCompatActivity() {
                                                         return
                                                     }
                                                     SugarRecord.deleteAll(MasterLoginDb::class.java)
-                                                    for (i in 0 until mStudentObject1.master.size) {
+                                                    for (i in mStudentObject1.master.indices) {
                                                         val stateModel1 = MasterLoginDb(
                                                             mStudentObject1.master.get(i).districtCode,
                                                             mStudentObject1.master.get(i).districtname,
@@ -296,7 +296,7 @@ class WelcomeActivity : AppCompatActivity() {
                                                         stateModel1.save()
                                                     }
                                                     SugarRecord.deleteAll(Table1LoginDb::class.java)
-                                                    for (i in 0 until mStudentObject1.table1.size) {
+                                                    for (i in mStudentObject1.table1.indices) {
                                                         val stateModel1 = Table1LoginDb(
                                                             mStudentObject1.table1.get(i).blockname,
                                                             mStudentObject1.table1.get(i).blockCode,
@@ -306,14 +306,14 @@ class WelcomeActivity : AppCompatActivity() {
                                                     }
 
                                                     SugarRecord.deleteAll(Table2Db::class.java)
-                                                    for (i in 0 until mStudentObject1.table2.size) {
+                                                    for (i in mStudentObject1.table2.indices) {
                                                         val stateModel1 = Table2Db(
                                                             mStudentObject1.table2[i].ClusterCode,
                                                             mStudentObject1.table2[i].clustername)
                                                         stateModel1.save()
                                                     }
                                                     SugarRecord.deleteAll(Table3Db::class.java)
-                                                    for (i in 0 until mStudentObject1.table3.size) {
+                                                    for (i in mStudentObject1.table3.indices) {
                                                         val stateModel1 = Table3Db(
                                                             mStudentObject1.table3[i].villagename,
                                                             mStudentObject1.table3[i].VillageCode,
@@ -321,7 +321,7 @@ class WelcomeActivity : AppCompatActivity() {
                                                         stateModel1.save()
                                                     }
                                                     SugarRecord.deleteAll(Table4Db::class.java)
-                                                    for (i in 0 until mStudentObject1.table4.size) {
+                                                    for (i in mStudentObject1.table4.indices) {
                                                         val stateModel1 = Table4Db(
                                                             mStudentObject1.table4[i].ClusterCode,
                                                             mStudentObject1.table4[i].VillageCode,
@@ -330,7 +330,7 @@ class WelcomeActivity : AppCompatActivity() {
                                                         stateModel1.save()
                                                     }
                                                     SugarRecord.deleteAll(Table5Db::class.java)
-                                                    for (i in 0 until mStudentObject1.table5.size) {
+                                                    for (i in mStudentObject1.table5.indices) {
                                                         val stateModel1 = Table5Db(
                                                             mStudentObject1.table5[i].bankCode,
                                                             mStudentObject1.table5[i].branchCode,
@@ -341,7 +341,7 @@ class WelcomeActivity : AppCompatActivity() {
                                                     }
 
                                                     SugarRecord.deleteAll(Table6Db::class.java)
-                                                    for (i in 0 until mStudentObject1.table6.size) {
+                                                    for (i in mStudentObject1.table6.indices) {
                                                         val stateModel1 = Table6Db(
                                                             mStudentObject1.table6[i].BankId,
                                                             mStudentObject1.table6[i].BankCode,
@@ -409,7 +409,6 @@ class WelcomeActivity : AppCompatActivity() {
 
             val view = layoutInflater!!.inflate(layouts!![position], container, false)
             container.addView(view)
-
             return view
         }
 

@@ -60,8 +60,6 @@ class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presente
 
     override fun onFailureResponse(request: ApiRequest, data: Any) {
         view?.hideProgress()
-        /*if (chkIntenrnetIssue(data.message))
-            view?.noInternet()*/
         view?.loadData(null)
     }
 

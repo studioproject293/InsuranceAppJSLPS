@@ -59,8 +59,6 @@ class HomeFragment : BaseFragment(), HomeView, OnFragmentListItemSelectListener 
         super.onResume()
         mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, "Dashboard"))
     }
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
