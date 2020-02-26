@@ -27,7 +27,6 @@ import com.jslps.bimaseva.R
 import com.jslps.bimaseva.activity.MainActivity
 import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.network.InsuranceCreate
-import com.jslps.bimaseva.ui.scheme.SchemeDetailsFragment
 import com.orm.query.Condition
 import com.orm.query.Select
 import okhttp3.OkHttpClient
@@ -191,7 +190,7 @@ class NewInsuranceForm : BaseFragment() {
                             ScalarsConverterFactory.create()
                         ).client(client).build()
                     val apiServices = retrofit.create(InsuranceCreate::class.java)
-                    val createInsurance = apiServices.createInsurancei(data)
+                    val createInsurance = apiServices.createInsurance(data)
                     createInsurance.enqueue(object : Callback<String> {
                         override fun onResponse(
                             call: Call<String>,

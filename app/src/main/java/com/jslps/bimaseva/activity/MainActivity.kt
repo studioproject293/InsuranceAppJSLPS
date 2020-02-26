@@ -27,7 +27,7 @@ import com.jslps.bimaseva.ui.underProcess.UnderProcessDetailsFragment
 
 
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
-    private var mFragmentManager: FragmentManager? = null
+    private var mFragmentManager : FragmentManager? = null
     private var mFragmentTag: String? = null
     private var mCurrentFragment: Int = 0
     internal var toolbar_home: Toolbar? = null
@@ -49,8 +49,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
             Constant.HOME_FRAGMENT -> {
                 mFragmentManager?.beginTransaction()!!.setCustomAnimations(
                     android.R.anim.slide_in_left,
-                    android.R.anim.slide_out_right
-                )
+                    android.R.anim.slide_out_right)
                     .addToBackStack(mFragmentTag)
                     .replace(R.id.fragment_main, HomeFragment(), mFragmentTag).commitAllowingStateLoss()
             }
@@ -124,7 +123,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
         when (type) {
             Constant.setTitle -> {
                 val headerData = data as HeaderData
-                toolbar_title?.setText(headerData.text)
+                toolbar_title?.text = headerData.text
             }
         }
     }

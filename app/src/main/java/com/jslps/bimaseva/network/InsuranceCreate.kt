@@ -7,6 +7,6 @@ import retrofit2.http.Query
 
 interface InsuranceCreate {
     @GET("CallCenter")
-    fun createInsurancei(
+    fun createInsurance(
         @Query("jsonstr") flag: String): Call<String>
 }

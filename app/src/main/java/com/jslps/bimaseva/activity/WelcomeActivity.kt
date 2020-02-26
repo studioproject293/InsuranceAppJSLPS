@@ -199,10 +199,10 @@ class WelcomeActivity : AppCompatActivity() {
                         Select.from<MasterLoginDb>(
                             MasterLoginDb::class.java).list() as ArrayList<MasterLoginDb>
                     println("LogInDbsdfsdfs" + Gson().toJson(arrayListVillage1))
-                    if(arrayListVillage1!=null && arrayListVillage1.size>0){
+                    if (arrayListVillage1 != null && arrayListVillage1.size > 0) {
                         if (checkboxRember!!.isChecked()) {
                             val pref =
-                                getApplicationContext().getSharedPreferences(
+                                this.getSharedPreferences(
                                     "MyPrefInsurance",
                                     0
                                 ) // 0 - for private mode
@@ -222,7 +222,7 @@ class WelcomeActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
 
-                    }else{
+                    } else {
                         if (DialogUtil.isConnectionAvailable(this@WelcomeActivity)) {
                             DialogUtil.displayProgress(this@WelcomeActivity)
                             val gson = GsonBuilder().setLenient().create()
@@ -235,35 +235,37 @@ class WelcomeActivity : AppCompatActivity() {
                             builder.readTimeout(250, TimeUnit.SECONDS)
                             val client = builder.build()
                             val retrofit =
-                                Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
-                                    ScalarsConverterFactory.create()
-                                ).client(client).build()
+                                Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
+                                    .addConverterFactory(
+                                        ScalarsConverterFactory.create()
+                                    ).client(client).build()
                             val apiServices = retrofit.create(LoginServiceNew::class.java)
                             val changePhotoResponseModelCall =
                                 apiServices.getTabletDownloadDataBCsakhi(
                                     "Login",
-                                    editTextUserName.getText().toString(),
-                                    editTextPassword.getText().toString()
+                                    editTextUserName.text.toString(),
+                                    editTextPassword.text.toString()
                                 )
                             changePhotoResponseModelCall.enqueue(object : Callback<String> {
                                 override fun onResponse(
                                     call: Call<String>,
-                                    response: Response<String>) {
+                                    response: Response<String>
+                                ) {
                                     val gson = Gson()
                                     if (checkboxRember!!.isChecked()) {
                                         val pref =
-                                            getApplicationContext().getSharedPreferences(
+                                            applicationContext.getSharedPreferences(
                                                 "MyPrefInsurance",
                                                 0
                                             ) // 0 - for private mode
                                         val editor = pref.edit()
                                         editor.putString(
                                             "userName",
-                                            editTextUserName.getText().toString()
+                                            editTextUserName.text.toString()
                                         )
                                         editor.putString(
                                             "Password",
-                                            editTextPassword.getText().toString()
+                                            editTextPassword.text.toString()
                                         )
                                         editor.apply()
                                     }
@@ -273,15 +275,15 @@ class WelcomeActivity : AppCompatActivity() {
                                     val result = XmlString?.replace(("</string>").toRegex(), "")
                                     val mStudentObject1 =
                                         gson.fromJson(result, BaseClass::class.java)
-
-                                    System.out.println("vvh" + gson.toJson(mStudentObject1))
-                                    Thread(object:Runnable {
-                                        public override fun run() {
+                                    Thread(object : Runnable {
+                                         override fun run() {
                                             while (true) {
-                                                try
-                                                {
+                                                try {
                                                     if (!runningThread) {
-                                                        val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
+                                                        val intent = Intent(
+                                                            this@WelcomeActivity,
+                                                            MainActivity::class.java
+                                                        )
                                                         startActivity(intent)
                                                         finish()
                                                         return
@@ -309,7 +311,8 @@ class WelcomeActivity : AppCompatActivity() {
                                                     for (i in mStudentObject1.table2.indices) {
                                                         val stateModel1 = Table2Db(
                                                             mStudentObject1.table2[i].ClusterCode,
-                                                            mStudentObject1.table2[i].clustername)
+                                                            mStudentObject1.table2[i].clustername
+                                                        )
                                                         stateModel1.save()
                                                     }
                                                     SugarRecord.deleteAll(Table3Db::class.java)
@@ -317,7 +320,8 @@ class WelcomeActivity : AppCompatActivity() {
                                                         val stateModel1 = Table3Db(
                                                             mStudentObject1.table3[i].villagename,
                                                             mStudentObject1.table3[i].VillageCode,
-                                                            mStudentObject1.table3[i].clustercode)
+                                                            mStudentObject1.table3[i].clustercode
+                                                        )
                                                         stateModel1.save()
                                                     }
                                                     SugarRecord.deleteAll(Table4Db::class.java)
@@ -326,7 +330,8 @@ class WelcomeActivity : AppCompatActivity() {
                                                             mStudentObject1.table4[i].ClusterCode,
                                                             mStudentObject1.table4[i].VillageCode,
                                                             mStudentObject1.table4[i].SHGCode,
-                                                            mStudentObject1.table4[i].Group_Name)
+                                                            mStudentObject1.table4[i].Group_Name
+                                                        )
                                                         stateModel1.save()
                                                     }
                                                     SugarRecord.deleteAll(Table5Db::class.java)
@@ -336,7 +341,8 @@ class WelcomeActivity : AppCompatActivity() {
                                                             mStudentObject1.table5[i].branchCode,
                                                             mStudentObject1.table5[i].branchName,
                                                             mStudentObject1.table5[i].branchName_Hindi,
-                                                            mStudentObject1.table5[i].iFSCCode)
+                                                            mStudentObject1.table5[i].iFSCCode
+                                                        )
                                                         stateModel1.save()
                                                     }
 
@@ -348,13 +354,13 @@ class WelcomeActivity : AppCompatActivity() {
                                                             mStudentObject1.table6[i].BankName,
                                                             mStudentObject1.table6[i].BankType,
                                                             mStudentObject1.table6[i].IFSCCode,
-                                                            mStudentObject1.table6[i].BankName_Hindi)
+                                                            mStudentObject1.table6[i].BankName_Hindi
+                                                        )
                                                         stateModel1.save()
                                                     }
-                                                    runningThread=false
+                                                    runningThread = false
 
-                                                }
-                                                catch (e:InterruptedException) {
+                                                } catch (e: InterruptedException) {
                                                     e.printStackTrace()
                                                 }
                                             }
