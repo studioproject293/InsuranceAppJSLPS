@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.R
@@ -63,7 +64,8 @@ class SchemeDetailsFragment : BaseFragment(), SchemeDetailsView, OnFragmentListI
 
     private var rootView: View? = null
     private var recycleview: RecyclerView? = null
-    private var entryForm:Button?=null
+    private var entryForm: Button? = null
+    private var linearLayoutManager: LinearLayoutManager? = null
     var presenter: SchemeDetailsPresenter? = null
     override fun onResume() {
         super.onResume()
@@ -71,14 +73,18 @@ class SchemeDetailsFragment : BaseFragment(), SchemeDetailsView, OnFragmentListI
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         rootView = inflater.inflate(R.layout.fragment_home, container, false)
         recycleview = rootView?.findViewById(R.id.recycleview)
         entryForm = rootView?.findViewById(R.id.entryForm)
         presenter = SchemeDetailsPresenter(this, activity as Activity)
-        recycleview?.layoutManager = Constant.gridLayout(activity, 2)
-        entryForm?.visibility=View.GONE
+        linearLayoutManager = LinearLayoutManager(getActivity());
+        recycleview?.setLayoutManager(linearLayoutManager);
+        entryForm?.visibility = View.GONE
         presenter?.resume()
         return rootView!!
     }

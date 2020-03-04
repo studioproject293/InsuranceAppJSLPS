@@ -20,7 +20,6 @@ import android.os.Handler
 import android.text.TextUtils
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,11 +38,10 @@ import com.jslps.bimaseva.R
 import com.jslps.bimaseva.activity.adapter.MyCustomPagerAdapter
 import com.jslps.bimaseva.network.LoginServiceNew
 import com.orm.SugarRecord
-import com.orm.query.Condition
 import com.orm.query.Select
+import kotlinx.android.synthetic.main.activity_welcome_new_designe.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -55,6 +53,7 @@ import java.util.concurrent.TimeUnit
 class WelcomeActivity : AppCompatActivity() {
     internal var images = intArrayOf(R.drawable.pmjby, R.drawable.pmsby, R.drawable.apy)
     private var viewPager: ViewPager? = null
+    private var registernewClaim: Button? = null
     private val myViewPagerAdapter: MyViewPagerAdapter? = null
     private val dotsLayout: LinearLayout? = null
     private val dots: Array<TextView>? = null
@@ -69,6 +68,7 @@ class WelcomeActivity : AppCompatActivity() {
     private var logIn: TextView? = null
     private var versionNo: TextView? = null
     private var reports: TextView? = null
+    private var imagerightarrow: ImageView? = null
     private var runningThread = true
 
     internal var viewPagerPageChangeListener: ViewPager.OnPageChangeListener =
@@ -100,21 +100,27 @@ class WelcomeActivity : AppCompatActivity() {
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
 
-        setContentView(R.layout.activity_welcome)
+        setContentView(R.layout.activity_welcome_new_designe)
 
         viewPager = findViewById(R.id.view_pager)
         reports = findViewById(R.id.reports)
+//        imagerightarrow = findViewById(R.id.imagerightarrow)
         reports?.setOnClickListener {
             val intent = Intent(this@WelcomeActivity, WelcomeActivityNew::class.java)
             startActivity(intent)
 
         }
         logIn = findViewById(R.id.logIn)
+        registernewClaim = findViewById(R.id.registernewClaim)
+        registernewClaim?.setOnClickListener {
+            val intent = Intent(this@WelcomeActivity, ClaimRegistrationActivity::class.java)
+            startActivity(intent)
+        }
         versionNo = findViewById(R.id.versionNo)
         try {
             val pInfo = packageManager.getPackageInfo(packageName, 0)
             val version = pInfo.versionName
-            versionNo?.setText("Version No: $version")
+            versionNo?.text = "Version No: $version"
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }
@@ -144,15 +150,40 @@ class WelcomeActivity : AppCompatActivity() {
         }, 500, 3000)
 
         viewPager!!.addOnPageChangeListener(viewPagerPageChangeListener)
+        val text = findViewById<TextView>(R.id.text)
+        val array = intArrayOf(
+            R.string.loading_msg,
+            R.string.yes,
+            R.string.exit_message,
+            R.string.app_name,
+            R.string.logout_message
+        )
+        text.post(object : Runnable {
+            internal var i = 0
+            public override fun run() {
+                text.setText(array[i])
+                i++
+                if (i == 5)
+                    i = 0
+                text.postDelayed(this, 5000)
+            }
+        })
 
         logIn!!.setOnClickListener { showCustomDialog() }
+        val shake = AnimationUtils.loadAnimation(this, R.anim.shake1)
+        val handler1 = Handler()
+        val r = Runnable {
+
+            registernewClaim?.startAnimation(shake)
+        }
+        handler1.postDelayed(r, 1000)
 
 
     }
 
     private fun showCustomDialog() {
         //before inflating the custom alert dialog layout, we will get the current activity viewgroup
-        val dialog = Dialog(this, android.R.style.Theme_DeviceDefault_Dialog_Alert)
+        val dialog = Dialog(this)
         // Include dialog.xml file
         dialog.setContentView(R.layout.layout_dialog)
         val closeButton = dialog.findViewById<ImageView>(R.id.closeButton)
@@ -195,12 +226,8 @@ class WelcomeActivity : AppCompatActivity() {
                 else -> {
                     DialogUtil.hideKeyboard(sigiin, this@WelcomeActivity)
                     dialog.cancel()
-                    val arrayListVillage1: ArrayList<MasterLoginDb> =
-                        Select.from<MasterLoginDb>(
-                            MasterLoginDb::class.java).list() as ArrayList<MasterLoginDb>
-                    println("LogInDbsdfsdfs" + Gson().toJson(arrayListVillage1))
-                    if (arrayListVillage1 != null && arrayListVillage1.size > 0) {
-                        if (checkboxRember!!.isChecked()) {
+                    if (!TextUtils.isEmpty(value)) {
+                        if (checkboxRember!!.isChecked) {
                             val pref =
                                 this.getSharedPreferences(
                                     "MyPrefInsurance",
@@ -276,7 +303,7 @@ class WelcomeActivity : AppCompatActivity() {
                                     val mStudentObject1 =
                                         gson.fromJson(result, BaseClass::class.java)
                                     Thread(object : Runnable {
-                                         override fun run() {
+                                        override fun run() {
                                             while (true) {
                                                 try {
                                                     if (!runningThread) {

@@ -4,5 +4,5 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="loading_msg">Please wait..</string>
-
+    <string name="logout_message">Are you sure, You want to Logout ?</string>
 </resources>

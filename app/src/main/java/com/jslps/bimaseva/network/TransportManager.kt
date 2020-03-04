@@ -51,14 +51,11 @@ class TransportManager {
             return manager as TransportManager
         }
 
-        val header = object : Interceptor {
-            override fun intercept(chain: Interceptor.Chain): Response {
-                val original = chain.request()
-                val builder = original.newBuilder()
-                builder.method(original.method(), original.body())
-                return chain.proceed(builder.build())
-
-            }
+        val header = Interceptor { chain ->
+            val original = chain.request()
+            val builder = original.newBuilder()
+            builder.method(original.method(), original.body())
+            chain.proceed(builder.build())
         }
 
 

@@ -255,7 +255,7 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView, O
                 attchmemntPopup(context as Activity)
             }
         }
-        return rootView!!
+        return  rootView!!
     }
 
     private fun attchmemntPopup(context: Activity) {

@@ -53,43 +53,47 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
             0 -> {
                 AppCache.getCache().insuranceStep = "Registered"
                 DialogUtil.displayProgress(context!!)
-            val changePhotoResponseModelCall =
-                apiServices.getTabletDownloadDataBCsakhi(
-                    "regproces", "0",
-                    getAppCache().insuranceStepSend.toString(),
-                    arraylistPanchyat.get(0).blockcode!!
-                )
-            changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    DialogUtil.stopProgressDisplay()
-                    val gson = Gson()
-                    Log.v("Response prof :", "hgfgfrhgs" + response.body())
-                    val fullResponse = response.body()
-                    val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                    val result = XmlString?.replace(("</string>").toRegex(), "")
-                    val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
-                    if (mStudentObject1 != null) {
-                        if (mStudentObject1.Master.isNotEmpty()) {
-                            AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
-                            view?.gotoScreen(
-                                Constant.INSURANCE_LIST_FRAGMENT,
-                                mStudentObject1.Master
-                            )
-                        } else view?.showMessage("You don't have any insurance,Please Add it.")
-                    } else {
-                        view?.showMessage("You don't have any insurance,Please Add it.")
+                val changePhotoResponseModelCall =
+                    apiServices.getTabletDownloadDataBCsakhi(
+                        "regproces", "0",
+                        getAppCache().insuranceStepSend.toString(),
+                        arraylistPanchyat.get(0).blockcode!!
+                    )
+                changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        DialogUtil.stopProgressDisplay()
+                        val gson = Gson()
+                        Log.v("Response prof :", "hgfgfrhgs" + response.body())
+                        val fullResponse = response.body()
+                        val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                        val result = XmlString?.replace(("</string>").toRegex(), "")
+                        val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
+                        if (mStudentObject1 != null) {
+                            if (mStudentObject1.Master.isNotEmpty()) {
+                                AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                                view?.gotoScreen(
+                                    Constant.INSURANCE_LIST_FRAGMENT,
+                                    mStudentObject1.Master
+                                )
+                            } else view?.showMessage("You don't have any insurance,Please Add it.")
+                        } else {
+                            view?.showMessage("You don't have any insurance,Please Add it.")
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    DialogUtil.stopProgressDisplay()
-                    val toast = Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT)
-                    toast.show()
-                }
-            })
-        }
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        DialogUtil.stopProgressDisplay()
+                        val toast = Toast.makeText(
+                            context,
+                            "Server error please try again",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
+                    }
+                })
+            }
             1 -> {
-                AppCache.getCache().insuranceStep = "Document Ready Not Submitted"
+                AppCache.getCache().insuranceStep = "Document ready but not received by the branch"
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi(
@@ -110,7 +114,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                             if (mStudentObject1.Master.isNotEmpty()) {
                                 AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
                                 view?.gotoScreen(
-                                    Constant.INSURANCE_LIST_FRAGMENT,
+                                    Constant.DOCUMENT_LIST_FRAGMENT,
                                     mStudentObject1.Master
                                 )
                             } else view?.showMessage("You don't have any insurance,Please Add it.")
@@ -169,7 +173,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi(
-                        "cs", "0",  getAppCache().insuranceStepSend!!,
+                        "cs", "0", getAppCache().insuranceStepSend!!,
                         arraylistPanchyat.get(0).blockcode!!
                     )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
@@ -208,7 +212,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall =
                     apiServices.getTabletDownloadDataBCsakhi(
-                        "rej", "2",  getAppCache().insuranceStepSend!!,
+                        "rej", "2", getAppCache().insuranceStepSend!!,
                         arraylistPanchyat.get(0).blockcode!!
                     )
                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
@@ -249,8 +253,10 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
         }
 
     }
+
     override fun onListItemLongClicked(itemId: Int, data: Any) {
     }
+
     var view: SchemeDetailsView? = view
     var context: Activity? = context
     override fun init() {
@@ -260,7 +266,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
     override fun resume() {
         val schemedata = ArrayList<String>()
         schemedata.add("Registered")
-        schemedata.add("Document Ready Not Submitted")
+        schemedata.add("Document ready but not received by the branch")
         schemedata.add("Under Process")
         schemedata.add("Claim Settled")
         schemedata.add("Rejected")

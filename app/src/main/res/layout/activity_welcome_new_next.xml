@@ -179,7 +179,7 @@
                                 android:background="@drawable/shape_border"
                                 android:gravity="center"
                                 android:padding="5dp"
-                                android:text="Document Ready But Not Submitted "
+                                android:text="Document ready but not received by the branch"
                                 android:textColor="#000"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />

@@ -24,8 +24,7 @@ class EntryReportsRecyclerviewAdapter(
 
     override fun onBindViewHolder(
         holder: ViewHolder,
-        position: Int
-    ) {
+        position: Int) {
         when {
             name?.equals("Insurance2")!! -> {
                 holder.nameofblock.visibility = View.GONE

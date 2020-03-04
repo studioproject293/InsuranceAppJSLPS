@@ -25,7 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
         </activity>
-        <activity android:name=".activity.WelcomeActivity">
+        <activity android:name=".activity.WelcomeActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,6 +38,11 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/AppThemeNoActionBar" />
         <activity android:name=".activity.WelcomeActivityNewNext" />
+        <activity android:name=".activity.ClaimRegistrationActivity" />
+        <activity android:name=".activity.ClaimRegistrationActivitySHGMember" />
+        <activity android:name=".activity.ClaimRegistrationActivityFamilySHGMember" />
+        <activity android:name=".activity.ClaimRegistrationActivityOthers" />
+        <activity android:name=".activity.ClaimRegistrationActivityOtpScreen" />
 
         <meta-data
                 android:name="DATABASE"

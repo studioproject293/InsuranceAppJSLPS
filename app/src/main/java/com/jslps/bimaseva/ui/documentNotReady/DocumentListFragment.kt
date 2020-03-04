@@ -1,4 +1,4 @@
-package com.jslps.bimaseva.ui.insuranceList
+package com.jslps.bimaseva.ui.documentNotReady
 
 import android.app.Activity
 import android.os.Bundle
@@ -7,17 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
+import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.R
+import com.jslps.bimaseva.cache.AppCache
 import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
 import com.jslps.bimaseva.model.HeaderData
-import com.jslps.bimaseva.ui.BaseFragment
-
-import com.jslps.bimaseva.Constant
-import com.jslps.bimaseva.cache.AppCache
 import com.jslps.bimaseva.model.Master
-import com.jslps.bimaseva.ui.insuranceList.adapter.InsuranceListAdapter
+import com.jslps.bimaseva.ui.BaseFragment
+import com.jslps.bimaseva.ui.documentNotReady.adapter.DocumentNotReadyListAdapter
 
-class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemSelectListener {
+
+class DocumentListFragment : BaseFragment(), DocumentNotReadyView, OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -27,7 +27,7 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
             recycleview?.visibility = View.VISIBLE
             if (homeRecyclerviewAdapter == null)
                 homeRecyclerviewAdapter =
-                    InsuranceListAdapter(cardInitResponse, getmActivity() as Activity, "")
+                    DocumentNotReadyListAdapter(cardInitResponse, getmActivity() as Activity, "")
             else
                 homeRecyclerviewAdapter?.updateList(cardInitResponse)
             homeRecyclerviewAdapter?.setListner(presenter?.getListner())
@@ -43,7 +43,7 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
         }
     }
 
-    var homeRecyclerviewAdapter: InsuranceListAdapter? = null
+    var homeRecyclerviewAdapter: DocumentNotReadyListAdapter? = null
 
     override fun showProgress() {
     }
@@ -62,7 +62,7 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
 
     private var rootView: View? = null
     private var recycleview: RecyclerView? = null
-    var presenter: InsurancePresenter? = null
+    var presenter: DocumentNotReadyPresenter? = null
     override fun onResume() {
         super.onResume()
         mListener!!.onFragmentUpdate(
@@ -80,7 +80,7 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
         super.onCreateView(inflater, container, savedInstanceState)
         rootView = inflater.inflate(R.layout.fragment_home, container, false)
         recycleview = rootView?.findViewById(R.id.recycleview)
-        presenter = InsurancePresenter(this, activity as Activity)
+        presenter = DocumentNotReadyPresenter(this, activity as Activity)
         recycleview?.layoutManager = Constant.getVerticalLayout(activity!!)
         val entryForm = rootView?.findViewById<Button>(R.id.entryForm)
         entryForm?.visibility = View.GONE
@@ -90,9 +90,9 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
 
     companion object {
         var insuranceName: List<Master>? = null
-        fun getInstance(insuranceNamee: List<Master>): InsuranceListFragment {
+        fun getInstance(insuranceNamee: List<Master>): DocumentListFragment {
             insuranceName = insuranceNamee
-            return InsuranceListFragment()
+            return DocumentListFragment()
         }
     }
 }

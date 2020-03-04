@@ -83,7 +83,7 @@ class NewInsuranceForm : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val rootView = inflater.inflate(R.layout.new_insurance_entry_form, container, false)
+        val rootView = inflater.inflate(R.layout.claim_registration_shg, container, false)
         setId(rootView)
 
         checkBox1?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -118,11 +118,11 @@ class NewInsuranceForm : BaseFragment() {
                     .sneakError()
             } else if (nameOfnomminee?.text.toString().isEmpty()) {
                 Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                    .setTitle("Please enter name of nominee ")
+                    .setTitle("Please enter name of nominee")
                     .sneakError()
             } else if (contactnoofnominee?.text.toString().isEmpty()) {
                 Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                    .setTitle("Please enter mobile no of nominee ")
+                    .setTitle("Please enter mobile no of nominee")
                     .sneakError()
             } else if (datePicker?.text.toString().isEmpty()) {
                 Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
@@ -194,8 +194,7 @@ class NewInsuranceForm : BaseFragment() {
                     createInsurance.enqueue(object : Callback<String> {
                         override fun onResponse(
                             call: Call<String>,
-                            response: Response<String>
-                        ) {
+                            response: Response<String>) {
                             DialogUtil.stopProgressDisplay()
                             val fullResponse = response.body()
                             val XmlString =
@@ -219,7 +218,7 @@ class NewInsuranceForm : BaseFragment() {
 
                         override fun onFailure(call: Call<String>, t: Throwable) {
                             DialogUtil.stopProgressDisplay()
-                            val toast = Toast.makeText(activity, t.toString(), Toast.LENGTH_SHORT)
+                            val toast = Toast.makeText(activity, "Server Error Please Try Again", Toast.LENGTH_SHORT)
                             toast.show()
                             Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
                                 .setTitle(t.toString())
@@ -289,11 +288,11 @@ class NewInsuranceForm : BaseFragment() {
                 id: Long
             ) {
                 clustercode = arraylistPanchyat[position].clustercode
-                arrayListBlock =
+               val arrayListBlock =
                     Select.from<Table3Db>(
                         Table3Db::class.java
                     ).where(
-                        Condition.prop("clustercode").eq(arraylistPanchyat[position].clustercode)
+                        Condition.prop("clustercode").eq(clustercode)
                     )
                         .list() as ArrayList<Table3Db>
                 val adapterBlock: ArrayAdapter<Table3Db> = ArrayAdapter<Table3Db>(
@@ -301,7 +300,7 @@ class NewInsuranceForm : BaseFragment() {
                     R.layout.spiner_row_new,
                     arrayListBlock!!
                 )
-                spinnerVillage?.setAdapter(adapterBlock)
+                spinnerVillage?.adapter = adapterBlock
             }
 
         }
@@ -321,10 +320,18 @@ class NewInsuranceForm : BaseFragment() {
                     Select.from<Table4Db>(
                         Table4Db::class.java
                     ).where(
-                        Condition.prop("clustercode").eq(clustercode),
-                        Condition.prop("villagecode").eq(arrayListBlock?.get(position)?.villagecode)
+                        Condition.prop("clustercode").eq(clustercode)/*,
+                        Condition.prop("villagecode").eq(arrayListBlock?.get(position)?.villagecode)*/
                     )
                         .list() as ArrayList<Table4Db>
+                Select.from<Table3Db>(
+                    Table3Db::class.java
+                ).where(
+                    Condition.prop("clustercode").eq(clustercode)/*,
+                        Condition.prop("villagecode").eq(arrayListBlock?.get(position)?.villagecode)*/
+                )
+                    .list() as ArrayList<Table4Db>
+
                 val adapterBlock: ArrayAdapter<Table4Db> = ArrayAdapter<Table4Db>(
                     activity!!,
                     R.layout.spiner_row_new,
@@ -390,8 +397,7 @@ class NewInsuranceForm : BaseFragment() {
                 bankCode = arraylistBank[position].bankcode
                 arrayListBranch =
                     Select.from<Table5Db>(
-                        Table5Db::class.java
-                    ).where(
+                        Table5Db::class.java).where(
                         Condition.prop("bankcode").eq(arraylistBank[position].bankcode)
                     )
                         .list() as ArrayList<Table5Db>
@@ -462,8 +468,6 @@ class NewInsuranceForm : BaseFragment() {
         spinnerBranch = rootView.findViewById<Spinner>(R.id.sppiner_branch)
         spinnerShg = rootView.findViewById<Spinner>(R.id.sppiner_shg)
         radioGroup = rootView.findViewById<RadioGroup>(R.id.radioSex)
-
-//        Toast.makeText(activity, radioButton?.getText(), Toast.LENGTH_SHORT).show();
 
     }
 

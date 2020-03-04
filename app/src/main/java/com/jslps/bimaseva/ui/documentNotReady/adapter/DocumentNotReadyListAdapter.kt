@@ -1,5 +1,4 @@
-package com.jslps.bimaseva.ui.insuranceList.adapter
-
+package com.jslps.bimaseva.ui.documentNotReady.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -16,8 +15,8 @@ import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
 import com.jslps.bimaseva.model.Master
 
 
-class InsuranceListAdapter(items: ArrayList<Master>, activity: Context, insuranceName: String) :
-    RecyclerView.Adapter<InsuranceListAdapter.ViewHolder>() {
+class DocumentNotReadyListAdapter(items: ArrayList<Master>, activity: Context, insuranceName: String) :
+    RecyclerView.Adapter<DocumentNotReadyListAdapter.ViewHolder>() {
 
     var itemList: ArrayList<Master>? = items
     var context: Context? = activity
@@ -46,34 +45,6 @@ class InsuranceListAdapter(items: ArrayList<Master>, activity: Context, insuranc
                 mListner?.onListItemSelected(p1, masterModel)
             }
         }
-        /*if (selectedPosition != -1) {
-            if (selectedPosition == p1) {
-                p0.buttonLayout.setVisibility(View.VISIBLE);
-                p0.downArrow.setVisibility(View.GONE);
-                p0.upArrow.setVisibility(View.VISIBLE);
-            } else {
-                p0.upArrow.setVisibility(View.GONE);
-                p0.downArrow.setVisibility(View.VISIBLE);
-                p0.buttonLayout.setVisibility(View.GONE);
-
-            }
-        }*/
-        /*p0.downArrow.setOnClickListener(View.OnClickListener {
-            selectedPosition = p0.getAdapterPosition()
-            notifyItemChanged(selectedPosition)
-            p0.buttonLayout.setVisibility(View.GONE)
-            p0.downArrow.setVisibility(View.GONE)
-            p0.upArrow.setVisibility(View.VISIBLE)
-            notifyItemRangeChanged(0, itemCount)
-        })
-        p0.upArrow.setOnClickListener(View.OnClickListener {
-            //selectedPosition = holder.getAdapterPosition();
-            // notifyItemChanged(selectedPosition);
-            p0.buttonLayout.setVisibility(View.GONE)
-            p0.downArrow.setVisibility(View.VISIBLE)
-            p0.upArrow.setVisibility(View.GONE)
-            //notifyItemRangeChanged(0, getItemCount());
-        })*/
 
     }
 
@@ -85,8 +56,6 @@ class InsuranceListAdapter(items: ArrayList<Master>, activity: Context, insuranc
         var contactNo: TextView = mView.findViewById(R.id.contactNo)
         var block: TextView = mView.findViewById(R.id.block)
         var village: TextView = mView.findViewById(R.id.village)
-        /*var downArrow: ImageView = mView.findViewById(R.id.moreInfoDown)
-        var upArrow: ImageView = mView.findViewById(R.id.moreInfoUp)*/
         var document: ImageView = mView.findViewById(R.id.doucment)
         var actionButton: Button = mView.findViewById(R.id.actionButton)
         var uploadDocument: Button = mView.findViewById(R.id.uploadDocument)

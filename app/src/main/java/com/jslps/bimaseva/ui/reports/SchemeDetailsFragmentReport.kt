@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.R
@@ -14,6 +15,7 @@ import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.MasterX
 
 import com.jslps.bimaseva.ui.BaseFragment
+import com.jslps.bimaseva.ui.home.HomePresenter
 import com.jslps.bimaseva.ui.reports.adapter.SchemeListAdapterReport
 
 class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnFragmentListItemSelectListener {
@@ -69,6 +71,8 @@ class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnF
         recycleview = rootView?.findViewById(R.id.recycleview)
         presenter = SchemeDetailsPresenterReport(this, activity as Activity)
         recycleview?.layoutManager = Constant.gridLayout(activity,2)
+        var entryForm = rootView?.findViewById<Button>(R.id.entryForm)
+        entryForm?.visibility = View.GONE
         presenter?.resume()
         return rootView!!
     }

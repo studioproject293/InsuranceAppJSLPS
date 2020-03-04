@@ -160,7 +160,7 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        rootView = inflater.inflate(R.layout.insurace_details, container, false)
+        rootView = inflater.inflate(R.layout.insurace_details_new, container, false)
         val nameOfInsurance: TextView? = rootView?.findViewById(R.id.insuranceName)
         val textHeading: TextView? = rootView?.findViewById(R.id.textHeading)
         textHeading?.text = "Claim Document Submitted at Bank. "
@@ -169,12 +169,12 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
         val block: TextView? = rootView?.findViewById(R.id.block)
         val village: TextView? = rootView?.findViewById(R.id.village)
         document = rootView?.findViewById(R.id.doucment)
-        var actionButton: Button? = rootView?.findViewById(R.id.actionButton)
-        var documentReadybutnotsubmit: Button? =
+        val actionButton: Button? = rootView?.findViewById(R.id.actionButton)
+        val documentReadybutnotsubmit: Button? =
             rootView?.findViewById(R.id.documentReadybutnotsubmit)
         val uploadDocument: Button? = rootView?.findViewById(R.id.uploadDocument)
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
-        documentReadybutnotsubmit?.visibility = View.GONE
+        documentReadybutnotsubmit?.visibility = View.INVISIBLE
         nomineeName?.text = insuranceNameeee?.Name
         block?.text = insuranceNameeee?.Blockname
         // block?.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.move));
@@ -183,7 +183,7 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
         bankbranch?.text = insuranceNameeee?.BranchName
         nameOfInsurance?.text = insuranceNameeee?.insuranceNamee
         presenter = UnderProcessDetailsPresenter(this, activity as Activity)
-        actionButton?.setText("Claim Settled")
+        actionButton?.text = "Claim Settled"
         actionButton?.setOnClickListener {
             if (TextUtils.isEmpty(encodedBase64)) {
                 val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)

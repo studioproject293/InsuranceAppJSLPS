@@ -1,6 +1,8 @@
 package com.jslps.bimaseva.ui.insuranceList
 
 import android.app.Activity
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.base.BasePresenter
@@ -11,8 +13,6 @@ import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.model.UploadRegisterData
 import com.jslps.bimaseva.network.ServiceUpdateListner
 import com.jslps.bimaseva.network.UploadRegisterDocument
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.twidpay.beta.model.ApiRequest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

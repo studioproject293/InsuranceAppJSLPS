@@ -4,12 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jslps.bimaseva.R
 import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
 
-class CardListAdapter( items: ArrayList<String>, activity: Context) : RecyclerView.Adapter<CardListAdapter.ViewHolder>() {
+class CardListAdapter(items: ArrayList<String>, activity: Context) :
+    RecyclerView.Adapter<CardListAdapter.ViewHolder>() {
 
     var itemList: ArrayList<String>? = items
     var context: Context? = activity
@@ -24,13 +26,20 @@ class CardListAdapter( items: ArrayList<String>, activity: Context) : RecyclerVi
     }
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-        p0.title.text= itemList!![p1]
-        p0.view.setOnClickListener { mListner?.onListItemSelected(p1,itemList!![p1]) }
+        p0.title.text = itemList!![p1]
+        when (p1) {
+            1 -> p0.homeicon.setImageResource(R.drawable.pmjayicon)
+            2 -> p0.homeicon.setImageResource(R.drawable.pmsbyicon)
+            3 -> p0.homeicon.setImageResource(R.drawable.imagedownload)
+            else -> p0.homeicon.setImageResource(R.drawable.insurance)
+        }
+        p0.view.setOnClickListener { mListner?.onListItemSelected(p1, itemList!![p1]) }
     }
 
     inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
 
         var title: TextView = mView.findViewById(R.id.title)
+        var homeicon: ImageView = mView.findViewById(R.id.homeicon)
         internal var view: View = mView
 
     }

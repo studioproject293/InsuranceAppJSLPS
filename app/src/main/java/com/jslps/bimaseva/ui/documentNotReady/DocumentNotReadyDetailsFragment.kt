@@ -1,4 +1,4 @@
-package com.jslps.bimaseva.ui.insuranceList
+package com.jslps.bimaseva.ui.documentNotReady
 
 import android.Manifest
 import android.app.Activity
@@ -30,7 +30,7 @@ import com.jslps.bimaseva.ui.BaseFragment
 
 import java.io.*
 
-class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListItemSelectListener {
+class DocumentNotReadyDetailsFragment : BaseFragment(), DocumentNotReadyView, OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
         val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
         toast.show()
@@ -76,7 +76,7 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
     var encodedBase64: String? = null
     var REQUEST_CAMERA = 0
     var SELECT_FILE = 1
-    var presenter: InsurancePresenter? = null
+    var presenter: DocumentNotReadyPresenter? = null
     private var rootView: View? = null
     override fun onResume() {
         super.onResume()
@@ -136,10 +136,6 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
 
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                 }
                 return
             }
@@ -149,7 +145,7 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        rootView = inflater.inflate(R.layout.insurace_details, container, false)
+        rootView = inflater.inflate(R.layout.document_not_ready_details, container, false)
         val nameOfInsurance: TextView? = rootView?.findViewById(R.id.insuranceName)
         val textHeading: TextView? = rootView?.findViewById(R.id.textHeading)
         val nomineeName: TextView? = rootView?.findViewById(R.id.nomineeInsurance)
@@ -158,7 +154,6 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
         val village: TextView? = rootView?.findViewById(R.id.village)
         document = rootView?.findViewById(R.id.doucment)
         var actionButton: Button? = rootView?.findViewById(R.id.actionButton)
-        var documentReadybutnotsubmit: Button? = rootView?.findViewById(R.id.documentReadybutnotsubmit)
         val uploadDocument: Button? = rootView?.findViewById(R.id.uploadDocument)
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
         nomineeName?.text = insuranceNameeee?.Name
@@ -168,11 +163,7 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
         contactNo?.text = insuranceNameeee?.Phno_ofNominee
         bankbranch?.text = insuranceNameeee?.BranchName
         nameOfInsurance?.text = insuranceNameeee?.insuranceNamee
-        presenter = InsurancePresenter(this, activity as Activity)
-        actionButton?.text = "Under Process"
-        documentReadybutnotsubmit?.setOnClickListener {
-            presenter?.documentReadyService(insuranceNameeee);
-        }
+        presenter = DocumentNotReadyPresenter(this, activity as Activity)
         actionButton?.setOnClickListener {
             if (TextUtils.isEmpty(encodedBase64)) {
                 val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
@@ -343,9 +334,9 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
 
     companion object {
         var insuranceNameeee: Master? = null
-        fun getInstance(insuranceNamee: Master): InsuranceDetailsFragment {
+        fun getInstance(insuranceNamee: Master): DocumentNotReadyDetailsFragment {
             insuranceNameeee = insuranceNamee
-            return InsuranceDetailsFragment()
+            return DocumentNotReadyDetailsFragment()
         }
     }
 }

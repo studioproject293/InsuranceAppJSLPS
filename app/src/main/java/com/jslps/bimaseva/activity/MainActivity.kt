@@ -1,8 +1,10 @@
 package com.jslps.bimaseva.activity
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
+
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentManager
@@ -20,6 +22,8 @@ import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.ui.NewInsuranceForm
 import com.jslps.bimaseva.ui.claimSetteled.ClaimSetteledDetailsFragment
+import com.jslps.bimaseva.ui.documentNotReady.DocumentListFragment
+import com.jslps.bimaseva.ui.documentNotReady.DocumentNotReadyDetailsFragment
 import com.jslps.bimaseva.ui.insuranceList.InsuranceDetailsFragment
 import com.jslps.bimaseva.ui.insuranceList.InsuranceListFragment
 import com.jslps.bimaseva.ui.reports.SchemeDetailsFragmentReport
@@ -27,7 +31,7 @@ import com.jslps.bimaseva.ui.underProcess.UnderProcessDetailsFragment
 
 
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
-    private var mFragmentManager : FragmentManager? = null
+    private var mFragmentManager: FragmentManager? = null
     private var mFragmentTag: String? = null
     private var mCurrentFragment: Int = 0
     internal var toolbar_home: Toolbar? = null
@@ -49,9 +53,11 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
             Constant.HOME_FRAGMENT -> {
                 mFragmentManager?.beginTransaction()!!.setCustomAnimations(
                     android.R.anim.slide_in_left,
-                    android.R.anim.slide_out_right)
+                    android.R.anim.slide_out_right
+                )
                     .addToBackStack(mFragmentTag)
-                    .replace(R.id.fragment_main, HomeFragment(), mFragmentTag).commitAllowingStateLoss()
+                    .replace(R.id.fragment_main, HomeFragment(), mFragmentTag)
+                    .commitAllowingStateLoss()
             }
             Constant.SCHEME_DETAILS_FRAGMENT -> {
                 mFragmentManager?.beginTransaction()!!.setCustomAnimations(
@@ -59,7 +65,11 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                     android.R.anim.slide_out_right
                 )
                     .addToBackStack(mFragmentTag)
-                    .replace(R.id.fragment_main, SchemeDetailsFragment.getInstance(data as String), mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        SchemeDetailsFragment.getInstance(data as String),
+                        mFragmentTag
+                    )
                     .commitAllowingStateLoss()
             }
             Constant.INSURANCE_LIST_FRAGMENT -> {
@@ -68,7 +78,24 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                     android.R.anim.slide_out_right
                 )
                     .addToBackStack(mFragmentTag)
-                    .replace(R.id.fragment_main, InsuranceListFragment.getInstance(data as List<Master>), mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        InsuranceListFragment.getInstance(data as List<Master>),
+                        mFragmentTag
+                    )
+                    .commitAllowingStateLoss()
+            }
+            Constant.DOCUMENT_LIST_FRAGMENT -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                    .addToBackStack(mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        DocumentListFragment.getInstance(data as List<Master>),
+                        mFragmentTag
+                    )
                     .commitAllowingStateLoss()
             }
             Constant.INSURANCE_DETAILS_FRAGMENT -> {
@@ -77,7 +104,11 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                     android.R.anim.slide_out_right
                 )
                     .addToBackStack(mFragmentTag)
-                    .replace(R.id.fragment_main, InsuranceDetailsFragment.getInstance(data as Master), mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        InsuranceDetailsFragment.getInstance(data as Master),
+                        mFragmentTag
+                    )
                     .commitAllowingStateLoss()
             }
             Constant.UNDER_PROCESS_DETAILS_FRAGMENT -> {
@@ -86,7 +117,11 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                     android.R.anim.slide_out_right
                 )
                     .addToBackStack(mFragmentTag)
-                    .replace(R.id.fragment_main, UnderProcessDetailsFragment.getInstance(data as Master), mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        UnderProcessDetailsFragment.getInstance(data as Master),
+                        mFragmentTag
+                    )
                     .commitAllowingStateLoss()
             }
             Constant.CLAIM_SETTELED_DETAILS_FRAGMENT -> {
@@ -95,7 +130,11 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                     android.R.anim.slide_out_right
                 )
                     .addToBackStack(mFragmentTag)
-                    .replace(R.id.fragment_main, ClaimSetteledDetailsFragment.getInstance(data as Master), mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        ClaimSetteledDetailsFragment.getInstance(data as Master),
+                        mFragmentTag
+                    )
                     .commitAllowingStateLoss()
             }
             Constant.REPORTS_DETAILS_FRAGMENT -> {
@@ -104,7 +143,11 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                     android.R.anim.slide_out_right
                 )
                     .addToBackStack(mFragmentTag)
-                    .replace(R.id.fragment_main, SchemeDetailsFragmentReport.getInstance(), mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        SchemeDetailsFragmentReport.getInstance(),
+                        mFragmentTag
+                    )
                     .commitAllowingStateLoss()
             }
             Constant.ENTRY_FORM_INSURANCE -> {
@@ -116,6 +159,14 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                     .replace(R.id.fragment_main, NewInsuranceForm.getInstance(), mFragmentTag)
                     .commitAllowingStateLoss()
             }
+            Constant.Document_DETAILS_FRAGMRNT -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right)
+                    .addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, DocumentNotReadyDetailsFragment.getInstance(data as Master), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
         }
     }
 
@@ -123,6 +174,10 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
         when (type) {
             Constant.setTitle -> {
                 val headerData = data as HeaderData
+                if (headerData.isLogoRequired)
+                    toolbar_home?.visibility = View.GONE
+                else
+                    toolbar_home?.visibility = View.VISIBLE
                 toolbar_title?.text = headerData.text
             }
         }
@@ -139,7 +194,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
     }
 
     fun closeApp() {
-        val alertDialogBuilder = AlertDialog.Builder(this)
+        val alertDialogBuilder = AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
         alertDialogBuilder.setMessage(getString(R.string.exit_message))
         alertDialogBuilder.setPositiveButton(getString(R.string.yes)) { arg0, arg1 -> finish() }
         alertDialogBuilder.setNegativeButton(getString(R.string.no)) { dialog, which -> dialog.dismiss() }
