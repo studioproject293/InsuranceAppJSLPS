@@ -20,6 +20,7 @@ import android.os.Handler
 import android.text.TextUtils
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,10 +37,12 @@ import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.R
 import com.jslps.bimaseva.activity.adapter.MyCustomPagerAdapter
+import com.jslps.bimaseva.adapter.HeadingWelcomePageListAdapter
+import com.jslps.bimaseva.model.welcomePageReports.BaseClassReportsWelcomwPage
+import com.jslps.bimaseva.model.welcomePageReports.BaseClassReportsWelcomwPageMain
 import com.jslps.bimaseva.network.LoginServiceNew
+import com.jslps.bimaseva.network.WelcomePageReports
 import com.orm.SugarRecord
-import com.orm.query.Select
-import kotlinx.android.synthetic.main.activity_welcome_new_designe.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -49,6 +52,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 class WelcomeActivity : AppCompatActivity() {
     internal var images = intArrayOf(R.drawable.pmjby, R.drawable.pmsby, R.drawable.apy)
@@ -150,7 +154,8 @@ class WelcomeActivity : AppCompatActivity() {
         }, 500, 3000)
 
         viewPager!!.addOnPageChangeListener(viewPagerPageChangeListener)
-        val text = findViewById<TextView>(R.id.text)
+//        updateReportData()
+       /* val text = findViewById<TextView>(R.id.text)
         val array = intArrayOf(
             R.string.loading_msg,
             R.string.yes,
@@ -159,8 +164,8 @@ class WelcomeActivity : AppCompatActivity() {
             R.string.logout_message
         )
         text.post(object : Runnable {
-            internal var i = 0
-            public override fun run() {
+             var i = 0
+            override fun run() {
                 text.setText(array[i])
                 i++
                 if (i == 5)
@@ -168,7 +173,7 @@ class WelcomeActivity : AppCompatActivity() {
                 text.postDelayed(this, 5000)
             }
         })
-
+*/
         logIn!!.setOnClickListener { showCustomDialog() }
         val shake = AnimationUtils.loadAnimation(this, R.anim.shake1)
         val handler1 = Handler()
@@ -179,6 +184,57 @@ class WelcomeActivity : AppCompatActivity() {
         handler1.postDelayed(r, 1000)
 
 
+    }
+
+    private fun updateReportData() {
+        if (DialogUtil.isConnectionAvailable(this@WelcomeActivity)) {
+            DialogUtil.displayProgress(this@WelcomeActivity)
+            val gson = GsonBuilder().setLenient().create()
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            val builder = OkHttpClient.Builder()
+            //comment in live build and uncomment in uat
+            builder.interceptors().add(interceptor)
+            builder.connectTimeout(250, TimeUnit.SECONDS)
+            builder.readTimeout(250, TimeUnit.SECONDS)
+            val client = builder.build()
+            val retrofit =
+                Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
+                    .addConverterFactory(
+                        ScalarsConverterFactory.create()
+                    ).client(client).build()
+            val apiServices = retrofit.create(WelcomePageReports::class.java)
+            val changePhotoResponseModelCall =
+                apiServices.getWelcomePageReports("")
+            changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                override fun onResponse(
+                    call: Call<String>,
+                    response: Response<String>) {
+                    val fullResponse = response.body()
+                    val XmlString =
+                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                    val result = XmlString?.replace(("</string>").toRegex(), "")
+                    val mStudentObject1 =
+                        gson.fromJson(result, BaseClassReportsWelcomwPageMain::class.java)
+                    val gson = Gson()
+                    Log.d("fddgsgs", "Body of Update product" + gson.toJson(mStudentObject1))
+
+//                     var headingWelcomePageListAdapter=HeadingWelcomePageListAdapter(mStudentObject1,this@WelcomeActivity)
+
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    DialogUtil.stopProgressDisplay()
+                    Sneaker.with(this@WelcomeActivity) // Activity, Fragment or ViewGroup
+                        .setTitle(t.toString())
+                        .sneakError()
+                }
+            })
+        } else {
+            Sneaker.with(this@WelcomeActivity) // Activity, Fragment or ViewGroup
+                .setTitle(Constant.NO_INTERNET)
+                .sneakError()
+        }
     }
 
     private fun showCustomDialog() {

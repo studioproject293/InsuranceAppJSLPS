@@ -20,6 +20,7 @@ object Constant {
     const val setTitle = 1111
     const val UPDATE__NO_INTERNET = 209
     const val API_BASE_URL = "http://swalekha.in/webServiceModalPopup.asmx/"
+    const val API_BASE_URL_JICA = "http://jica.swalekha.in/Webservices/DataDownloadWebService.asmx/"
     const val NO_INTERNET = "No Internet Connection"
     fun getHorizontalLayout(context: Activity): RecyclerView.LayoutManager {
         return LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)

@@ -19,53 +19,53 @@
                 android:textColorHint="#000">
 
             <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:id="@+id/name"
                     android:textColor="#000"
                     android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
-       <!-- <TextView
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
-                android:textSize="12sp"
-                android:layout_marginTop="5dp"
-                android:textColor="#000"
-                android:layout_marginLeft="10dp"
-                android:text="Select Gender"
-                android:background="#FFFFFF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        <RadioGroup
-                android:id="@+id/radioSex"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="1"
-                android:layout_margin="10dp"
-                android:layout_height="wrap_content" >
+        <!-- <TextView
+                 android:paddingStart="2dp"
+                 android:paddingEnd="2dp"
+                 android:textSize="12sp"
+                 android:layout_marginTop="5dp"
+                 android:textColor="#000"
+                 android:layout_marginLeft="10dp"
+                 android:text="Select Gender"
+                 android:background="#FFFFFF"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"/>
+         <RadioGroup
+                 android:id="@+id/radioSex"
+                 android:layout_width="match_parent"
+                 android:orientation="horizontal"
+                 android:weightSum="1"
+                 android:layout_margin="10dp"
+                 android:layout_height="wrap_content" >
 
-            <RadioButton
-                    android:id="@+id/radioMale"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="match_parent"
-                    android:text="Male"
-                    android:checked="true"
-                    android:textColor="#000"
-                    android:buttonTint="@color/colorAccent" />
+             <RadioButton
+                     android:id="@+id/radioMale"
+                     android:layout_width="0dp"
+                     android:layout_weight="0.5"
+                     android:layout_height="match_parent"
+                     android:text="Male"
+                     android:checked="true"
+                     android:textColor="#000"
+                     android:buttonTint="@color/colorAccent" />
 
-            <RadioButton
-                    android:id="@+id/radioFemale"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
+             <RadioButton
+                     android:id="@+id/radioFemale"
+                     android:layout_width="0dp"
+                     android:layout_weight="0.5"
 
-                    android:textColor="#000"
-                    android:buttonTint="@color/colorAccent"
-                    android:layout_height="wrap_content"
-                    android:text="Female" />
+                     android:textColor="#000"
+                     android:buttonTint="@color/colorAccent"
+                     android:layout_height="wrap_content"
+                     android:text="Female" />
 
-        </RadioGroup>-->
+         </RadioGroup>-->
 
         <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -97,9 +97,9 @@
                     android:id="@+id/contactnoofnominee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:inputType="phone"
                     android:maxLength="10"
+                    android:singleLine="true"
                     android:textColor="#000"
                     android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -110,206 +110,34 @@
                 android:layout_marginTop="10dp">
 
             <FrameLayout
-                    android:layout_marginTop="6dp"
-                    android:background="@drawable/drawable_spinner_border"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/drawable_spinner_border">
 
                 <Spinner
-                        android:layout_marginTop="5dp"
-                        android:id="@+id/edit_type"
+                        android:id="@+id/sppiner_district"
                         android:layout_width="match_parent"
-                        android:textSize="12sp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
                         android:backgroundTint="#000"
                         android:spinnerMode="dropdown"
-                        android:layout_height="40dp"/>
+                        android:textSize="12sp" />
             </FrameLayout>
 
             <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="#FFFFFF"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"
-                    android:layout_marginBottom="15dp"
-                    android:textSize="12sp"
-                    android:textColor="#000"
-                    android:layout_marginLeft="10dp"
                     android:text="Select District"
-                    android:background="#FFFFFF"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-        </FrameLayout>
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
-
-        <FrameLayout
-                android:layout_marginTop="10dp"
-                android:background="@drawable/drawable_spinner_border"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            <Spinner
-                    android:id="@+id/spinner_block"
-                    android:layout_width="match_parent"
-                    android:textSize="12sp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:backgroundTint="#000"
-                    android:spinnerMode="dropdown"
-                    android:layout_height="40dp" />
-        </FrameLayout>
-
-            <TextView
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
-                    android:layout_marginBottom="15dp"
-                    android:textSize="12sp"
                     android:textColor="#000"
-                    android:layout_marginLeft="10dp"
-                    android:text="Select BLock"
-                    android:background="#FFFFFF"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-        </FrameLayout>
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
-
-        <FrameLayout
-                android:layout_marginTop="10dp"
-                android:background="@drawable/drawable_spinner_border"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            <Spinner
-                    android:id="@+id/spinner_panchayt"
-                    android:layout_width="match_parent"
-                    android:textSize="12sp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:backgroundTint="#000"
-                    android:spinnerMode="dropdown"
-                    android:layout_height="40dp" />
-        </FrameLayout>
-
-            <TextView
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
-                    android:layout_marginBottom="15dp"
-                    android:textSize="12sp"
-                    android:textColor="#000"
-                    android:layout_marginLeft="10dp"
-                    android:text="Select Panchayat"
-                    android:background="#FFFFFF"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-        </FrameLayout>
-
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
-
-        <FrameLayout
-                android:layout_marginTop="10dp"
-                android:background="@drawable/drawable_spinner_border"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            <Spinner
-                    android:id="@+id/spinner_village"
-                    android:layout_width="match_parent"
-                    android:textSize="12sp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:backgroundTint="#000"
-                    android:spinnerMode="dropdown"
-                    android:layout_height="40dp" />
-        </FrameLayout>
-
-            <TextView
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
-                    android:layout_marginBottom="15dp"
-                    android:textSize="12sp"
-                    android:textColor="#000"
-                    android:layout_marginLeft="10dp"
-                    android:text="Select Village"
-                    android:background="#FFFFFF"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-        </FrameLayout>
-
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
-
-        <FrameLayout
-                android:layout_marginTop="10dp"
-                android:background="@drawable/drawable_spinner_border"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            <Spinner
-                    android:id="@+id/sppiner_shg"
-                    android:layout_width="match_parent"
-                    android:textSize="12sp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:backgroundTint="#000"
-                    android:spinnerMode="dropdown"
-                    android:layout_height="40dp" />
-        </FrameLayout>
-
-            <TextView
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
-                    android:layout_marginBottom="15dp"
-                    android:textSize="12sp"
-                    android:textColor="#000"
-                    android:layout_marginLeft="10dp"
-                    android:text="Select SHG"
-                    android:background="#FFFFFF"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-        </FrameLayout>
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
-
-        <FrameLayout
-                android:layout_marginTop="10dp"
-                android:background="@drawable/drawable_spinner_border"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            <Spinner
-                    android:id="@+id/sppiner_bank"
-                    android:layout_width="match_parent"
-                    android:textSize="12sp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:backgroundTint="#000"
-                    android:spinnerMode="dropdown"
-                    android:layout_height="40dp" />
-        </FrameLayout>
-
-            <TextView
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
-                    android:layout_marginBottom="15dp"
-                    android:textSize="12sp"
-                    android:textColor="#000"
-                    android:layout_marginLeft="10dp"
-                    android:text="Select Bank"
-                    android:background="#FFFFFF"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="12sp" />
         </FrameLayout>
 
         <FrameLayout
@@ -317,72 +145,244 @@
                 android:layout_height="60dp">
 
             <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/drawable_spinner_border"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:background="@drawable/drawable_spinner_border">
 
-            <Spinner
-                    android:id="@+id/sppiner_branch"
-                    android:layout_width="match_parent"
-                    android:textSize="12sp"
-                    android:layout_gravity="center"
+                <Spinner
+                        android:id="@+id/spinner_block"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:backgroundTint="#000"
+                        android:spinnerMode="dropdown"
+                        android:textSize="12sp" />
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:backgroundTint="#000"
-                    android:spinnerMode="dropdown"
-                    android:layout_height="40dp" />
+                    android:layout_marginBottom="15dp"
+                    android:background="#FFFFFF"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="Select BLock"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
         </FrameLayout>
 
-        <TextView
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
-                android:layout_marginBottom="15dp"
-                android:textSize="12sp"
-                android:textColor="#000"
-                android:layout_marginLeft="10dp"
-                android:text="Select Branch"
-                android:background="#FFFFFF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-    </FrameLayout>
         <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
 
-        <FrameLayout
-                android:layout_marginTop="10dp"
-                android:background="@drawable/drawable_spinner_border"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/drawable_spinner_border">
 
-        <TextView
-                android:layout_width="match_parent"
-                android:textSize="12sp"
-                android:gravity="center_vertical"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-
-                android:layout_marginLeft="10dp"
-                android:backgroundTint="#000"
-                android:spinnerMode="dropdown"
-                android:layout_height="40dp"
-                android:id="@+id/datepicker"
-                android:textColor="#000"
-                />
-        </FrameLayout>
+                <Spinner
+                        android:id="@+id/spinner_panchayt"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:backgroundTint="#000"
+                        android:spinnerMode="dropdown"
+                        android:textSize="12sp" />
+            </FrameLayout>
 
             <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="#FFFFFF"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"
+                    android:text="Select Panchayat"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
+        </FrameLayout>
+
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/drawable_spinner_border">
+
+                <Spinner
+                        android:id="@+id/spinner_village"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:backgroundTint="#000"
+                        android:spinnerMode="dropdown"
+                        android:textSize="12sp" />
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="#FFFFFF"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="Select Village"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
+        </FrameLayout>
+
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/drawable_spinner_border">
+
+                <Spinner
+                        android:id="@+id/sppiner_shg"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:backgroundTint="#000"
+                        android:spinnerMode="dropdown"
+                        android:textSize="12sp" />
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="#FFFFFF"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="Select SHG"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
+        </FrameLayout>
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/drawable_spinner_border">
+
+                <Spinner
+                        android:id="@+id/sppiner_bank"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:backgroundTint="#000"
+                        android:spinnerMode="dropdown"
+                        android:textSize="12sp" />
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="#FFFFFF"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="Select Bank"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
+        </FrameLayout>
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/drawable_spinner_border">
+
+                <Spinner
+                        android:id="@+id/sppiner_branch"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:backgroundTint="#000"
+                        android:spinnerMode="dropdown"
+                        android:textSize="12sp" />
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="#FFFFFF"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="Select Branch"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
+        </FrameLayout>
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/drawable_spinner_border">
+
+                <TextView
+                        android:id="@+id/datepicker"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+
+                        android:layout_marginTop="10dp"
+                        android:backgroundTint="#000"
+                        android:gravity="center_vertical"
+                        android:spinnerMode="dropdown"
+                        android:textColor="#000"
+                        android:textSize="12sp" />
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="1dp"
-                    android:textSize="12sp"
-                    android:textColor="#000"
-                    android:layout_marginLeft="10dp"
-                    android:text="Date of Incidence"
                     android:background="#FFFFFF"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="Date of Incidence"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
         </FrameLayout>
 
         <TextView
@@ -411,94 +411,97 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     android:buttonTint="@color/colorAccent"
+                    android:text="PMSBY"
                     android:textColor="#000"
-                    android:text="PMSBY" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
             <CheckBox
                     android:id="@+id/checkBox2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
-                    android:textSize="16sp"
                     android:buttonTint="@color/colorAccent"
-                    android:textStyle="bold"
+                    android:text="PMJJY"
                     android:textColor="#000"
-                    android:text="PMJJY" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
             <CheckBox
                     android:id="@+id/checkBox3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
-                    android:textSize="16sp"
                     android:buttonTint="@color/colorAccent"
-                    android:textStyle="bold"
+                    android:text="PMJAY"
                     android:textColor="#000"
-                    android:text="PMJAY" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
             <CheckBox
                     android:id="@+id/checkBox4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.3"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorAccent"
-                    android:textStyle="bold"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="1.3"
+                    android:buttonTint="@color/colorAccent"
+                    android:text="ASSET Insurance"
                     android:textColor="#000"
-                    android:text="ASSET Insurance" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
         </LinearLayout>
+
         <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name of caller Person"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:hint="Name of caller Person"
                 android:textColorHint="#000">
 
             <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameofcaller"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:textColor="#000"
-                    android:id="@+id/nameofcaller"
                     android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mobile No. Caller"
-
                 android:layout_marginTop="5dp"
+
                 android:layout_marginBottom="10dp"
+                android:hint="Mobile No. Caller"
                 android:textColorHint="#000">
 
             <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mobileofcaller"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:maxLength="10"
                     android:inputType="phone"
+                    android:maxLength="10"
+                    android:singleLine="true"
                     android:textColor="#000"
-                    android:id="@+id/mobileofcaller"
                     android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <Button
+                android:id="@+id/buttonSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/buttonSave"
-                android:text="Save Data"
-                android:textAllCaps="false"
-                android:textStyle="bold"
+                android:layout_margin="20dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
+                android:background="@drawable/buttonshape"
+                android:text="Save Data"
+                android:textAllCaps="false"
                 android:textColor="#FFF"
-                android:layout_margin="20dp"
-                android:background="@drawable/buttonshape"/>
+                android:textStyle="bold" />
     </LinearLayout>
 </ScrollView>

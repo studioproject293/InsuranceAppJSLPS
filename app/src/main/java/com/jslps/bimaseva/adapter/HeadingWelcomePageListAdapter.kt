@@ -4,20 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jslps.bimaseva.R
-import com.jslps.bimaseva.cache.AppCache
-import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
-import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.model.welcomePageReports.BaseClassReportsWelcomwPage
 
 
 class HeadingWelcomePageListAdapter(
-    items: ArrayList<BaseClassReportsWelcomwPage>,
+    items:  ArrayList<BaseClassReportsWelcomwPage>,
     activity: Context,
     insuranceName: String
 ) :

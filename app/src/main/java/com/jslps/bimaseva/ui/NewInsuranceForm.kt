@@ -343,15 +343,13 @@ class NewInsuranceForm : BaseFragment() {
         }
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
             }
 
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long
-            ) {
+                id: Long) {
                 distirctCode = arraylistDistict.get(position).districtcode
                 val arrayListBlock: ArrayList<Table1LoginDb> =
                     Select.from<Table1LoginDb>(

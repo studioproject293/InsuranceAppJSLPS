@@ -13,24 +13,24 @@ class ClaimRegistrationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_claim_registration)
-        linearLayout1 = findViewById(R.id.layout1)
-        linearLayout2 = findViewById(R.id.layout2)
-        linearLayout3 = findViewById(R.id.layout3)
+        linearLayout1 = findViewById(R.id.shgRegistration)
+        linearLayout2 = findViewById(R.id.shgFamilyregistration)
+        linearLayout3 = findViewById(R.id.registrationothers)
       linearLayout1?.setOnClickListener {
-            val intent = Intent(this@ClaimRegistrationActivity, ClaimRegistrationActivityFamilySHGMember::class.java)
+            val intent = Intent(this@ClaimRegistrationActivity, ClaimRegistrationActivitySHGMember::class.java)
             startActivity(intent)
             finish()
         }
-        /* linearLayout2?.setOnClickListener {
-           val intent = Intent(this@ClaimRegistrationActivity, WelcomeActivityNewNext::class.java)
+         linearLayout2?.setOnClickListener {
+           val intent = Intent(this@ClaimRegistrationActivity, ClaimRegistrationActivityFamilySHGMember::class.java)
            startActivity(intent)
            finish()
        }
        linearLayout3?.setOnClickListener {
-           val intent = Intent(this@ClaimRegistrationActivity, WelcomeActivityNewNext::class.java)
+           val intent = Intent(this@ClaimRegistrationActivity, ClaimRegistrationActivityOthers::class.java)
            startActivity(intent)
            finish()
-       }*/
+       }
 
     }
 }
