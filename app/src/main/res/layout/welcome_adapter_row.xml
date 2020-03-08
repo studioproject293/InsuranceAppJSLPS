@@ -28,7 +28,7 @@
 
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="79dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:background="#FFF"
@@ -53,8 +53,8 @@
 
             <TextView
                     android:id="@+id/registerd_count"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/circle_round"
                     android:gravity="center"
                     android:text="10"
@@ -67,12 +67,12 @@
 
         <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="#000" />
 
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="79dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="#FFF"
                 android:gravity="center"
@@ -96,8 +96,8 @@
 
             <TextView
                     android:id="@+id/underprocess_count"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/circle_round"
                     android:gravity="center"
                     android:text="10"
@@ -110,12 +110,12 @@
 
         <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="#000" />
 
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="79dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="#FFF"
                 android:gravity="center"
@@ -139,8 +139,8 @@
 
             <TextView
                     android:id="@+id/completed_count"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/circle_round"
                     android:gravity="center"
                     android:text="10"
@@ -153,13 +153,13 @@
 
         <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="#000" />
 
         <LinearLayout
                 android:id="@+id/layout"
                 android:layout_width="match_parent"
-                android:layout_height="79dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="#FFF"
                 android:gravity="center"
@@ -183,8 +183,8 @@
 
             <TextView
                     android:id="@+id/rejected_count"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/circle_round"
                     android:gravity="center"
                     android:text="10"
@@ -195,9 +195,5 @@
 
         </LinearLayout>
 
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#000" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

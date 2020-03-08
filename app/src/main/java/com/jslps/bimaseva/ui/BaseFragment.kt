@@ -28,20 +28,16 @@ abstract class BaseFragment : Fragment() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onAttach(activity: Activity?) {
-        //    // QLog.m11v("Class:" + getClass().getSimpleName());
-        super.onAttach(activity)
-        mActivity = activity as AppCompatActivity?
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //  // QLog.m11v("Class:" + getClass().getSimpleName());
         super.onCreate(savedInstanceState)
     }
 
-    override fun onInflate(activity: Activity?, attrs: AttributeSet?, savedInstanceState: Bundle?) {
+    override fun onInflate(activity: Activity, attrs: AttributeSet, savedInstanceState: Bundle?) {
         //// // QLog.m11v("Class:" + getClass().getSimpleName());
-        super.onInflate(activity, attrs, savedInstanceState)
+        super.onInflate(activity!!, attrs, savedInstanceState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -85,10 +81,10 @@ abstract class BaseFragment : Fragment() {
         super.onLowMemory()
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
+    override fun onAttach(activity: Activity) {
+        super.onAttach(activity)
         if (context is OnFragmentInteractionListener) {
-            mListener = context
+            mListener = context as OnFragmentInteractionListener
         } else {
             //if(com.olive.upi.transport.TransportConstants.appRelease) Log.d("", "onAttach: mListener is not OnFragmentInteractionListener "+mListener);
             //            throw new RuntimeException(context.toString()

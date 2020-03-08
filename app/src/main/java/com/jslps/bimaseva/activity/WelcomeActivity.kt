@@ -28,6 +28,8 @@ import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.gson.Gson
@@ -37,12 +39,15 @@ import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.R
 import com.jslps.bimaseva.activity.adapter.MyCustomPagerAdapter
+import com.jslps.bimaseva.activity.adapter.MyCustomPagerAdapterReports
 import com.jslps.bimaseva.adapter.HeadingWelcomePageListAdapter
 import com.jslps.bimaseva.model.welcomePageReports.BaseClassReportsWelcomwPage
-import com.jslps.bimaseva.model.welcomePageReports.BaseClassReportsWelcomwPageMain
+import com.jslps.bimaseva.model.welcomePageReports.Listdetails
 import com.jslps.bimaseva.network.LoginServiceNew
 import com.jslps.bimaseva.network.WelcomePageReports
 import com.orm.SugarRecord
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -63,6 +68,7 @@ class WelcomeActivity : AppCompatActivity() {
     private val dots: Array<TextView>? = null
     private val layouts: IntArray? = null
     internal var currentPage = 0
+    internal var currentPage1 = 0
     internal var timer: Timer? = null
     internal var checkBox: CheckBox? = null
     internal var checkboxRember: CheckBox? = null
@@ -74,7 +80,7 @@ class WelcomeActivity : AppCompatActivity() {
     private var reports: TextView? = null
     private var imagerightarrow: ImageView? = null
     private var runningThread = true
-
+    var dotsIndicator:DotsIndicator?=null
     internal var viewPagerPageChangeListener: ViewPager.OnPageChangeListener =
         object : ViewPager.OnPageChangeListener {
 
@@ -90,7 +96,9 @@ class WelcomeActivity : AppCompatActivity() {
 
             }
         }
-
+    var recyclerviewreports: ViewPager? = null
+    val speedScroll = 150;
+    val handler: Handler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar!!.hide()
@@ -107,6 +115,8 @@ class WelcomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_welcome_new_designe)
 
         viewPager = findViewById(R.id.view_pager)
+        recyclerviewreports = findViewById(R.id.recyclerviewreports)
+//        recyclerviewreports = findViewById(R.id.recyclerviewreports)
         reports = findViewById(R.id.reports)
 //        imagerightarrow = findViewById(R.id.imagerightarrow)
         reports?.setOnClickListener {
@@ -154,26 +164,31 @@ class WelcomeActivity : AppCompatActivity() {
         }, 500, 3000)
 
         viewPager!!.addOnPageChangeListener(viewPagerPageChangeListener)
-//        updateReportData()
-       /* val text = findViewById<TextView>(R.id.text)
-        val array = intArrayOf(
-            R.string.loading_msg,
-            R.string.yes,
-            R.string.exit_message,
-            R.string.app_name,
-            R.string.logout_message
-        )
-        text.post(object : Runnable {
-             var i = 0
-            override fun run() {
-                text.setText(array[i])
-                i++
-                if (i == 5)
-                    i = 0
-                text.postDelayed(this, 5000)
-            }
-        })
-*/
+//        recyclerviewreports?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        updateReportData()
+        dotsIndicator = findViewById<DotsIndicator>(R.id.dots_indicator)
+
+        /* val text = findViewById<TextView>(R.id.text)
+         val array = intArrayOf(
+             R.string.loading_msg,
+             R.string.yes,
+             R.string.exit_message,
+             R.string.app_name,
+             R.string.logout_message
+         )
+         text.post(object : Runnable {
+              var i = 0
+             override fun run() {
+                 text.setText(array[i])
+                 i++
+                 if (i == 5)
+                     i = 0
+                 text.postDelayed(this, 5000)
+             }
+         })
+ */
+
         logIn!!.setOnClickListener { showCustomDialog() }
         val shake = AnimationUtils.loadAnimation(this, R.anim.shake1)
         val handler1 = Handler()
@@ -209,17 +224,52 @@ class WelcomeActivity : AppCompatActivity() {
             changePhotoResponseModelCall.enqueue(object : Callback<String> {
                 override fun onResponse(
                     call: Call<String>,
-                    response: Response<String>) {
+                    response: Response<String>
+                ) {
+                    DialogUtil.stopProgressDisplay()
                     val fullResponse = response.body()
                     val XmlString =
                         fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                     val result = XmlString?.replace(("</string>").toRegex(), "")
                     val mStudentObject1 =
-                        gson.fromJson(result, BaseClassReportsWelcomwPageMain::class.java)
+                        gson.fromJson(result, BaseClassReportsWelcomwPage::class.java)
                     val gson = Gson()
                     Log.d("fddgsgs", "Body of Update product" + gson.toJson(mStudentObject1))
 
-//                     var headingWelcomePageListAdapter=HeadingWelcomePageListAdapter(mStudentObject1,this@WelcomeActivity)
+                    val headingWelcomePageListAdapter =
+                        MyCustomPagerAdapterReports(this@WelcomeActivity,
+                            mStudentObject1.master as ArrayList<Listdetails>
+                        )
+                    recyclerviewreports?.adapter = headingWelcomePageListAdapter;
+                    val handler = Handler()
+                    val Update = Runnable {
+                        val NUM_PAGES = mStudentObject1.master.size
+                        if (currentPage1 == NUM_PAGES) {
+                            currentPage1 = 0
+                        }
+                        recyclerviewreports!!.setCurrentItem(currentPage1++,true)
+                    }
+
+                    timer = Timer() // This will create a new Thread
+                    timer?.schedule(object : TimerTask() { // task to be scheduled
+
+                        override fun run() {
+                            handler.post(Update)
+                        }
+                    }, 5000, 5000)
+                    dotsIndicator?.setViewPager(recyclerviewreports!!)
+                    /*var count = 0;
+                    val handler2 = Handler()
+                    val r1 = Runnable {
+                        if(count < mStudentObject1.master.size){
+                            recyclerviewreports?.scrollToPosition(++count);
+
+                        }
+
+                    }
+                    handler2.postDelayed(r1, 1000)
+                    count++*/
+
 
                 }
 

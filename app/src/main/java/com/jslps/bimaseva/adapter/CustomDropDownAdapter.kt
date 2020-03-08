@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.jslps.bimaseva.R
-import com.jslps.bimaseva.model.districtModel.BlockMasterClass
+import com.jslps.bimaseva.model.blockModel.BlockMasterClass
 import com.jslps.bimaseva.model.districtModel.DistrictMasterClass
 
 class CustomDropDownAdapter(val context: Context, val dataType: String, var listItemsTxt: List<*>) :
@@ -38,6 +38,12 @@ class CustomDropDownAdapter(val context: Context, val dataType: String, var list
         } else if (dataType == "block") {
             val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
             vh.label.text = districtMasterClass.get(position).blockName
+        }else if (dataType == "cluster") {
+            val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
+            vh.label.text = districtMasterClass.get(position).clusterName
+        }else if (dataType == "village") {
+            val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
+            vh.label.text = districtMasterClass.get(position).villageName
         }
 
         return view

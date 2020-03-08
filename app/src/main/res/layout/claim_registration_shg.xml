@@ -79,7 +79,6 @@
                     android:id="@+id/nameOfnomminee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:singleLine="true"
                     android:textColor="#000"
                     android:textSize="16sp" />
@@ -118,13 +117,12 @@
                 <Spinner
                         android:id="@+id/sppiner_district"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
                         android:backgroundTint="#000"
                         android:spinnerMode="dropdown"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
             </FrameLayout>
 
             <TextView
@@ -153,7 +151,7 @@
                 <Spinner
                         android:id="@+id/spinner_block"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:backgroundTint="#000"
@@ -187,7 +185,7 @@
                 <Spinner
                         android:id="@+id/spinner_panchayt"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:backgroundTint="#000"
@@ -222,7 +220,7 @@
                 <Spinner
                         android:id="@+id/spinner_village"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:backgroundTint="#000"
@@ -257,7 +255,7 @@
                 <Spinner
                         android:id="@+id/sppiner_shg"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:backgroundTint="#000"
@@ -291,7 +289,7 @@
                 <Spinner
                         android:id="@+id/sppiner_bank"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:backgroundTint="#000"
@@ -325,7 +323,7 @@
                 <Spinner
                         android:id="@+id/sppiner_branch"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:backgroundTint="#000"
@@ -359,7 +357,7 @@
                 <TextView
                         android:id="@+id/datepicker"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
 

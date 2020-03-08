@@ -8,15 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jslps.bimaseva.R
 import com.jslps.bimaseva.model.welcomePageReports.BaseClassReportsWelcomwPage
+import com.jslps.bimaseva.model.welcomePageReports.Listdetails
 
 
 class HeadingWelcomePageListAdapter(
-    items:  ArrayList<BaseClassReportsWelcomwPage>,
-    activity: Context,
-    insuranceName: String
-) :
+    items:  ArrayList<Listdetails>,
+    activity: Context) :
     RecyclerView.Adapter<HeadingWelcomePageListAdapter.ViewHolder>() {
-    var itemList: ArrayList<BaseClassReportsWelcomwPage>? = items
+    var itemList: ArrayList<Listdetails>? = items
     var context: Context? = activity
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val row =
@@ -30,15 +29,17 @@ class HeadingWelcomePageListAdapter(
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         val baseClassReportsWelcomwPage = itemList?.get(p1)
+
         p0.textrowheading.text = baseClassReportsWelcomwPage?.insurance
         p0.completed_count.text =
-            baseClassReportsWelcomwPage?.listdetails?.get(0)?.completed.toString()
+            baseClassReportsWelcomwPage?.completed.toString()
         p0.registerd_count.text =
-            baseClassReportsWelcomwPage?.listdetails?.get(0)?.register.toString()
+            baseClassReportsWelcomwPage?.register.toString()
         p0.rejected_count.text =
-            baseClassReportsWelcomwPage?.listdetails?.get(0)?.reject.toString()
+            baseClassReportsWelcomwPage?.reject.toString()
         p0.underprocess_count.text =
-            baseClassReportsWelcomwPage?.listdetails?.get(0)?.underProcess.toString()
+            baseClassReportsWelcomwPage?.underProcess.toString()
+
     }
 
 

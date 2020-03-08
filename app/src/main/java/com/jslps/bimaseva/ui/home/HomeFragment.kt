@@ -36,7 +36,7 @@ class HomeFragment : BaseFragment(), HomeView, OnFragmentListItemSelectListener 
             recycleview?.visibility = View.VISIBLE
             if (homeRecyclerviewAdapter == null)
                 homeRecyclerviewAdapter =
-                    CardListAdapter(cardInitResponse, getmActivity() as Activity)
+                    CardListAdapter(cardInitResponse, activity as Activity)
             else
                 homeRecyclerviewAdapter?.updateList(cardInitResponse)
             homeRecyclerviewAdapter?.setListner(presenter?.getListner())

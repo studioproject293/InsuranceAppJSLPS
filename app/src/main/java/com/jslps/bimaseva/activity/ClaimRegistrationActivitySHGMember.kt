@@ -14,7 +14,7 @@ import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.R
 import com.jslps.bimaseva.adapter.CustomDropDownAdapter
 import com.jslps.bimaseva.model.blockModel.BlockModelClass
-import com.jslps.bimaseva.model.districtModel.BlockMasterClass
+import com.jslps.bimaseva.model.blockModel.BlockMasterClass
 import com.jslps.bimaseva.model.districtModel.DistirctModelClass
 import com.jslps.bimaseva.model.districtModel.DistrictMasterClass
 import com.jslps.bimaseva.network.DistrictBlockClusterAndOtherGetList
@@ -58,6 +58,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
     var radioGroup: RadioGroup? = null
     var genderId: Int? = null
     var districtMasterClass: DistrictMasterClass? = null
+    var blockMasterClass: BlockMasterClass? = null
     private var runningThread = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,6 +93,44 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
 
         }
 
+        spinnerBlock?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
+                val gson = Gson()
+                Log.d(
+                    "fddgsgs",
+                    "Body of Update product" + gson.toJson(blockMasterClass)
+                )
+                getClusterDataList(blockMasterClass?.blockCode.toString())
+
+            }
+
+        }
+        spinnerPanchyt?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long) {
+                val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
+                getVillageDataList(blockMasterClass?.clusterCode.toString())
+
+            }
+
+        }
     }
 
     private fun getDistrict() {
@@ -137,8 +176,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                         .sneakError()
                 }
             })
-        }
-        else {
+        } else {
             Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
                 .setTitle(Constant.NO_INTERNET)
                 .sneakError()
@@ -164,11 +202,12 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                     ).client(client).build()
             val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
             val changePhotoResponseModelCall =
-                apiServices.fetchDistrictBlockClusterAndOtherGetList(distictCode, "D","" , "")
+                apiServices.fetchDistrictBlockClusterAndOtherGetList(distictCode, "D", "", "")
             changePhotoResponseModelCall.enqueue(object : Callback<String> {
                 override fun onResponse(
                     call: Call<String>,
-                    response: Response<String>) {
+                    response: Response<String>
+                ) {
                     DialogUtil.stopProgressDisplay()
                     val fullResponse = response.body()
                     val XmlString =
@@ -176,7 +215,157 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                     val result = XmlString?.replace(("</string>").toRegex(), "")
                     val mStudentObject1 =
                         gson.fromJson(result, BlockModelClass::class.java)
-                    updateSppinerBlock(mStudentObject1.master)
+                    updateSppinerBlock(mStudentObject1.master, "block")
+
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    DialogUtil.stopProgressDisplay()
+                    Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
+                        .setTitle(t.toString())
+                        .sneakError()
+                }
+            })
+        } else {
+            Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
+                .setTitle(Constant.NO_INTERNET)
+                .sneakError()
+        }
+    }
+
+    private fun getClusterDataList(blockCode: String) {
+        if (DialogUtil.isConnectionAvailable(this)) {
+            DialogUtil.displayProgress(this)
+            val gson = GsonBuilder().setLenient().create()
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            val builder = OkHttpClient.Builder()
+            //comment in live build and uncomment in uat
+            builder.interceptors().add(interceptor)
+            builder.connectTimeout(250, TimeUnit.SECONDS)
+            builder.readTimeout(250, TimeUnit.SECONDS)
+            val client = builder.build()
+            val retrofit =
+                Retrofit.Builder().baseUrl(Constant.API_BASE_URL_JICA)
+                    .addConverterFactory(
+                        ScalarsConverterFactory.create()
+                    ).client(client).build()
+            val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
+            val changePhotoResponseModelCall =
+                apiServices.fetchDistrictBlockClusterAndOtherGetList(blockCode, "B", "", "")
+            changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                override fun onResponse(
+                    call: Call<String>,
+                    response: Response<String>
+                ) {
+                    DialogUtil.stopProgressDisplay()
+                    val fullResponse = response.body()
+                    val XmlString =
+                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                    val result = XmlString?.replace(("</string>").toRegex(), "")
+                    val mStudentObject1 =
+                        gson.fromJson(result, BlockModelClass::class.java)
+                    updateSppinerBlock(mStudentObject1.master, "cluster")
+
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    DialogUtil.stopProgressDisplay()
+                    Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
+                        .setTitle(t.toString())
+                        .sneakError()
+                }
+            })
+        } else {
+            Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
+                .setTitle(Constant.NO_INTERNET)
+                .sneakError()
+        }
+    }
+
+    private fun getVillageDataList(clusterCode: String) {
+        if (DialogUtil.isConnectionAvailable(this)) {
+            DialogUtil.displayProgress(this)
+            val gson = GsonBuilder().setLenient().create()
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            val builder = OkHttpClient.Builder()
+            //comment in live build and uncomment in uat
+            builder.interceptors().add(interceptor)
+            builder.connectTimeout(250, TimeUnit.SECONDS)
+            builder.readTimeout(250, TimeUnit.SECONDS)
+            val client = builder.build()
+            val retrofit =
+                Retrofit.Builder().baseUrl(Constant.API_BASE_URL_JICA)
+                    .addConverterFactory(
+                        ScalarsConverterFactory.create()
+                    ).client(client).build()
+            val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
+            val changePhotoResponseModelCall =
+                apiServices.fetchDistrictBlockClusterAndOtherGetList(clusterCode, "C", "", "")
+            changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                override fun onResponse(
+                    call: Call<String>,
+                    response: Response<String>
+                ) {
+                    DialogUtil.stopProgressDisplay()
+                    val fullResponse = response.body()
+                    val XmlString =
+                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                    val result = XmlString?.replace(("</string>").toRegex(), "")
+                    val mStudentObject1 =
+                        gson.fromJson(result, BlockModelClass::class.java)
+                    updateSppinerBlock(mStudentObject1.master, "village")
+
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    DialogUtil.stopProgressDisplay()
+                    Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
+                        .setTitle(t.toString())
+                        .sneakError()
+                }
+            })
+        } else {
+            Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
+                .setTitle(Constant.NO_INTERNET)
+                .sneakError()
+        }
+    }
+
+    private fun getSHGDataList(villgaeCode: String) {
+        if (DialogUtil.isConnectionAvailable(this)) {
+            DialogUtil.displayProgress(this)
+            val gson = GsonBuilder().setLenient().create()
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            val builder = OkHttpClient.Builder()
+            //comment in live build and uncomment in uat
+            builder.interceptors().add(interceptor)
+            builder.connectTimeout(250, TimeUnit.SECONDS)
+            builder.readTimeout(250, TimeUnit.SECONDS)
+            val client = builder.build()
+            val retrofit =
+                Retrofit.Builder().baseUrl(Constant.API_BASE_URL_JICA)
+                    .addConverterFactory(
+                        ScalarsConverterFactory.create()
+                    ).client(client).build()
+            val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
+            val changePhotoResponseModelCall =
+                apiServices.fetchDistrictBlockClusterAndOtherGetList(villgaeCode, "C", "", "")
+            changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                override fun onResponse(
+                    call: Call<String>,
+                    response: Response<String>
+                ) {
+                    DialogUtil.stopProgressDisplay()
+                    val fullResponse = response.body()
+                    val XmlString =
+                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                    val result = XmlString?.replace(("</string>").toRegex(), "")
+                    val mStudentObject1 =
+                        gson.fromJson(result, BlockModelClass::class.java)
+                    updateSppinerBlock(mStudentObject1.master, "village")
 
                 }
 
@@ -200,12 +389,19 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
         )
         sppiner_district?.adapter = adapter
     }
-    private fun updateSppinerBlock(master: List<BlockMasterClass>) {
+
+    private fun updateSppinerBlock(master: List<BlockMasterClass>, dataType: String) {
         val adapter = CustomDropDownAdapter(
-            this, "block", master
+            this, dataType, master
         )
-        spinnerBlock?.adapter = adapter
+        when (dataType) {
+            "block" -> spinnerBlock?.adapter = adapter
+            "cluster" -> spinnerPanchyt?.adapter = adapter
+            "village" -> spinnerVillage?.adapter = adapter
+        }
+
     }
+
     private fun setId() {
         nameOfnomminee = findViewById(R.id.nameOfnomminee)
         mobileofcaller = findViewById(R.id.mobileofcaller)
