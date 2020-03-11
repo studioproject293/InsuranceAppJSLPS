@@ -32,21 +32,35 @@ class CustomDropDownAdapter(val context: Context, val dataType: String, var list
         val params = view.layoutParams
         params.height = 60
         view.layoutParams = params
-        if (dataType == "district") {
-            val districtMasterClass = listItemsTxt as ArrayList<DistrictMasterClass>
-            vh.label.text = districtMasterClass.get(position).districtName
-        } else if (dataType == "block") {
-            val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
-            vh.label.text = districtMasterClass.get(position).blockName
-        }else if (dataType == "cluster") {
-            val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
-            vh.label.text = districtMasterClass.get(position).clusterName
-        }else if (dataType == "village") {
-            val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
-            vh.label.text = districtMasterClass.get(position).villageName
-        }else if (dataType == "shg") {
-            val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
-            vh.label.text = districtMasterClass.get(position).group_Name
+        when (dataType) {
+            "district" -> {
+                val districtMasterClass = listItemsTxt as ArrayList<DistrictMasterClass>
+                vh.label.text = districtMasterClass.get(position).districtName
+            }
+            "block" -> {
+                val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
+                vh.label.text = districtMasterClass.get(position).blockName
+            }
+            "cluster" -> {
+                val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
+                vh.label.text = districtMasterClass.get(position).clusterName
+            }
+            "village" -> {
+                val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
+                vh.label.text = districtMasterClass.get(position).villageName
+            }
+            "shg" -> {
+                val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
+                vh.label.text = districtMasterClass.get(position).group_Name
+            }
+            "bank" -> {
+                val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
+                vh.label.text = districtMasterClass.get(position).bankName
+            }
+            "branch" -> {
+                val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
+                vh.label.text = districtMasterClass.get(position).branchName
+            }
         }
 
         return view

@@ -20,8 +20,8 @@ data class BlockMasterClass (
     @SerializedName("BankCode") val bankCode : String,
     @SerializedName("BankName") val bankName : String,
     @SerializedName("BankName_Hindi") val bankName_Hindi : String,
-    @SerializedName("ActLenght") val actLenght : Int,
-    @SerializedName("BranchCode") val branchCode : Int,
+    @SerializedName("ActLenght") val actLenght : String,
+    @SerializedName("BranchCode") val branchCode : String,
     @SerializedName("BranchName") val branchName : String,
     @SerializedName("BranchName_Hindi") val branchName_Hindi : String
 )

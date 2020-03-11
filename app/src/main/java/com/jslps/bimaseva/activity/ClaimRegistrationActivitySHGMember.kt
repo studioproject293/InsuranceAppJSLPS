@@ -20,6 +20,7 @@ import com.jslps.bimaseva.model.blockModel.BlockMasterClass
 import com.jslps.bimaseva.model.districtModel.DistirctModelClass
 import com.jslps.bimaseva.model.districtModel.DistrictMasterClass
 import com.jslps.bimaseva.network.DistrictBlockClusterAndOtherGetList
+import kotlinx.android.synthetic.main.claim_registration_shg.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -73,6 +74,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
         buttonSave?.setOnClickListener { }
 
         getDistrict()
+        getBankList()
         sppiner_district?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -95,7 +97,21 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
             }
 
         }
+        spinnerBank?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
 
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long) {
+                val districtMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass
+                getBranchDataList(districtMasterClass.bankCode)
+            }
+
+        }
         spinnerBlock?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -105,8 +121,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long
-            ) {
+                id: Long) {
                 blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
                 val gson = Gson()
                 Log.d(
@@ -152,26 +167,8 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
             }
 
         }
-        /*val dateSetListener = object : DatePickerDialog.OnDateSetListener {
-            override fun onDateSet(
-                view: DatePicker, year: Int, monthOfYear: Int,
-                dayOfMonth: Int
-            ) {
-                cal.set(Calendar.YEAR, year)
-                cal.set(Calendar.MONTH, monthOfYear)
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                updateDateInView()
-            }
-        }*/
+
         datePicker?.setOnClickListener {
-           /* DatePickerDialog(
-                this, R.style.datepicker,
-                dateSetListener,
-                // set DatePickerDialog to point to today's date when it loads up
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-            ).show()*/
             datePickerStrt()
         }
     }
@@ -209,6 +206,103 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                     val mStudentObject1 =
                         gson.fromJson(result, DistirctModelClass::class.java)
                     updateSppinerDistrict(mStudentObject1.master)
+
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    DialogUtil.stopProgressDisplay()
+                    Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
+                        .setTitle(t.toString())
+                        .sneakError()
+                }
+            })
+        } else {
+            Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
+                .setTitle(Constant.NO_INTERNET)
+                .sneakError()
+        }
+    }
+    private fun getBankList() {
+        if (DialogUtil.isConnectionAvailable(this)) {
+//            DialogUtil.displayProgress(this)
+            val gson = GsonBuilder().setLenient().create()
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            val builder = OkHttpClient.Builder()
+            //comment in live build and uncomment in uat
+            builder.interceptors().add(interceptor)
+            builder.connectTimeout(250, TimeUnit.SECONDS)
+            builder.readTimeout(250, TimeUnit.SECONDS)
+            val client = builder.build()
+            val retrofit =
+                Retrofit.Builder().baseUrl(Constant.API_BASE_URL_JICA)
+                    .addConverterFactory(
+                        ScalarsConverterFactory.create()
+                    ).client(client).build()
+            val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
+            val changePhotoResponseModelCall =
+                apiServices.fetchDistrictBlockClusterAndOtherGetList("", "BNK_NAME", "", "")
+            changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                override fun onResponse(
+                    call: Call<String>,
+                    response: Response<String>
+                ) {
+//                    DialogUtil.stopProgressDisplay()
+                    val fullResponse = response.body()
+                    val XmlString =
+                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                    val result = XmlString?.replace(("</string>").toRegex(), "")
+                    val mStudentObject1 =
+                        gson.fromJson(result, BlockModelClass::class.java)
+                    updateSppinerBlock(mStudentObject1.master,"bank")
+
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    DialogUtil.stopProgressDisplay()
+                    Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
+                        .setTitle(t.toString())
+                        .sneakError()
+                }
+            })
+        } else {
+            Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
+                .setTitle(Constant.NO_INTERNET)
+                .sneakError()
+        }
+    }
+    private fun getBranchDataList(bankCode:String) {
+        if (DialogUtil.isConnectionAvailable(this)) {
+//            DialogUtil.displayProgress(this)
+            val gson = GsonBuilder().setLenient().create()
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            val builder = OkHttpClient.Builder()
+            //comment in live build and uncomment in uat
+            builder.interceptors().add(interceptor)
+            builder.connectTimeout(250, TimeUnit.SECONDS)
+            builder.readTimeout(250, TimeUnit.SECONDS)
+            val client = builder.build()
+            val retrofit =
+                Retrofit.Builder().baseUrl(Constant.API_BASE_URL_JICA)
+                    .addConverterFactory(
+                        ScalarsConverterFactory.create()
+                    ).client(client).build()
+            val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
+            val changePhotoResponseModelCall =
+                apiServices.fetchDistrictBlockClusterAndOtherGetList(bankCode, "BRN_NAME", "", "")
+            changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                override fun onResponse(
+                    call: Call<String>,
+                    response: Response<String>) {
+//                    DialogUtil.stopProgressDisplay()
+                    val fullResponse = response.body()
+                    val XmlString =
+                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                    val result = XmlString?.replace(("</string>").toRegex(), "")
+                    val mStudentObject1 =
+                        gson.fromJson(result, BlockModelClass::class.java)
+                    updateSppinerBlock(mStudentObject1.master,"branch")
 
                 }
 
@@ -441,6 +535,8 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
             "cluster" -> spinnerPanchyt?.adapter = adapter
             "village" -> spinnerVillage?.adapter = adapter
             "shg" -> spinnerShg?.adapter = adapter
+            "bank" -> sppiner_bank?.adapter = adapter
+            "branch" -> sppiner_branch?.adapter = adapter
         }
 
     }
@@ -467,11 +563,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
         radioGroup = findViewById<RadioGroup>(R.id.radioSex)
 
     }
-    /*private fun updateDateInView() {
-        val myFormat = "dd/MM/yyyy" // mention the format you need
-        val sdf = SimpleDateFormat(myFormat, Locale.US)
-        datePicker!!.text = sdf.format(cal.getTime())
-    }*/
+
     private fun datePickerStrt(): Dialog {
         var c = Calendar.getInstance(Locale.ENGLISH)
         val ALyear = c.get(Calendar.YEAR)
