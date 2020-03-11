@@ -13,7 +13,7 @@ import com.jslps.bimaseva.model.districtModel.DistrictMasterClass
 class CustomDropDownAdapter(val context: Context, val dataType: String, var listItemsTxt: List<*>) :
     BaseAdapter() {
 
-    val mInflater: LayoutInflater = LayoutInflater.from(context)
+    private val mInflater: LayoutInflater = LayoutInflater.from(context)
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
         val view: View
@@ -44,6 +44,9 @@ class CustomDropDownAdapter(val context: Context, val dataType: String, var list
         }else if (dataType == "village") {
             val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
             vh.label.text = districtMasterClass.get(position).villageName
+        }else if (dataType == "shg") {
+            val districtMasterClass = listItemsTxt as ArrayList<BlockMasterClass>
+            vh.label.text = districtMasterClass.get(position).group_Name
         }
 
         return view

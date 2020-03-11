@@ -15,5 +15,13 @@ data class BlockMasterClass (
     @SerializedName("VillageName_H") val villageName_H : String,
     @SerializedName("GroupCode") val groupCode : String,
     @SerializedName("Group_Name") val group_Name : String,
-    @SerializedName("Group_Name_H") val group_Name_H : String
+    @SerializedName("Group_Name_H") val group_Name_H : String,
+    @SerializedName("BankId") val bankId : Int,
+    @SerializedName("BankCode") val bankCode : String,
+    @SerializedName("BankName") val bankName : String,
+    @SerializedName("BankName_Hindi") val bankName_Hindi : String,
+    @SerializedName("ActLenght") val actLenght : Int,
+    @SerializedName("BranchCode") val branchCode : Int,
+    @SerializedName("BranchName") val branchName : String,
+    @SerializedName("BranchName_Hindi") val branchName_Hindi : String
 )

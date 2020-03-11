@@ -1,5 +1,7 @@
 package com.jslps.bimaseva.activity
 
+import android.app.DatePickerDialog
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -25,6 +27,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -124,12 +127,52 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long) {
+                id: Long
+            ) {
                 val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
                 getVillageDataList(blockMasterClass?.clusterCode.toString())
 
             }
 
+        }
+        spinnerVillage?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
+                getSHGDataList(blockMasterClass?.villageCode.toString())
+
+            }
+
+        }
+        /*val dateSetListener = object : DatePickerDialog.OnDateSetListener {
+            override fun onDateSet(
+                view: DatePicker, year: Int, monthOfYear: Int,
+                dayOfMonth: Int
+            ) {
+                cal.set(Calendar.YEAR, year)
+                cal.set(Calendar.MONTH, monthOfYear)
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                updateDateInView()
+            }
+        }*/
+        datePicker?.setOnClickListener {
+           /* DatePickerDialog(
+                this, R.style.datepicker,
+                dateSetListener,
+                // set DatePickerDialog to point to today's date when it loads up
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            ).show()*/
+            datePickerStrt()
         }
     }
 
@@ -158,7 +201,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                     call: Call<String>,
                     response: Response<String>
                 ) {
-                    DialogUtil.stopProgressDisplay()
+//                    DialogUtil.stopProgressDisplay()
                     val fullResponse = response.body()
                     val XmlString =
                         fullResponse?.substring(fullResponse.indexOf("\">") + 2)
@@ -185,7 +228,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
 
     private fun getBlockData(distictCode: String) {
         if (DialogUtil.isConnectionAvailable(this)) {
-            DialogUtil.displayProgress(this)
+//            DialogUtil.displayProgress(this)
             val gson = GsonBuilder().setLenient().create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -208,7 +251,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                     call: Call<String>,
                     response: Response<String>
                 ) {
-                    DialogUtil.stopProgressDisplay()
+//                    DialogUtil.stopProgressDisplay()
                     val fullResponse = response.body()
                     val XmlString =
                         fullResponse?.substring(fullResponse.indexOf("\">") + 2)
@@ -235,7 +278,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
 
     private fun getClusterDataList(blockCode: String) {
         if (DialogUtil.isConnectionAvailable(this)) {
-            DialogUtil.displayProgress(this)
+//            DialogUtil.displayProgress(this)
             val gson = GsonBuilder().setLenient().create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -258,7 +301,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                     call: Call<String>,
                     response: Response<String>
                 ) {
-                    DialogUtil.stopProgressDisplay()
+//                    DialogUtil.stopProgressDisplay()
                     val fullResponse = response.body()
                     val XmlString =
                         fullResponse?.substring(fullResponse.indexOf("\">") + 2)
@@ -285,7 +328,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
 
     private fun getVillageDataList(clusterCode: String) {
         if (DialogUtil.isConnectionAvailable(this)) {
-            DialogUtil.displayProgress(this)
+//            DialogUtil.displayProgress(this)
             val gson = GsonBuilder().setLenient().create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -308,7 +351,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                     call: Call<String>,
                     response: Response<String>
                 ) {
-                    DialogUtil.stopProgressDisplay()
+//                    DialogUtil.stopProgressDisplay()
                     val fullResponse = response.body()
                     val XmlString =
                         fullResponse?.substring(fullResponse.indexOf("\">") + 2)
@@ -335,7 +378,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
 
     private fun getSHGDataList(villgaeCode: String) {
         if (DialogUtil.isConnectionAvailable(this)) {
-            DialogUtil.displayProgress(this)
+//           DialogUtil.displayProgress(this)
             val gson = GsonBuilder().setLenient().create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -352,7 +395,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                     ).client(client).build()
             val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
             val changePhotoResponseModelCall =
-                apiServices.fetchDistrictBlockClusterAndOtherGetList(villgaeCode, "C", "", "")
+                apiServices.fetchDistrictBlockClusterAndOtherGetList(villgaeCode, "V", "", "")
             changePhotoResponseModelCall.enqueue(object : Callback<String> {
                 override fun onResponse(
                     call: Call<String>,
@@ -365,7 +408,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                     val result = XmlString?.replace(("</string>").toRegex(), "")
                     val mStudentObject1 =
                         gson.fromJson(result, BlockModelClass::class.java)
-                    updateSppinerBlock(mStudentObject1.master, "village")
+                    updateSppinerBlock(mStudentObject1.master, "shg")
 
                 }
 
@@ -385,8 +428,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
 
     private fun updateSppinerDistrict(master: List<DistrictMasterClass>) {
         val adapter = CustomDropDownAdapter(
-            this, "district", master
-        )
+            this, "district", master)
         sppiner_district?.adapter = adapter
     }
 
@@ -398,6 +440,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
             "block" -> spinnerBlock?.adapter = adapter
             "cluster" -> spinnerPanchyt?.adapter = adapter
             "village" -> spinnerVillage?.adapter = adapter
+            "shg" -> spinnerShg?.adapter = adapter
         }
 
     }
@@ -423,5 +466,37 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
         spinnerShg = findViewById<Spinner>(R.id.sppiner_shg)
         radioGroup = findViewById<RadioGroup>(R.id.radioSex)
 
+    }
+    /*private fun updateDateInView() {
+        val myFormat = "dd/MM/yyyy" // mention the format you need
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+        datePicker!!.text = sdf.format(cal.getTime())
+    }*/
+    private fun datePickerStrt(): Dialog {
+        var c = Calendar.getInstance(Locale.ENGLISH)
+        val ALyear = c.get(Calendar.YEAR)
+        val ALmonthOfYear = c.get(Calendar.MONTH)
+        val ALdayOfMonth = c.get(Calendar.DAY_OF_MONTH)
+        var dpd = DatePickerDialog(
+            this,
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                val dateSelected =
+                    (getProperFormat(dayOfMonth) + "-" + getProperFormat(monthOfYear + 1) + "-" + year)
+                datePicker?.setText(dateSelected)
+            }, ALyear, ALmonthOfYear, ALdayOfMonth
+        )
+        c.add(Calendar.YEAR, 5)
+        dpd.datePicker.maxDate = System.currentTimeMillis()
+        dpd.show()
+        return dpd
+    }
+
+    private fun getProperFormat(hhORmm: Int): String {
+        var temp = hhORmm.toString()
+        if (temp.length == 1) {
+            temp = "0$temp"
+        } else {
+        }
+        return temp
     }
 }
