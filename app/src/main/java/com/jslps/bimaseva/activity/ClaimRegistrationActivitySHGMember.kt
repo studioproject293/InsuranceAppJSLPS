@@ -2,6 +2,7 @@ package com.jslps.bimaseva.activity
 
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -71,7 +72,10 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
         setId()
         supportActionBar?.title = "SHG Claim Registration";
         buttonSave = findViewById(R.id.buttonSave)
-        buttonSave?.setOnClickListener { }
+        buttonSave?.setOnClickListener {
+            val intent = Intent(this, ClaimRegistrationActivityOtpScreen::class.java)
+            startActivity(intent)
+        }
 
         getDistrict()
         getBankList()
@@ -343,8 +347,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
             changePhotoResponseModelCall.enqueue(object : Callback<String> {
                 override fun onResponse(
                     call: Call<String>,
-                    response: Response<String>
-                ) {
+                    response: Response<String>) {
 //                    DialogUtil.stopProgressDisplay()
                     val fullResponse = response.body()
                     val XmlString =
@@ -485,16 +488,14 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
             val retrofit =
                 Retrofit.Builder().baseUrl(Constant.API_BASE_URL_JICA)
                     .addConverterFactory(
-                        ScalarsConverterFactory.create()
-                    ).client(client).build()
+                        ScalarsConverterFactory.create()).client(client).build()
             val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
             val changePhotoResponseModelCall =
                 apiServices.fetchDistrictBlockClusterAndOtherGetList(villgaeCode, "V", "", "")
             changePhotoResponseModelCall.enqueue(object : Callback<String> {
                 override fun onResponse(
                     call: Call<String>,
-                    response: Response<String>
-                ) {
+                    response: Response<String>) {
                     DialogUtil.stopProgressDisplay()
                     val fullResponse = response.body()
                     val XmlString =

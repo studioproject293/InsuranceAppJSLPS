@@ -68,7 +68,8 @@
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:gravity="center"
-                android:text=""
+                android:text="स्वयं सहायता समूह सदस्यों एवं अन्य बीमित व्यक्तियों के बीमा दावा निपटारे
+हेतु मोबाईल एप्लीकेषन"
                 android:textColor="#000"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -165,7 +166,7 @@
             android:layout_marginRight="25dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_weight="1.1"
+            android:layout_weight="1"
             app:cardBackgroundColor="#FFF"
             app:cardCornerRadius="8dp"
             app:cardElevation="5dp">
@@ -182,7 +183,7 @@
             android:id="@+id/registernewClaim"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.2"
+            android:layout_weight="0.3"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"

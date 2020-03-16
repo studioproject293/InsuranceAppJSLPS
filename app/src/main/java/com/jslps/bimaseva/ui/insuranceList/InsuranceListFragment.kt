@@ -27,7 +27,7 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
             recycleview?.visibility = View.VISIBLE
             if (homeRecyclerviewAdapter == null)
                 homeRecyclerviewAdapter =
-                    InsuranceListAdapter(cardInitResponse, getmActivity() as Activity, "")
+                    InsuranceListAdapter(cardInitResponse, activity as Activity, "")
             else
                 homeRecyclerviewAdapter?.updateList(cardInitResponse)
             homeRecyclerviewAdapter?.setListner(presenter?.getListner())
@@ -75,8 +75,7 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         rootView = inflater.inflate(R.layout.fragment_home, container, false)
         recycleview = rootView?.findViewById(R.id.recycleview)

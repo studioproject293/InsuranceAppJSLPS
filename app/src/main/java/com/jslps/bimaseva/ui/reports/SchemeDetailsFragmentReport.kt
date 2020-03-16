@@ -29,7 +29,7 @@ class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnF
         if (cardInitResponse != null) {
             recycleview?.visibility = View.VISIBLE
             if (homeRecyclerviewAdapter == null)
-                homeRecyclerviewAdapter = SchemeListAdapterReport(cardInitResponse,getmActivity() as Activity,
+                homeRecyclerviewAdapter = SchemeListAdapterReport(cardInitResponse,activity as Activity,
                     AppCache.getCache().insurancetype.toString()
                 )
             else
@@ -61,7 +61,7 @@ class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnF
     var presenter: SchemeDetailsPresenterReport? = null
     override fun onResume() {
         super.onResume()
-        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, AppCache.getCache().insurancetype.toString()))
+        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, "Reports"))
     }
 
 
@@ -70,8 +70,8 @@ class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnF
         rootView = inflater.inflate(R.layout.fragment_home, container, false)
         recycleview = rootView?.findViewById(R.id.recycleview)
         presenter = SchemeDetailsPresenterReport(this, activity as Activity)
-        recycleview?.layoutManager = Constant.gridLayout(activity,2)
-        var entryForm = rootView?.findViewById<Button>(R.id.entryForm)
+        recycleview?.layoutManager = Constant.getVerticalLayout(activity!!)
+        val entryForm = rootView?.findViewById<Button>(R.id.entryForm)
         entryForm?.visibility = View.GONE
         presenter?.resume()
         return rootView!!

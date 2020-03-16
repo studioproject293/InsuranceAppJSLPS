@@ -27,7 +27,7 @@ class DocumentListFragment : BaseFragment(), DocumentNotReadyView, OnFragmentLis
             recycleview?.visibility = View.VISIBLE
             if (homeRecyclerviewAdapter == null)
                 homeRecyclerviewAdapter =
-                    DocumentNotReadyListAdapter(cardInitResponse, getmActivity() as Activity, "")
+                    DocumentNotReadyListAdapter(cardInitResponse, activity as Activity, "")
             else
                 homeRecyclerviewAdapter?.updateList(cardInitResponse)
             homeRecyclerviewAdapter?.setListner(presenter?.getListner())

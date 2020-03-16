@@ -273,7 +273,7 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
                 if (data != null) {
                     //onSelectFromGalleryResult(data)
                     val imageUri = data.data as Uri
-                    val imageStream = getmActivity()?.contentResolver?.openInputStream(imageUri) as InputStream
+                    val imageStream = activity?.contentResolver?.openInputStream(imageUri) as InputStream
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
                     document?.setImageBitmap(selectedImage)
                     val byteArrayOutputStream = ByteArrayOutputStream()

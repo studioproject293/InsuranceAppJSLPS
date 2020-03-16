@@ -37,7 +37,7 @@ class SchemeDetailsFragment : BaseFragment(), SchemeDetailsView, OnFragmentListI
             recycleview?.visibility = View.VISIBLE
             if (homeRecyclerviewAdapter == null)
                 homeRecyclerviewAdapter =
-                    SchemeListAdapter(cardInitResponse, getmActivity() as Activity, insuranceName!!)
+                    SchemeListAdapter(cardInitResponse, activity as Activity, insuranceName!!)
             else
                 homeRecyclerviewAdapter?.updateList(cardInitResponse)
             homeRecyclerviewAdapter?.setListner(presenter?.getListner())

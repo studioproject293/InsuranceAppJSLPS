@@ -17,6 +17,7 @@ data class CallCenter(
 	val Name_Claim: String,
 	val guid: String,
 	val CreatedBy: String,
-	val Gender: String
+	val Gender: String,
+	val Relation: String
 
 )

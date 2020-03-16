@@ -5,4 +5,12 @@
     <string name="no">No</string>
     <string name="loading_msg">Please wait..</string>
     <string name="logout_message">Are you sure, You want to Logout ?</string>
+    <string name="selected_item">Selected item:</string>
+    <string-array name="Relationship">
+        <item>Select Relationship</item>
+        <item>Father</item>
+        <item>Mother</item>
+        <item>Son</item>
+        <item>Brother</item>
+    </string-array>
 </resources>

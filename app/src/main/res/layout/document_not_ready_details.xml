@@ -270,10 +270,10 @@
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/custom_circle_black_border"
+                    android:background="@drawable/custom_circle"
                     android:padding="10dp"
-                    android:text="Upload"
-                    android:textColor="#000"
+                    android:text="Upload "
+                    android:textColor="#FFF"
                     android:textSize="16sp" />
         </LinearLayout>
 

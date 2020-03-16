@@ -47,7 +47,7 @@ open class BaseFragment : Fragment() {
 
     fun showToast(msg: String?) {
         if (!msg.isNullOrEmpty() && mActivity != null)
-            Toast.makeText(getmActivity(), msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
     }
 
 
