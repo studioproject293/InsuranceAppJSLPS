@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="22dp"
-                android:background="#2E2C8F"
+                android:background="@drawable/buttonshape"
                 android:text="Sign in"
                 android:textAllCaps="false"
                 android:textColor="#fff"

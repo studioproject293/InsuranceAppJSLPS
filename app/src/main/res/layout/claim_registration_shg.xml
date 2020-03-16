@@ -56,6 +56,7 @@
                     android:id="@+id/contactnoofnominee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:digits="0123456789"
                     android:inputType="phone"
                     android:maxLength="10"
                     android:singleLine="true"
@@ -444,6 +445,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="phone"
                     android:maxLength="10"
+                    android:digits="0123456789"
                     android:singleLine="true"
                     android:textColor="#000"
                     android:textSize="16sp" />
@@ -457,7 +459,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/buttonshape"
-                android:text="Save Data"
+                android:text="Get OTP"
                 android:textAllCaps="false"
                 android:textColor="#FFF"
                 android:textStyle="bold" />

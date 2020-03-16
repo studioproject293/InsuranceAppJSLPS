@@ -3,8 +3,8 @@ package com.jslps.bimaseva.model.blockModel
 import com.google.gson.annotations.SerializedName
 
 data class BlockMasterClass (
-    @SerializedName("DistrictCode") var districtCode : Int,
-    @SerializedName("BlockCode") var blockCode : Int,
+    @SerializedName("DistrictCode") var districtCode : String,
+    @SerializedName("BlockCode") var blockCode : String,
     @SerializedName("BlockName") var blockName : String,
     @SerializedName("BlockName_H") var blockName_H : String,
     @SerializedName("ClusterCode") var clusterCode : String,
@@ -16,7 +16,7 @@ data class BlockMasterClass (
     @SerializedName("GroupCode") var groupCode : String,
     @SerializedName("Group_Name") var group_Name : String,
     @SerializedName("Group_Name_H") var group_Name_H : String,
-    @SerializedName("BankId") var bankId : Int,
+    @SerializedName("BankId") var bankId : String,
     @SerializedName("BankCode") var bankCode : String,
     @SerializedName("BankName") var bankName : String,
     @SerializedName("BankName_Hindi") var bankName_Hindi : String,

@@ -1,3 +1,7 @@
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class CallCenter(
 
 	val Name: String,
@@ -20,4 +24,4 @@ data class CallCenter(
 	val Gender: String,
 	val Relation: String
 
-)
+): Parcelable

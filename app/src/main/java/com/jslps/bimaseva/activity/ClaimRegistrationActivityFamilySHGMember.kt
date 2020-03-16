@@ -3,9 +3,9 @@ package com.jslps.bimaseva.activity
 import CallCenter
 import android.app.DatePickerDialog
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -25,6 +25,7 @@ import com.jslps.bimaseva.model.districtModel.DistirctModelClass
 import com.jslps.bimaseva.model.districtModel.DistrictMasterClass
 import com.jslps.bimaseva.network.DistrictBlockClusterAndOtherGetList
 import com.jslps.bimaseva.network.InsuranceCreate
+import com.jslps.bimaseva.network.InsuranceCreateOTP
 import kotlinx.android.synthetic.main.claim_registration_shg.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,9 +34,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 
 class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
@@ -111,6 +112,38 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                 Sneaker.with(this@ClaimRegistrationActivityFamilySHGMember) // Activity, Fragment or ViewGroup
                     .setTitle("Please enter mobile no of nominee")
                     .sneakError()
+            } else if (TextUtils.isEmpty(distirctCode)) {
+                Sneaker.with(this@ClaimRegistrationActivityFamilySHGMember) // Activity, Fragment or ViewGroup
+                    .setTitle("Please select district")
+                    .sneakError()
+            } else if (TextUtils.isEmpty(blockCode)) {
+                Sneaker.with(this@ClaimRegistrationActivityFamilySHGMember) // Activity, Fragment or ViewGroup
+                    .setTitle("Please select block")
+                    .sneakError()
+            } else if (TextUtils.isEmpty(clustercode)) {
+                Sneaker.with(this@ClaimRegistrationActivityFamilySHGMember) // Activity, Fragment or ViewGroup
+                    .setTitle("Please select panchayat")
+                    .sneakError()
+            } else if (TextUtils.isEmpty(villageCode)) {
+                Sneaker.with(this@ClaimRegistrationActivityFamilySHGMember) // Activity, Fragment or ViewGroup
+                    .setTitle("Please select village")
+                    .sneakError()
+            } else if (TextUtils.isEmpty(shgCode)) {
+                Sneaker.with(this@ClaimRegistrationActivityFamilySHGMember) // Activity, Fragment or ViewGroup
+                    .setTitle("Please select SHG")
+                    .sneakError()
+            } else if (TextUtils.isEmpty(relationShipId)) {
+                Sneaker.with(this@ClaimRegistrationActivityFamilySHGMember) // Activity, Fragment or ViewGroup
+                    .setTitle("Please select relationship ")
+                    .sneakError()
+            } else if (TextUtils.isEmpty(bankCode)) {
+                Sneaker.with(this@ClaimRegistrationActivityFamilySHGMember) // Activity, Fragment or ViewGroup
+                    .setTitle("Please select bank")
+                    .sneakError()
+            } else if (TextUtils.isEmpty(branchCode)) {
+                Sneaker.with(this@ClaimRegistrationActivityFamilySHGMember) // Activity, Fragment or ViewGroup
+                    .setTitle("Please select branch")
+                    .sneakError()
             } else if (datePicker?.text.toString().isEmpty()) {
                 Sneaker.with(this@ClaimRegistrationActivityFamilySHGMember) // Activity, Fragment or ViewGroup
                     .setTitle("Please enter date")
@@ -129,11 +162,11 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                     .sneakError()
             } else {
                 val selectedId = radioGroup?.getCheckedRadioButtonId();
-                /*radioButton = findViewById<RadioButton>(selectedId!!);
-                if (radioButton?.text.toString().equals("Male")) {
-                    genderId = 1
+                radioButton = findViewById<RadioButton>(selectedId!!);
+                genderId = if (radioButton?.text.toString().equals("Male")) {
+                    1
                 } else
-                    genderId = 2*/
+                    2
                 val id = UUID.randomUUID().toString()
                 val s = TextUtils.join(", ", list)
                 val callCenter = CallCenter(
@@ -153,10 +186,10 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                     nameofcaller?.text.toString(),
                     id,
                     "Admin",
-                    "",
+                    genderId.toString(),
                     relationShipId.toString()
                 )
-                val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(callCenter) + "] } "
+
                 if (DialogUtil.isConnectionAvailable(this@ClaimRegistrationActivityFamilySHGMember)) {
                     DialogUtil.displayProgress(this@ClaimRegistrationActivityFamilySHGMember)
                     val gson = GsonBuilder().setLenient().create()
@@ -165,42 +198,45 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                     val builder = OkHttpClient.Builder()
                     //comment in live build and uncomment in uat
                     builder.interceptors().add(interceptor)
-                    builder.connectTimeout(120, TimeUnit.SECONDS)
-                    builder.readTimeout(120, TimeUnit.SECONDS)
+                    builder.connectTimeout(250, TimeUnit.SECONDS)
+                    builder.readTimeout(250, TimeUnit.SECONDS)
                     val client = builder.build()
                     val retrofit =
-                        Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
+                        Retrofit.Builder().baseUrl(Constant.API_BASE_URL_JICA).addConverterFactory(
                             ScalarsConverterFactory.create()
                         ).client(client).build()
-                    val apiServices = retrofit.create(InsuranceCreate::class.java)
-                    val createInsurance = apiServices.createInsurance(data)
+                    val apiServices = retrofit.create(InsuranceCreateOTP::class.java)
+                    val createInsurance = apiServices.createInsurance(contactnoofnominee?.text.toString())
                     createInsurance.enqueue(object : Callback<String> {
                         override fun onResponse(
                             call: Call<String>,
-                            response: Response<String>
-                        ) {
+                            response: Response<String>) {
                             DialogUtil.stopProgressDisplay()
                             val fullResponse = response.body()
                             val XmlString =
                                 fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                             val result = XmlString?.replace(("</string>").toRegex(), "")
-                            if (result.equals("\"1\"")) {
-                                Sneaker.with(this@ClaimRegistrationActivityFamilySHGMember) // Activity, Fragment or ViewGroup
-                                    .setTitle("Insurance Create Successfully ")
-                                    .sneakSuccess()
-                                val intent = Intent(
-                                    this@ClaimRegistrationActivityFamilySHGMember,
-                                    MainActivity::class.java
-                                )
-                                intent.flags =
-                                    Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                startActivity(intent)
+                            val pref = getSharedPreferences("MyPrefInsuranceOTP", 0) // 0 - for private mode
+                            val editor = pref.edit()
+                            editor.putString("otp", result)
+                            editor.apply()
 
-                            } else {
-                                Sneaker.with(this@ClaimRegistrationActivityFamilySHGMember) // Activity, Fragment or ViewGroup
-                                    .setTitle("Please Try Again")
-                                    .sneakError()
-                            }
+                            Sneaker.with(this@ClaimRegistrationActivityFamilySHGMember) // Activity, Fragment or ViewGroup
+                                .setTitle("OTP sent successfully ")
+                                .sneakSuccess()
+                            val intent = Intent(
+                                this@ClaimRegistrationActivityFamilySHGMember,
+                                ClaimRegistrationActivityOtpScreen::class.java
+                            )
+                            Handler().postDelayed(object:Runnable {
+                                public override fun run() {
+                                    intent.putExtra("data", callCenter)
+                                    startActivity(intent)
+                                }
+                            }, 2000)
+
+
+
                         }
 
                         override fun onFailure(call: Call<String>, t: Throwable) {
@@ -282,7 +318,27 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
             }
 
         }
+        spinnerShg?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
 
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long) {
+                if (position == 0)
+                    return
+                else {
+                    val districtMasterClass =
+                        parent?.getItemAtPosition(position) as BlockMasterClass?
+                    shgCode = districtMasterClass?.groupCode.toString()
+
+                }
+            }
+
+        }
         spinnerBlock?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -325,6 +381,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                     return
                 else {
                     val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
+                    clustercode = blockMasterClass?.clusterCode
                     getVillageDataList(blockMasterClass?.clusterCode.toString())
                 }
 
@@ -433,7 +490,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
 
     private fun getDistrict() {
         if (DialogUtil.isConnectionAvailable(this)) {
-//            DialogUtil.displayProgress(this)
+            DialogUtil.displayProgress(this)
             val gson = GsonBuilder().setLenient().create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -483,7 +540,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
 
     private fun getBlockData(distictCode: String) {
         if (DialogUtil.isConnectionAvailable(this)) {
-//            DialogUtil.displayProgress(this)
+            DialogUtil.displayProgress(this)
             val gson = GsonBuilder().setLenient().create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -506,13 +563,14 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                     call: Call<String>,
                     response: Response<String>
                 ) {
-//                    DialogUtil.stopProgressDisplay()
+                    DialogUtil.stopProgressDisplay()
                     val fullResponse = response.body()
                     val XmlString =
                         fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                     val result = XmlString?.replace(("</string>").toRegex(), "")
                     val mStudentObject1 =
                         gson.fromJson(result, BlockModelClass::class.java)
+
                     updateSppinerBlock(mStudentObject1.master, "block")
 
                 }
@@ -533,7 +591,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
 
     private fun getClusterDataList(blockCode: String) {
         if (DialogUtil.isConnectionAvailable(this)) {
-//            DialogUtil.displayProgress(this)
+            DialogUtil.displayProgress(this)
             val gson = GsonBuilder().setLenient().create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -556,7 +614,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                     call: Call<String>,
                     response: Response<String>
                 ) {
-//                    DialogUtil.stopProgressDisplay()
+                    DialogUtil.stopProgressDisplay()
                     val fullResponse = response.body()
                     val XmlString =
                         fullResponse?.substring(fullResponse.indexOf("\">") + 2)
@@ -583,7 +641,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
 
     private fun getVillageDataList(clusterCode: String) {
         if (DialogUtil.isConnectionAvailable(this)) {
-//            DialogUtil.displayProgress(this)
+            DialogUtil.displayProgress(this)
             val gson = GsonBuilder().setLenient().create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -606,7 +664,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                     call: Call<String>,
                     response: Response<String>
                 ) {
-//                    DialogUtil.stopProgressDisplay()
+                    DialogUtil.stopProgressDisplay()
                     val fullResponse = response.body()
                     val XmlString =
                         fullResponse?.substring(fullResponse.indexOf("\">") + 2)
@@ -633,7 +691,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
 
     private fun getSHGDataList(villgaeCode: String) {
         if (DialogUtil.isConnectionAvailable(this)) {
-//           DialogUtil.displayProgress(this)
+            DialogUtil.displayProgress(this)
             val gson = GsonBuilder().setLenient().create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -681,14 +739,6 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
         }
     }
 
-    private fun updateSppinerDistrict(master: List<DistrictMasterClass>) {
-        master.get(0).districtName = "All District"
-        val adapter = CustomDropDownAdapter(
-            this, "district", master
-        )
-        sppiner_district?.adapter = adapter
-    }
-
     private fun getBankList() {
         if (DialogUtil.isConnectionAvailable(this)) {
 //            DialogUtil.displayProgress(this)
@@ -714,7 +764,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                     call: Call<String>,
                     response: Response<String>
                 ) {
-//                    DialogUtil.stopProgressDisplay()
+                    DialogUtil.stopProgressDisplay()
                     val fullResponse = response.body()
                     val XmlString =
                         fullResponse?.substring(fullResponse.indexOf("\">") + 2)
@@ -741,7 +791,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
 
     private fun getBranchDataList(bankCode: String) {
         if (DialogUtil.isConnectionAvailable(this)) {
-//            DialogUtil.displayProgress(this)
+            DialogUtil.displayProgress(this)
             val gson = GsonBuilder().setLenient().create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -764,7 +814,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                     call: Call<String>,
                     response: Response<String>
                 ) {
-//                    DialogUtil.stopProgressDisplay()
+                    DialogUtil.stopProgressDisplay()
                     val fullResponse = response.body()
                     val XmlString =
                         fullResponse?.substring(fullResponse.indexOf("\">") + 2)
@@ -788,13 +838,21 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                 .sneakError()
         }
     }
-
-    private fun updateSppinerBlock(master: List<BlockMasterClass>, dataType: String) {
+    private fun updateSppinerDistrict(master: ArrayList<DistrictMasterClass>) {
+        master.add(0, DistrictMasterClass("","All District",""))
+        val adapter = CustomDropDownAdapter(
+            this, "district", master
+        )
+        sppiner_district?.adapter = adapter
+    }
+    private fun updateSppinerBlock(master: ArrayList<BlockMasterClass>, dataType: String) {
 
         when (dataType) {
             "block" -> {
-                /*spinnerBlock?.isEnabled=true*/
-                master.get(0).blockName = "All Block"
+                master.add(0, BlockMasterClass("","","All Block", "","",
+                    "","","","","",
+                    "","","","","","","",
+                    "","","",""))
                 val adapter = CustomDropDownAdapter(
                     this, dataType, master
                 )
@@ -802,8 +860,11 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
             }
 
             "cluster" -> {
-                /*spinnerBlock?.isEnabled=true*/
-                master.get(0).clusterName = "All Panchyat"
+                master.add(0, BlockMasterClass("","","", "","",
+                    "All Panchayat","","","","",
+                    "","","","","","","",
+                    "","","",""))
+
                 val adapter = CustomDropDownAdapter(
                     this, dataType, master
                 )
@@ -811,32 +872,43 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
             }
 
             "village" -> {
-                /*spinnerBlock?.isEnabled=true*/
-                master.get(0).villageName = "All Village"
+                master.add(0, BlockMasterClass("","","", "","",
+                    "","","","All Village","",
+                    "","","","","","","",
+                    "","","",""))
+              /*  master.get(0).villageName = "All Village"*/
                 val adapter = CustomDropDownAdapter(
                     this, dataType, master
                 )
                 spinnerVillage?.adapter = adapter
             }
             "shg" -> {
-                /*spinnerBlock?.isEnabled=true*/
-                master.get(0).group_Name = "All SHG"
+                master.add(0, BlockMasterClass("","","", "","",
+                    "","","","",
+                    "","","All SHG","","","","",
+                    "","","","",""))
                 val adapter = CustomDropDownAdapter(
                     this, dataType, master
                 )
                 spinnerShg?.adapter = adapter
             }
             "bank" -> {
-                /*spinnerBlock?.isEnabled=true*/
-                master.get(0).bankName = "All Bank"
+                master.add(0, BlockMasterClass("","","", "","",
+                    "","","","",
+                    "","","","","","","All Bank",
+                    "","","","",""))
+               /* master.get(0).bankName = "All Bank"*/
                 val adapter = CustomDropDownAdapter(
                     this, dataType, master
                 )
                 sppiner_bank?.adapter = adapter
             }
             "branch" -> {
-                /*spinnerBlock?.isEnabled=true*/
-                master.get(0).branchName = "All Branch"
+                master.add(0, BlockMasterClass("","","", "","",
+                    "","","","",
+                    "","","","","","","",
+                    "","","","All Branch",""))
+              /*  master.get(0).branchName = "All Branch"*/
                 val adapter = CustomDropDownAdapter(
                     this, dataType, master
                 )
@@ -846,11 +918,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
 
     }
 
-    /* private fun updateDateInView() {
-         val myFormat = "dd/MM/yyyy" // mention the format you need
-         val sdf = SimpleDateFormat(myFormat, Locale.US)
-         datePicker!!.text = sdf.format(cal.getTime())
-     }*/
+
     private fun datePickerStrt(): Dialog {
         var c = Calendar.getInstance(Locale.ENGLISH)
         val ALyear = c.get(Calendar.YEAR)

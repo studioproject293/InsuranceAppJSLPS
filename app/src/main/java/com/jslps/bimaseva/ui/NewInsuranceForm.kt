@@ -171,8 +171,8 @@ class NewInsuranceForm : BaseFragment() {
                     nameofcaller?.text.toString(),
                     id,
                     createdBy!!,
-                    genderId?.toString()!!
-                )
+                    genderId?.toString()!!,
+                "")
                 val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(callCenter) + "] } "
                 if (DialogUtil.isConnectionAvailable(activity!!)) {
                     DialogUtil.displayProgress(activity!!)
@@ -458,7 +458,7 @@ class NewInsuranceForm : BaseFragment() {
         checkBox2 = rootView.findViewById(R.id.checkBox2)
         checkBox3 = rootView.findViewById(R.id.checkBox3)
         checkBox4 = rootView.findViewById(R.id.checkBox4)
-        spinner = rootView.findViewById<Spinner>(R.id.edit_type)
+        spinner = rootView.findViewById<Spinner>(R.id.sppiner_district)
         spinnerPanchyt = rootView.findViewById<Spinner>(R.id.spinner_panchayt)
         spinnerVillage = rootView.findViewById<Spinner>(R.id.spinner_village)
         spinnerBank = rootView.findViewById<Spinner>(R.id.sppiner_bank)

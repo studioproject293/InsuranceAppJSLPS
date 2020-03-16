@@ -9,6 +9,7 @@ class AppCache {
     var loginPojonew: BaseClass? = null
     var insurancetype: String? = null
     var insuranceStep: String? = null
+    var insuranceOtp: String? = null
     var insuranceStepSend: String? = null
 
     companion object {
