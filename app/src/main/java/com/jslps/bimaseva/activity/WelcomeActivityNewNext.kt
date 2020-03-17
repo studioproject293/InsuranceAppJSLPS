@@ -29,7 +29,6 @@ import java.util.concurrent.TimeUnit
 
 class WelcomeActivityNewNext : AppCompatActivity() {
     var recyclerView: RecyclerView? = null
-    var button: Button? = null
     var bank: TextView? = null
     var branch: TextView? = null
     var block: TextView? = null
@@ -70,14 +69,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
             }
         }
         recyclerView = findViewById(R.id.recyclerviewreports)
-        button = findViewById(R.id.button)
-        button?.setOnClickListener {
-            val intent = Intent(this@WelcomeActivityNewNext, WelcomeActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
-            finish()
-        }
+
         recyclerView?.setLayoutManager(
             LinearLayoutManager(
                 this,

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.viewpager.widget.PagerAdapter
@@ -25,28 +26,28 @@ class MyCustomPagerAdapterReports(internal var context: Context, internal var it
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view === `object` as CardView
+        return view === `object` as ScrollView
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val mView = layoutInflater.inflate(R.layout.welcome_adapter_row, container, false)
 
-        var textrowheading: TextView = mView.findViewById(R.id.heading)
-        var registerd_count: TextView = mView.findViewById(R.id.registerd_count)
-        var underprocess_count: TextView = mView.findViewById(R.id.underprocess_count)
-        var completed_count: TextView = mView.findViewById(R.id.completed_count)
-        var rejected_count: TextView = mView.findViewById(R.id.rejected_count)
+        val textrowheading: TextView = mView.findViewById(R.id.heading)
+        val registerd_count: TextView = mView.findViewById(R.id.registerd_count)
+        val underprocess_count: TextView = mView.findViewById(R.id.underprocess_count)
+        val completed_count: TextView = mView.findViewById(R.id.completed_count)
+        val rejected_count: TextView = mView.findViewById(R.id.rejected_count)
 //        imageView.setImageResource(images[position])
-        val baseClassReportsWelcomwPage = itemList?.get(position)
-        textrowheading.text = baseClassReportsWelcomwPage?.insurance
+        val baseClassReportsWelcomwPage = itemList.get(position)
+        textrowheading.text = baseClassReportsWelcomwPage.insurance
         completed_count.text =
-            baseClassReportsWelcomwPage?.completed.toString()
+            baseClassReportsWelcomwPage.completed.toString()
         registerd_count.text =
-            baseClassReportsWelcomwPage?.register.toString()
+            baseClassReportsWelcomwPage.register.toString()
         rejected_count.text =
-            baseClassReportsWelcomwPage?.reject.toString()
+            baseClassReportsWelcomwPage.reject.toString()
         underprocess_count.text =
-            baseClassReportsWelcomwPage?.underProcess.toString()
+            baseClassReportsWelcomwPage.underProcess.toString()
 
         container.addView(mView)
 
@@ -55,6 +56,6 @@ class MyCustomPagerAdapterReports(internal var context: Context, internal var it
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        container.removeView(`object` as CardView)
+        container.removeView(`object` as ScrollView)
     }
 }

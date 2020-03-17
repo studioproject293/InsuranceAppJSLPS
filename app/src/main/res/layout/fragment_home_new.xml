@@ -37,8 +37,6 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center|top"
                 android:layout_marginTop="100dp"
-
-
                 android:src="@drawable/logo"
                 />
 

@@ -244,15 +244,7 @@
 
             </LinearLayout>
         </HorizontalScrollView>
-       <Button
-               android:layout_width="150dp"
-               android:layout_height="50dp"
-               android:id="@+id/button"
-               android:gravity="center"
-               android:layout_margin="10dp"
-               android:layout_gravity="center"
-           android:background="@drawable/buttonshape"
-           android:text="Login"/>
+
 
     </LinearLayout>
 </ScrollView>

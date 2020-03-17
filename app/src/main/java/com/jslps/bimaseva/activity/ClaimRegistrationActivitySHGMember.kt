@@ -53,9 +53,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
     var spinnerBranch: Spinner? = null
     var spinnerShg: Spinner? = null
     var datePicker: TextView? = null
-    var cal = Calendar.getInstance()
     var clustercode: String? = null
-    var viillagecode: String? = null
     var buttonSave: Button? = null
     var checkBox1: CheckBox? = null
     var checkBox2: CheckBox? = null
@@ -66,9 +64,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
     var shgCode: String? = null
     val list = arrayListOf<Int>()
     var radioGroup: RadioGroup? = null
-    var districtMasterClass: DistrictMasterClass? = null
-    var blockMasterClass: BlockMasterClass? = null
-    private var runningThread = true
+
     var villageCode: String? = null
     var bankCode: String? = null
     var branchCode: String? = null
@@ -183,64 +179,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                     "0"
                 )
                 val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(callCenter) + "] } "
-                /*if (DialogUtil.isConnectionAvailable(this@ClaimRegistrationActivitySHGMember)) {
-                    DialogUtil.displayProgress(this@ClaimRegistrationActivitySHGMember)
-                    val gson = GsonBuilder().setLenient().create()
-                    val interceptor = HttpLoggingInterceptor()
-                    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                    val builder = OkHttpClient.Builder()
-                    //comment in live build and uncomment in uat
-                    builder.interceptors().add(interceptor)
-                    builder.connectTimeout(120, TimeUnit.SECONDS)
-                    builder.readTimeout(120, TimeUnit.SECONDS)
-                    val client = builder.build()
-                    val retrofit =
-                        Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
-                            ScalarsConverterFactory.create()
-                        ).client(client).build()
-                    val apiServices = retrofit.create(InsuranceCreate::class.java)
-                    val createInsurance = apiServices.createInsurance(data)
-                    createInsurance.enqueue(object : Callback<String> {
-                        override fun onResponse(
-                            call: Call<String>,
-                            response: Response<String>
-                        ) {
-                            DialogUtil.stopProgressDisplay()
-                            val fullResponse = response.body()
-                            val XmlString =
-                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                            val result = XmlString?.replace(("</string>").toRegex(), "")
-                            if (result.equals("\"1\"")) {
-                                Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
-                                    .setTitle("Insurance Create Successfully ")
-                                    .sneakSuccess()
-                                val intent = Intent(
-                                    this@ClaimRegistrationActivitySHGMember,
-                                    MainActivity::class.java
-                                )
-                                intent.flags =
-                                    Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                startActivity(intent)
 
-                            } else {
-                                Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
-                                    .setTitle("Please Try Again")
-                                    .sneakError()
-                            }
-                        }
-
-                        override fun onFailure(call: Call<String>, t: Throwable) {
-                            DialogUtil.stopProgressDisplay()
-                            Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
-                                .setTitle("Server Error Please Try Again")
-                                .sneakError()
-                        }
-                    })
-                } else {
-                    Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
-                        .setTitle(Constant.NO_INTERNET)
-                        .sneakError()
-                }*/
                 if (DialogUtil.isConnectionAvailable(this@ClaimRegistrationActivitySHGMember)) {
                     DialogUtil.displayProgress(this@ClaimRegistrationActivitySHGMember)
                     val gson = GsonBuilder().setLenient().create()
@@ -371,9 +310,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                 else {
                     val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
                     val gson = Gson()
-                    Log.d(
-                        "fddgsgs",
-                        "Body of Update product" + gson.toJson(blockMasterClass)
+                    Log.d("fddgsgs", "Body of Update product" + gson.toJson(blockMasterClass)
                     )
                     blockCode = blockMasterClass?.blockCode.toString()
                     getClusterDataList(blockMasterClass?.blockCode.toString())
@@ -412,8 +349,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long
-            ) {
+                id: Long) {
                 if (position == 0)
                     return
                 else {
@@ -455,8 +391,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long
-            ) {
+                id: Long) {
                 if (position == 0)
                     return
                 else {
