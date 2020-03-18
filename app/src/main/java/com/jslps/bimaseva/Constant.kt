@@ -17,6 +17,7 @@ object Constant {
     const val ENTRY_FORM_INSURANCE = 108
     const val Document_DETAILS_FRAGMRNT = 109
     const val DOCUMENT_LIST_FRAGMENT = 110
+    const val DOCUMENT_FALSE_LIST_FRAGMENT = 111
     const val setTitle = 1111
     const val UPDATE__NO_INTERNET = 209
     const val API_BASE_URL = "http://swalekha.in/webServiceModalPopup.asmx/"

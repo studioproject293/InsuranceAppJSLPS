@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.R
@@ -14,6 +13,7 @@ import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
 import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.ui.BaseFragment
+
 import com.jslps.bimaseva.ui.documentNotReady.adapter.DocumentNotReadyListAdapter
 
 
@@ -70,21 +70,16 @@ class DocumentListFragment : BaseFragment(), DocumentNotReadyView, OnFragmentLis
             HeaderData(false, AppCache.getCache().insurancetype.toString())
         )
     }
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         rootView = inflater.inflate(R.layout.fragment_home, container, false)
         recycleview = rootView?.findViewById(R.id.recycleview)
         presenter = DocumentNotReadyPresenter(this, activity as Activity)
         recycleview?.layoutManager = Constant.getVerticalLayout(activity!!)
-        val entryForm = rootView?.findViewById<Button>(R.id.entryForm)
-        entryForm?.visibility = View.GONE
-        presenter?.resume()
+        presenter?.resume(insuranceName)
         return rootView!!
     }
 

@@ -1,36 +1,29 @@
-package com.jslps.bimaseva.ui.home
+package com.jslps.bimaseva.ui.documentFale
 
 import android.app.Activity
 import com.jslps.bimaseva.base.BasePresenter
 import com.jslps.bimaseva.base.Presenter
 import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
-import com.jslps.bimaseva.network.ServiceUpdateListner
-import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.model.Master
+import com.jslps.bimaseva.network.ServiceUpdateListner
+import com.jslps.bimaseva.ui.documentNotReady.DocumentFalseView
 import com.twidpay.beta.model.ApiRequest
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presenter(),
+class DocumentFalsePresenter(view: DocumentFalseView, context: Activity) : BasePresenter,
+    Presenter(),
     OnFragmentListItemSelectListener {
     override fun onListItemSelected(itemId: Int, data: Any) {
 
-        getAppCache().insurancetype = data.toString()
-        if (data.toString().equals("PMSBY"))
-            getAppCache().insuranceStepSend = "1"
-        else if (data.toString().equals("PMJJY"))
-            getAppCache().insuranceStepSend = "2"
-        else if (data.toString().equals("PMJAY"))
-            getAppCache().insuranceStepSend = "3"
-        else if (data.toString().equals("ASSET Insurance"))
-            getAppCache().insuranceStepSend = "4"
-        view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
     }
 
     override fun onListItemLongClicked(itemId: Int, data: Any) {
     }
 
 
-    var view: HomeView? = view
+    var view: DocumentFalseView? = view
     var context: Activity? = context
 
     override fun init() {
@@ -43,14 +36,11 @@ class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presente
 
 
     override fun resume() {
-        val schemedata = ArrayList<String>()
-        schemedata.add("PMSBY")
-        schemedata.add("PMJJY")
-        schemedata.add("PMJAY")
-        schemedata.add("ASSET Insurance")
-        view?.loadData(schemedata)
-    }
 
+    }
+    fun loadData(insuranceName: List<Master>?){
+        view?.loadData(insuranceName as ArrayList<Master>)
+    }
     override fun onDestroy() {
 
     }
@@ -69,6 +59,7 @@ class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presente
     }
 
     override fun onFragmentInteraction(fragmentId: Int, data: Any?) {
+
     }
 
     fun getListner(): OnFragmentListItemSelectListener {

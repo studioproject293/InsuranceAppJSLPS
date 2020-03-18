@@ -15,7 +15,6 @@ import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.MasterX
 
 import com.jslps.bimaseva.ui.BaseFragment
-import com.jslps.bimaseva.ui.home.HomePresenter
 import com.jslps.bimaseva.ui.reports.adapter.SchemeListAdapterReport
 
 class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnFragmentListItemSelectListener {
@@ -71,13 +70,11 @@ class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnF
         recycleview = rootView?.findViewById(R.id.recycleview)
         presenter = SchemeDetailsPresenterReport(this, activity as Activity)
         recycleview?.layoutManager = Constant.getVerticalLayout(activity!!)
-        val entryForm = rootView?.findViewById<Button>(R.id.entryForm)
-        entryForm?.visibility = View.GONE
+
         presenter?.resume()
         return rootView!!
     }
     companion object {
-        var insuranceName: String? = null
         fun getInstance(): SchemeDetailsFragmentReport {
             return SchemeDetailsFragmentReport()
         }

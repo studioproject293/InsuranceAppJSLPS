@@ -5,7 +5,6 @@ import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.base.BasePresenter
 import com.jslps.bimaseva.base.Presenter
-import com.jslps.bimaseva.cache.AppCache
 import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
 import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.model.UploadRegisterData
@@ -46,9 +45,13 @@ class DocumentNotReadyPresenter(view: DocumentNotReadyView, context: Activity) :
     }
 
 
-    override fun resume() {
+    override fun resume(insuranceName: List<Master>?) {
         val master = getAppCache().loginPojo?.Master as ArrayList<Master>
         view?.loadData(master)
+    }
+
+    override fun resume() {
+
     }
 
     override fun onDestroy() {

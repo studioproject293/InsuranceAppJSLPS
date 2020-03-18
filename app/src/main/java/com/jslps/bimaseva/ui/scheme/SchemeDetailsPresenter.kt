@@ -1,6 +1,5 @@
 package com.jslps.bimaseva.ui.scheme
 
-import MasterLoginDb
 import Table1LoginDb
 import android.app.Activity
 import android.util.Log
@@ -16,6 +15,7 @@ import com.jslps.bimaseva.network.LoginService
 import com.jslps.bimaseva.network.ServiceUpdateListner
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.jslps.bimaseva.model.Master
 import com.orm.query.Select
 import com.twidpay.beta.model.ApiRequest
 import okhttp3.OkHttpClient
@@ -246,6 +246,43 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                 })
             }
             5 -> {
+                AppCache.getCache().insuranceStep = "Document False"
+                DialogUtil.displayProgress(context!!)
+                val changePhotoResponseModelCall =
+                    apiServices.getTabletDownloadDataBCsakhi(
+                        "Duplicate", "0", getAppCache().insuranceStepSend!!,
+                        arraylistPanchyat.get(0).blockcode!!
+                    )
+                changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        val gson = Gson()
+                        DialogUtil.stopProgressDisplay()
+                        val fullResponse = response.body()
+                        val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                        val result = XmlString?.replace(("</string>").toRegex(), "")
+                        val mStudentObject1 = gson.fromJson(result, LoginPojo::class.java)
+                        System.out.println("vvh" + gson.toJson(mStudentObject1))
+                        if (mStudentObject1 != null) {
+                            if (mStudentObject1.Master.isNotEmpty()) {
+                                AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                                view?.gotoScreen(
+                                    Constant.INSURANCE_LIST_FRAGMENT,
+                                    mStudentObject1.Master
+                                )
+                            } else view?.showMessage("You don't have any insurance,Please Add it.")
+                        } else {
+                            view?.showMessage("You don't have any insurance,Please Add it.")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        DialogUtil.stopProgressDisplay()
+                        val toast = Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT)
+                        toast.show()
+                    }
+                })
+            }
+            6 -> {
                 AppCache.getCache().insuranceStep = "Total Claim"
                 view?.gotoScreen(Constant.REPORTS_DETAILS_FRAGMENT, "")
             }
@@ -263,6 +300,10 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
         ServiceUpdateListner.getInstance().setListener(this)
     }
 
+    override fun resume(insuranceName: List<Master>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun resume() {
         val schemedata = ArrayList<String>()
         schemedata.add("Registered")
@@ -270,6 +311,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
         schemedata.add("Under Process")
         schemedata.add("Claim Settled")
         schemedata.add("Rejected")
+        schemedata.add("Document False")
         schemedata.add("Total Claim")
         view?.loadData(schemedata)
     }

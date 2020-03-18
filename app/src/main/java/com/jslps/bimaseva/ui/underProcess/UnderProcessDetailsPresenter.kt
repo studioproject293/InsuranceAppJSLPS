@@ -45,8 +45,12 @@ class UnderProcessDetailsPresenter(view: UnderProcessDetailsView, context: Activ
     }
 
 
-    override fun resume() {
+    override fun resume(insuranceName: List<Master>?) {
 
+    }
+
+    override fun resume() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onDestroy() {
@@ -75,7 +79,7 @@ class UnderProcessDetailsPresenter(view: UnderProcessDetailsView, context: Activ
 
     fun uploadUnderProcess(insuranceNameeee: Master?, encodedBase64: String?) {
         if (DialogUtil.isConnectionAvailable(context)) {
-            this!!.context?.let { DialogUtil.displayProgress(it) }
+            DialogUtil.displayProgress(context!!)
             val gson = GsonBuilder().setLenient().create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)

@@ -14,6 +14,7 @@ import com.jslps.bimaseva.network.LoginService
 import com.jslps.bimaseva.network.ServiceUpdateListner
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.jslps.bimaseva.model.Master
 import com.twidpay.beta.model.ApiRequest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -37,6 +38,10 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
 
     override fun init() {
         ServiceUpdateListner.getInstance().setListener(this)
+    }
+
+    override fun resume(insuranceName: List<Master>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 

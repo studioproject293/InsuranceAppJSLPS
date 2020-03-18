@@ -33,6 +33,7 @@ class SchemeListAdapter(items: ArrayList<String>, activity: Context, insuranceNa
             2 -> p0.homeicon.setImageResource(R.drawable.process_icon)
             3 -> p0.homeicon.setImageResource(R.drawable.claim_setteld)
             4 -> p0.homeicon.setImageResource(R.drawable.rejected_icon)
+            5 -> p0.homeicon.setImageResource(R.drawable.document_false)
             else -> p0.homeicon.setImageResource(R.drawable.reports_icon)
         }
         p0.view.setOnClickListener { mListner?.onListItemSelected(p1, insuranceName) }

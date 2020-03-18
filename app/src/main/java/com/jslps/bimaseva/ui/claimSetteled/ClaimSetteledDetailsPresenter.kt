@@ -40,6 +40,10 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
     }
 
 
+    override fun resume(insuranceName: List<Master>?) {
+
+    }
+
     override fun resume() {
 
     }

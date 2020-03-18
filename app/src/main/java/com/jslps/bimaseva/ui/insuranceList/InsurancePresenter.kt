@@ -11,8 +11,10 @@ import com.jslps.bimaseva.cache.AppCache
 import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
 import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.model.UploadRegisterData
+import com.jslps.bimaseva.model.UploadRegisterDataDocumentFalse
 import com.jslps.bimaseva.network.ServiceUpdateListner
 import com.jslps.bimaseva.network.UploadRegisterDocument
+import com.jslps.bimaseva.network.UploadRegisterDocumentFalse
 import com.twidpay.beta.model.ApiRequest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -63,9 +65,13 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
     }
 
 
-    override fun resume() {
+    override fun resume(insuranceName: List<Master>?) {
         val master = getAppCache().loginPojo?.Master as ArrayList<Master>
         view?.loadData(master)
+    }
+
+    override fun resume() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onDestroy() {
@@ -249,6 +255,67 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
                                      .fillParent(true)
                                      .textAlign(Align.CENTER)
                                      .show()*/
+                            }
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                    } else {
+                        DialogUtil.stopProgressDisplay()
+                        view?.showMessage(response.message())
+                    }
+                }
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    DialogUtil.stopProgressDisplay()
+                    view?.showMessage(t.localizedMessage.toString())
+                }
+            })
+        } else {
+            view?.noInternet()
+        }
+    }
+
+    fun documentfalseService(callId: Int?) {
+
+        if (DialogUtil.isConnectionAvailable(context)) {
+            DialogUtil.displayProgress(context!!)
+            val gson = GsonBuilder().setLenient().create()
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            val builder = OkHttpClient.Builder()
+            //comment in live build and uncomment in uat
+            builder.interceptors().add(interceptor)
+            builder.connectTimeout(120, TimeUnit.SECONDS)
+            builder.readTimeout(120, TimeUnit.SECONDS)
+            val client = builder.build()
+            val retrofit = Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
+                ScalarsConverterFactory.create()
+            ).client(client).build()
+            val apiServices = retrofit.create(UploadRegisterDocumentFalse::class.java)
+            val uploadRegisterData = UploadRegisterDataDocumentFalse(callId.toString())
+            val data = "{" + "\"tblCallCenter_IsStatus\"" + " : " + Gson().toJson(uploadRegisterData) + "}"
+            val changePhotoResponseModelCall =
+                apiServices.uploadRegisterDocumentFalse(data)
+            changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    if (response.isSuccessful) {
+                        DialogUtil.stopProgressDisplay()
+                        val fullResponse = response.body()
+                        val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                        val result = XmlString?.replace(("</string>").toRegex(), "")
+                        var jsonObj: JSONObject? = null
+                        try {
+                            jsonObj = JSONObject(result.toString())
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                        try {
+                            val categoryObject = jsonObj?.getJSONArray("Table")
+                            val jsonObject = categoryObject?.getJSONObject(0)
+                            val Result = jsonObject?.getString("RetValue")
+                            if (Result.equals("1", ignoreCase = true)) {
+                                view?.showMessage("Insurance Update Successfully")
+                            } else {
+                               view?.showMessage("Please Try again")
                             }
                         } catch (e: JSONException) {
                             e.printStackTrace()

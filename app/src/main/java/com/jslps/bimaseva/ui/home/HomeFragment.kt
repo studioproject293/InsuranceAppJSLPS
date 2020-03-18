@@ -79,7 +79,7 @@ class HomeFragment : BaseFragment(), HomeView, OnFragmentListItemSelectListener 
         super.onCreateView(inflater, container, savedInstanceState)
         rootView = inflater.inflate(R.layout.fragment_home_new, container, false)
         recycleview = rootView?.findViewById(R.id.recycleview)
-        entryForm = rootView?.findViewById(R.id.entryForm)
+
         logout = rootView?.findViewById(R.id.logout)
         presenter = HomePresenter(this, activity as Activity)
         linearLayoutManager = LinearLayoutManager(getActivity());

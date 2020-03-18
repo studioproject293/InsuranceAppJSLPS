@@ -22,6 +22,7 @@ import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.ui.NewInsuranceForm
 import com.jslps.bimaseva.ui.claimSetteled.ClaimSetteledDetailsFragment
+import com.jslps.bimaseva.ui.documentFale.DocumentFalseListFragment
 import com.jslps.bimaseva.ui.documentNotReady.DocumentListFragment
 import com.jslps.bimaseva.ui.documentNotReady.DocumentNotReadyDetailsFragment
 import com.jslps.bimaseva.ui.insuranceList.InsuranceDetailsFragment
@@ -94,6 +95,19 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                     .replace(
                         R.id.fragment_main,
                         DocumentListFragment.getInstance(data as List<Master>),
+                        mFragmentTag
+                    )
+                    .commitAllowingStateLoss()
+            }
+            Constant.DOCUMENT_FALSE_LIST_FRAGMENT -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                    .addToBackStack(mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        DocumentFalseListFragment.getInstance(data as List<Master>),
                         mFragmentTag
                     )
                     .commitAllowingStateLoss()
@@ -193,7 +207,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
 
     }
 
-    fun closeApp() {
+    private fun closeApp() {
         val alertDialogBuilder = AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
         alertDialogBuilder.setMessage(getString(R.string.exit_message))
         alertDialogBuilder.setPositiveButton(getString(R.string.yes)) { arg0, arg1 -> finish() }

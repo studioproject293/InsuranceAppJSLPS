@@ -80,7 +80,7 @@ class SchemeDetailsFragment : BaseFragment(), SchemeDetailsView, OnFragmentListI
         super.onCreateView(inflater, container, savedInstanceState)
         rootView = inflater.inflate(R.layout.fragment_home, container, false)
         recycleview = rootView?.findViewById(R.id.recycleview)
-        entryForm = rootView?.findViewById(R.id.entryForm)
+
         presenter = SchemeDetailsPresenter(this, activity as Activity)
         linearLayoutManager = LinearLayoutManager(getActivity());
         recycleview?.setLayoutManager(linearLayoutManager);
