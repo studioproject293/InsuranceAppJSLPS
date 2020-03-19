@@ -8,12 +8,17 @@ import Table3Db
 import Table4Db
 import Table5Db
 import Table6Db
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.Uri
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -28,8 +33,6 @@ import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.gson.Gson
@@ -40,24 +43,24 @@ import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.R
 import com.jslps.bimaseva.activity.adapter.MyCustomPagerAdapter
 import com.jslps.bimaseva.activity.adapter.MyCustomPagerAdapterReports
-import com.jslps.bimaseva.adapter.HeadingWelcomePageListAdapter
 import com.jslps.bimaseva.model.welcomePageReports.BaseClassReportsWelcomwPage
 import com.jslps.bimaseva.model.welcomePageReports.Listdetails
 import com.jslps.bimaseva.network.LoginServiceNew
 import com.jslps.bimaseva.network.WelcomePageReports
 import com.orm.SugarRecord
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
+import org.jsoup.Jsoup
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 class WelcomeActivity : AppCompatActivity() {
     internal var images = intArrayOf(R.drawable.pmjby, R.drawable.pmsby, R.drawable.apy)
@@ -80,7 +83,7 @@ class WelcomeActivity : AppCompatActivity() {
     private var reports: TextView? = null
     private var imagerightarrow: ImageView? = null
     private var runningThread = true
-    var dotsIndicator:DotsIndicator?=null
+    var dotsIndicator: DotsIndicator? = null
     internal var viewPagerPageChangeListener: ViewPager.OnPageChangeListener =
         object : ViewPager.OnPageChangeListener {
 
@@ -237,7 +240,8 @@ class WelcomeActivity : AppCompatActivity() {
                     Log.d("fddgsgs", "Body of Update product" + gson.toJson(mStudentObject1))
 
                     val headingWelcomePageListAdapter =
-                        MyCustomPagerAdapterReports(this@WelcomeActivity,
+                        MyCustomPagerAdapterReports(
+                            this@WelcomeActivity,
                             mStudentObject1.master as ArrayList<Listdetails>
                         )
                     recyclerviewreports?.adapter = headingWelcomePageListAdapter;
@@ -247,7 +251,7 @@ class WelcomeActivity : AppCompatActivity() {
                         if (currentPage1 == NUM_PAGES) {
                             currentPage1 = 0
                         }
-                        recyclerviewreports!!.setCurrentItem(currentPage1++,true)
+                        recyclerviewreports!!.setCurrentItem(currentPage1++, true)
                     }
 
                     timer = Timer() // This will create a new Thread
@@ -569,5 +573,77 @@ class WelcomeActivity : AppCompatActivity() {
     private fun showError(editText: EditText) {
         val shake = AnimationUtils.loadAnimation(this, R.anim.shake)
         editText.startAnimation(shake)
+    }
+
+    var latestVersion: String? = null
+
+    inner class UpdateAsync(currentVersion: String, context: Context) :
+        AsyncTask<String, String, JSONObject>() {
+        private val currentVersion: String
+        private val context: Context
+
+        init {
+            this.currentVersion = currentVersion
+            this.context = context
+        }
+
+        override fun doInBackground(vararg params: String): JSONObject {
+            try {
+                latestVersion =
+                    Jsoup.connect("https://play.google.com/store/apps/details?id= $packageName &hl=en")
+                        .timeout(10000)
+                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                        .referrer("http://www.google.com")
+                        .get()
+                        .select("div.hAyfc:nth-child(4) > span:nth-child(2) > div:nth-child(1) > span:nth-child(1)")
+                        .first()
+                        .ownText()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            return JSONObject()
+        }
+
+        override fun onPostExecute(jsonObject: JSONObject) {
+            if (latestVersion != null) {
+                if (!currentVersion.equals(latestVersion, ignoreCase = true)) {
+                    updateDialog()
+                }
+            }
+            super.onPostExecute(jsonObject)
+        }
+    }
+
+    fun updateDialog() {
+        val alertDialogBuilder =
+            AlertDialog.Builder(this@WelcomeActivity)
+        //            String s1 = "<b>" + "Update Available" + "</b>";
+//            Spanned strMessage = Html.fromHtml(s1);
+        alertDialogBuilder.setTitle("New version available ($latestVersion)")
+        alertDialogBuilder.setMessage(getString(R.string.youAreNotUpdatedMessage) + " ")
+        alertDialogBuilder.setCancelable(false)
+        alertDialogBuilder.setPositiveButton(
+            R.string.update,
+            DialogInterface.OnClickListener { dialog, id ->
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=$packageName")
+                    )
+                )
+            })
+        alertDialogBuilder.show()
+    }
+
+    fun forceUpdate() {
+        val packageManager = packageManager
+        var packageInfo: PackageInfo? = null
+        try {
+            packageInfo = packageManager.getPackageInfo(packageName, 0)
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        val currentVersion = packageInfo!!.versionName
+        UpdateAsync(currentVersion, this@WelcomeActivity).execute()
     }
 }
