@@ -266,7 +266,7 @@ class SchemeDetailsPresenter(view: SchemeDetailsView, context: Activity) : BaseP
                             if (mStudentObject1.Master.isNotEmpty()) {
                                 AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
                                 view?.gotoScreen(
-                                    Constant.INSURANCE_LIST_FRAGMENT,
+                                    Constant.DOCUMENT_FALSE_LIST_FRAGMENT,
                                     mStudentObject1.Master
                                 )
                             } else view?.showMessage("You don't have any insurance,Please Add it.")

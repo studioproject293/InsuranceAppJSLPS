@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.R
@@ -19,7 +20,8 @@ import com.jslps.bimaseva.ui.documentNotReady.adapter.DocumentNotReadyListAdapte
 
 class DocumentListFragment : BaseFragment(), DocumentNotReadyView, OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
+        toast.show()
     }
 
     override fun loadData(cardInitResponse: ArrayList<Master>?) {
@@ -52,6 +54,8 @@ class DocumentListFragment : BaseFragment(), DocumentNotReadyView, OnFragmentLis
     }
 
     override fun noInternet() {
+        val toast = Toast.makeText(context, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
+        toast.show()
     }
 
     override fun onListItemSelected(itemId: Int, data: Any) {

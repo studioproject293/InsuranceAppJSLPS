@@ -280,7 +280,7 @@ class WelcomeActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     DialogUtil.stopProgressDisplay()
                     Sneaker.with(this@WelcomeActivity) // Activity, Fragment or ViewGroup
-                        .setTitle(t.toString())
+                        .setTitle("Server error, Please Try Again")
                         .sneakError()
                 }
             })

@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.irozon.sneaker.Sneaker
 import com.jslps.bimaseva.R
 import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
 import com.jslps.bimaseva.model.HeaderData
@@ -19,7 +21,8 @@ import com.jslps.bimaseva.ui.insuranceList.adapter.InsuranceListAdapter
 
 class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
+        toast.show()
     }
 
     override fun loadData(cardInitResponse: ArrayList<Master>?) {

@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jslps.bimaseva.Constant
@@ -53,6 +54,8 @@ class HomeFragment : BaseFragment(), HomeView, OnFragmentListItemSelectListener 
     }
 
     override fun noInternet() {
+        val toast = Toast.makeText(context, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
+        toast.show()
     }
 
     override fun onListItemSelected(itemId: Int, data: Any) {

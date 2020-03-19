@@ -18,6 +18,7 @@ import android.widget.*
 import androidx.annotation.NonNull
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
+import com.irozon.sneaker.Sneaker
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.R
@@ -35,7 +36,7 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
         val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
         toast.show()
         if (message != null) {
-            if (message.equals("Insurance Update Successfully")){
+            if (message == "Insurance Update Successfully"){
                 val intent = Intent(activity, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK

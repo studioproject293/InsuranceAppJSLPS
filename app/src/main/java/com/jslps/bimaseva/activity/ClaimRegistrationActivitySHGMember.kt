@@ -289,7 +289,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                     val districtMasterClass =
                         parent?.getItemAtPosition(position) as BlockMasterClass?
                     shgCode = districtMasterClass?.groupCode.toString()
-                    getBlockData(districtMasterClass?.groupCode.toString())
+
                 }
             }
 

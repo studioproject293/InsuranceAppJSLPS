@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.R
@@ -40,6 +41,11 @@ class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnF
         }
     }
 
+    override fun showMessage(message: String) {
+        val toast = Toast.makeText(context, message, Toast.LENGTH_SHORT)
+        toast.show()
+    }
+
     override fun showProgress() {
     }
 
@@ -47,6 +53,8 @@ class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnF
     }
 
     override fun noInternet() {
+        val toast = Toast.makeText(context, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
+        toast.show()
     }
 
     override fun onListItemSelected(itemId: Int, data: Any) {
@@ -70,7 +78,6 @@ class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnF
         recycleview = rootView?.findViewById(R.id.recycleview)
         presenter = SchemeDetailsPresenterReport(this, activity as Activity)
         recycleview?.layoutManager = Constant.getVerticalLayout(activity!!)
-
         presenter?.resume()
         return rootView!!
     }

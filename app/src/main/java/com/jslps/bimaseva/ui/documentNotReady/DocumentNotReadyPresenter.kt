@@ -140,20 +140,20 @@ class DocumentNotReadyPresenter(view: DocumentNotReadyView, context: Activity) :
                             if (Result.equals("1", ignoreCase = true)) {
                                 view?.showMessage("Insurance Update Successfully")
                             } else {
-                                 view?.showMessage("Please try again")
+                                view?.showMessage("Please try again")
                             }
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
                     } else {
                         DialogUtil.stopProgressDisplay()
-                        view?.showMessage(response.message())
+                        view?.showMessage("Server Error,Please Try Again")
                     }
                 }
 
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     DialogUtil.stopProgressDisplay()
-                    view?.showMessage(t.localizedMessage)
+                    view?.showMessage("Server Error,Please Try Again")
                 }
             })
         } else {

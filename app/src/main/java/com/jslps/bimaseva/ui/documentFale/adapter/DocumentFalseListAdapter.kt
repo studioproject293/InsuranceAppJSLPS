@@ -23,7 +23,7 @@ class DocumentFalseListAdapter(items: ArrayList<Master>, activity: Context, insu
     var insuranceNamee: String = insuranceName
     private var selectedPosition = -1
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
-        val row = LayoutInflater.from(p0.context).inflate(R.layout.row_item_insurace_list, p0, false)
+        val row = LayoutInflater.from(p0.context).inflate(R.layout.row_item_insurace_false_list, p0, false)
         return ViewHolder(row)
     }
 

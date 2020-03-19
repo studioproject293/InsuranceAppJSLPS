@@ -1,6 +1,7 @@
 package com.jslps.bimaseva.ui.claimSetteled
 
 import android.app.Activity
+import android.widget.Toast
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.base.BasePresenter
@@ -149,13 +150,13 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
                         }
                     } else {
                        DialogUtil.stopProgressDisplay()
-                        view?.showMessage(response.message())
+                        view?.showMessage("Server Error, Please Try Again")
                     }
                 }
 
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     DialogUtil.stopProgressDisplay()
-                    view?.showMessage(t.localizedMessage)
+                    view?.showMessage("Server Error,Please Try Again")
                 }
             })
         } else {
@@ -220,28 +221,21 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
                             val jsonObject = categoryObject?.getJSONObject(0)
                             val Result = jsonObject?.getString("RetValue")
                             if (Result.equals("1", ignoreCase = true)) {
-
                                 view?.showMessage("Insurance Update Successfully")
                             } else {
-                                /* Snackbar.with(getActivity(), null)
-                                     .type(Type.ERROR)
-                                     .message("Please try again")
-                                     .duration(Duration.SHORT)
-                                     .fillParent(true)
-                                     .textAlign(Align.CENTER)
-                                     .show()*/
+                                view?.showMessage("Server Error, Please Try Again")
                             }
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
                     } else {
-                        context?.let { DialogUtil.displayProgress(it) }
-                        view?.showMessage(response.message())
+                        DialogUtil.stopProgressDisplay()
+                        view?.showMessage("Server Error, Please Try Again")
                     }
                 }
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     DialogUtil.stopProgressDisplay()
-                    view?.showMessage(t.localizedMessage)
+                    view?.showMessage("Server Error, Please Try Again")
                 }
             })
         } else {

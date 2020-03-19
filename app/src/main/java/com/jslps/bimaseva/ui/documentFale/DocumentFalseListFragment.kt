@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.R
@@ -19,6 +20,8 @@ import com.jslps.bimaseva.ui.documentNotReady.DocumentFalseView
 class DocumentFalseListFragment : BaseFragment(), DocumentFalseView,
     OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
+        val toast = Toast.makeText(context, message as String, Toast.LENGTH_SHORT)
+        toast.show()
     }
 
     override fun loadData(cardInitResponse: ArrayList<Master>?) {
@@ -51,6 +54,8 @@ class DocumentFalseListFragment : BaseFragment(), DocumentFalseView,
     }
 
     override fun noInternet() {
+        val toast = Toast.makeText(context, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
+        toast.show()
     }
 
     override fun onListItemSelected(itemId: Int, data: Any) {

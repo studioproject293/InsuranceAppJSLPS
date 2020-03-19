@@ -53,7 +53,7 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView, O
     }
 
     override fun showProgress() {
-        activity?.let { DialogUtil.displayProgress(it) }
+        DialogUtil.displayProgress(activity!!)
     }
 
     override fun hideProgress() {
@@ -79,7 +79,7 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView, O
     private var rootView: View? = null
     override fun onResume() {
         super.onResume()
-        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, AppCache.getCache().insurancetype.toString()))
+        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, "Claim Settled "))
     }
 
     private fun onSelectFromGalleryResult(data: Intent) {

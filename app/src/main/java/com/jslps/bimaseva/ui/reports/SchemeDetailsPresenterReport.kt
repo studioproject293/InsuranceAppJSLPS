@@ -66,13 +66,10 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
         changePhotoResponseModelCall.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 DialogUtil.stopProgressDisplay()
-                val gson = Gson()
-                Log.v("Response prof :", "hgfgfrhgs" + response.body())
 
                 val fullResponse = response.body()
                 val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                 val result = XmlString?.replace(("</string>").toRegex(), "")
-                print("fhrjfghf" + result)
                 val mStudentObject1 = gson.fromJson(result, ReportModel::class.java)
                 for (item in mStudentObject1.Master) {
                     mStudentObject1.Master.get(index = 0).Column2="Registered ("
@@ -87,8 +84,7 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
 
             override fun onFailure(call: Call<String>, t: Throwable) {
                 DialogUtil.stopProgressDisplay()
-                val toast = Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT)
-                toast.show()
+                view?.showMessage("Server Error,Please Try Again")
             }
         })
     }

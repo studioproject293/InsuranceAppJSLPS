@@ -180,7 +180,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
                 }
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     DialogUtil.stopProgressDisplay()
-                    view?.showMessage(t.localizedMessage)
+                    view?.showMessage("Server Error,Please Try Again")
                 }
             })
         } else {

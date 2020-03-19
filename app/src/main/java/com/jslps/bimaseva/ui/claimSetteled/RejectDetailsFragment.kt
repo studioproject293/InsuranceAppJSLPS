@@ -30,11 +30,11 @@ import java.io.*
 
 class RejectDetailsFragment : BaseFragment(), UnderProcessDetailsView, OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
-        Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
+        /*Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
             .setTitle(message.toString())
-            .sneakSuccess()
-       /* val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
-        toast.show()*/
+            .sneakSuccess()*/
+        val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
+        toast.show()
     }
 
     override fun gotoScreen(fragmentID: Int, message: Any?) {
@@ -109,8 +109,7 @@ class RejectDetailsFragment : BaseFragment(), UnderProcessDetailsView, OnFragmen
         val village: TextView? = rootView?.findViewById(R.id.village)
         val rejectReason: EditText? = rootView?.findViewById(R.id.rejectReason)
         document = rootView?.findViewById(R.id.doucment)
-        var actionButton: Button? = rootView?.findViewById(R.id.actionButton)
-        val uploadDocument: Button? = rootView?.findViewById(R.id.uploadDocument)
+        val actionButton: Button? = rootView?.findViewById(R.id.actionButton)
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
         nomineeName?.text = insuranceNameeee?.Name
         block?.text = insuranceNameeee?.Blockname
@@ -155,9 +154,7 @@ class RejectDetailsFragment : BaseFragment(), UnderProcessDetailsView, OnFragmen
         gallery.setOnClickListener {
             alertD.dismiss()
             val intent = Intent(
-                Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            )
+                Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             intent.setType("image/*")
             startActivityForResult(
                 Intent.createChooser(intent, "Select File"),
