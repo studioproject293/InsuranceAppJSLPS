@@ -6,23 +6,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:padding="5dp"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="@dimen/spacing_small">
 
-    <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="right|center"
-                android:layout_marginRight="3dp"
-                android:elevation="1dp"
-
-                android:src="@drawable/right_arrow"
-                android:tint="#D2691E" />
-
-        <LinearLayout
+    <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -34,10 +20,10 @@
                     android:background="#D2691E" />
 
             <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.9"
                     android:layout_height="wrap_content"
                     android:background="#FFF"
-
                     android:orientation="vertical">
 
                 <LinearLayout
@@ -51,7 +37,8 @@
                             android:layout_height="wrap_content"
                             android:background="#fff"
                             android:orientation="vertical"
-                            android:padding="8dp">
+                            android:padding="8dp"
+                            android:weightSum="1">
 
                         <LinearLayout
                                 android:layout_width="match_parent"
@@ -59,6 +46,7 @@
                                 android:gravity="center"
                                 android:orientation="horizontal"
                                android:padding="2dp"
+
                                 android:weightSum="1">
 
                             <TextView
@@ -68,7 +56,7 @@
 
                                     android:text="Name Of  Insurance"
                                     android:textColor="#000"
-                                    android:textSize="16sp" />
+                                    android:textSize="@dimen/text_large" />
 
                             <TextView
                                     android:layout_width="0dp"
@@ -78,7 +66,7 @@
 
                                     android:text=":"
                                     android:textColor="#000"
-                                    android:textSize="16sp" />
+                                    android:textSize="@dimen/text_large" />
 
                             <TextView
                                     android:id="@+id/insuranceName"
@@ -87,7 +75,7 @@
                                     android:layout_weight="0.45"
 
                                     android:textColor="#000"
-                                    android:textSize="16sp" />
+                                    android:textSize="@dimen/text_large" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -105,7 +93,7 @@
 
                                     android:text="Nominee of insurance"
                                     android:textColor="#000"
-                                    android:textSize="16sp" />
+                                    android:textSize="@dimen/text_large" />
 
                             <TextView
                                     android:layout_width="0dp"
@@ -116,7 +104,7 @@
 
                                     android:text=":"
                                     android:textColor="#000"
-                                    android:textSize="16sp" />
+                                    android:textSize="@dimen/text_large" />
 
                             <TextView
                                     android:id="@+id/nomineeInsurance"
@@ -125,7 +113,7 @@
                                     android:layout_weight="0.45"
 
                                     android:textColor="#000"
-                                    android:textSize="16sp" />
+                                    android:textSize="@dimen/text_large" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -142,7 +130,7 @@
                                     android:layout_weight="0.45"
                                     android:text="Contact No."
                                     android:textColor="#000"
-                                    android:textSize="16sp" />
+                                    android:textSize="@dimen/text_large" />
 
                             <TextView
                                     android:layout_width="0dp"
@@ -152,7 +140,7 @@
 
                                     android:text=":"
                                     android:textColor="#000"
-                                    android:textSize="16sp" />
+                                    android:textSize="@dimen/text_large" />
 
                             <TextView
                                     android:id="@+id/contactNo"
@@ -161,7 +149,7 @@
                                     android:layout_weight="0.45"
 
                                     android:textColor="#000"
-                                    android:textSize="16sp" />
+                                    android:textSize="@dimen/text_large" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -223,7 +211,7 @@
                                 android:padding="1dp"
                                 android:text="Village :"
                                 android:textColor="#000"
-                                android:textSize="16sp" />
+                                android:textSize="@dimen/text_large" />
 
                         <TextView
                                 android:id="@+id/village"
@@ -232,7 +220,7 @@
                                 android:layout_weight="0.6"
                                 android:padding="1dp"
                                 android:textColor="#000"
-                                android:textSize="16sp" />
+                                android:textSize="@dimen/text_large" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -250,7 +238,7 @@
                                 android:padding="1dp"
                                 android:text="Block :"
                                 android:textColor="#000"
-                                android:textSize="16sp" />
+                                android:textSize="@dimen/text_large" />
 
                         <TextView
                                 android:id="@+id/block"
@@ -259,7 +247,7 @@
                                 android:layout_weight="0.6"
                                 android:padding="1dp"
                                 android:textColor="#000"
-                                android:textSize="16sp" />
+                                android:textSize="@dimen/text_large" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -277,7 +265,7 @@
                                 android:padding="1dp"
                                 android:text="Bank Branch :"
                                 android:textColor="#000"
-                                android:textSize="16sp" />
+                                android:textSize="@dimen/text_large" />
 
                         <TextView
                                 android:id="@+id/bankbranch"
@@ -286,7 +274,7 @@
                                 android:layout_weight="0.6"
                                 android:padding="1dp"
                                 android:textColor="#000"
-                                android:textSize="16sp" />
+                                android:textSize="@dimen/text_large" />
                     </LinearLayout>
 
                     <TextView
@@ -296,7 +284,7 @@
                             android:padding="10dp"
                             android:text="Writing information submitted at bank ."
                             android:textColor="#000"
-                            android:textSize="16sp" />
+                            android:textSize="@dimen/text_large" />
 
                     <LinearLayout
                             android:layout_width="match_parent"
@@ -307,13 +295,13 @@
                         <ImageView
                                 android:id="@+id/doucment"
                                 android:layout_width="0dp"
-                                android:layout_height="130dp"
+                                android:layout_height="@dimen/margin_large"
                                 android:layout_margin="5dp"
                                 android:layout_weight="0.6" />
 
                         <Button
                                 android:id="@+id/uploadDocument"
-                                android:layout_width="130dp"
+                                android:layout_width="@dimen/margin_large"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:background="@drawable/custom_circle_black_border"
@@ -322,12 +310,12 @@
                                 android:text="Upload"
 
                                 android:textColor="#000"
-                                android:textSize="16sp" />
+                                android:textSize="@dimen/text_large" />
                     </LinearLayout>
 
                     <Button
                             android:id="@+id/actionButton"
-                            android:layout_width="130dp"
+                            android:layout_width="@dimen/margin_large"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="10dp"
@@ -335,7 +323,7 @@
                             android:padding="10dp"
                             android:text="Action"
                             android:textColor="#fff"
-                            android:textSize="16sp" />
+                            android:textSize="@dimen/text_large" />
                 </LinearLayout>
 
                 <!--<View
@@ -343,6 +331,12 @@
                         android:layout_height="1dp"
                         android:background="#000" />-->
             </LinearLayout>
+        <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center"
+                android:src="@drawable/right_arrow" />
         </LinearLayout>
-    </FrameLayout>
+
 </androidx.cardview.widget.CardView>

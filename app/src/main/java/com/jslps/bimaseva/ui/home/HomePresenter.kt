@@ -15,15 +15,27 @@ class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presente
     override fun onListItemSelected(itemId: Int, data: Any) {
 
         getAppCache().insurancetype = data.toString()
-        if (data.toString().equals("PMSBY"))
-            getAppCache().insuranceStepSend = "1"
-        else if (data.toString().equals("PMJJY"))
-            getAppCache().insuranceStepSend = "2"
-        else if (data.toString().equals("PMJAY"))
-            getAppCache().insuranceStepSend = "3"
-        else if (data.toString().equals("ASSET Insurance"))
-            getAppCache().insuranceStepSend = "4"
-        view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
+        when {
+            data.toString() == "PMSBY" ->{
+                getAppCache().insuranceStepSend = "1"
+                view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
+            }
+            data.toString() == "PMJJY" ->{
+                getAppCache().insuranceStepSend = "2"
+                view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
+            }
+            data.toString() == "PMJAY" ->{
+                getAppCache().insuranceStepSend = "3"
+                view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
+            }
+            data.toString() == "ASSET Insurance" ->{
+                getAppCache().insuranceStepSend = "4"
+                view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
+            }
+            data.toString() == "Registered A New Claim"-> view?.gotoScreen(Constant.INSURANCE_CREATE_INSIDE, data)
+        }
+
+
     }
 
     override fun onListItemLongClicked(itemId: Int, data: Any) {
@@ -44,6 +56,7 @@ class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presente
 
     override fun resume() {
         val schemedata = ArrayList<String>()
+        schemedata.add("Registered A New Claim")
         schemedata.add("PMSBY")
         schemedata.add("PMJJY")
         schemedata.add("PMJAY")

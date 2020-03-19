@@ -28,7 +28,10 @@ class HomeFragment : BaseFragment(), HomeView, OnFragmentListItemSelectListener 
     private var homeRecyclerviewAdapter: CardListAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
     override fun gotoScreen(fragmentID: Int, message: Any?) {
-        mListener?.onFragmentInteraction(fragmentID, message as String)
+        if (fragmentID == Constant.INSURANCE_CREATE_INSIDE) {
+            mListener?.onFragmentInteraction(Constant.INSURANCE_CREATE_INSIDE,"")
+        } else
+            mListener?.onFragmentInteraction(fragmentID, message as String)
     }
 
     override fun loadData(cardInitResponse: ArrayList<String>?) {
@@ -100,9 +103,11 @@ class HomeFragment : BaseFragment(), HomeView, OnFragmentListItemSelectListener 
 
         return rootView!!
     }
+
     private var preferences: SharedPreferences? = null
     fun logoutApp() {
-        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(activity,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+        val alertDialogBuilder: AlertDialog.Builder =
+            AlertDialog.Builder(activity, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
         alertDialogBuilder.setMessage(getString(R.string.logout_message))
         alertDialogBuilder.setPositiveButton("yes",
             DialogInterface.OnClickListener { arg0, arg1 ->

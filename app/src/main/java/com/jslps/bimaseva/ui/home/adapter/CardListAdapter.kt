@@ -28,9 +28,10 @@ class CardListAdapter(items: ArrayList<String>, activity: Context) :
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         p0.title.text = itemList!![p1]
         when (p1) {
-            1 -> p0.homeicon.setImageResource(R.drawable.pmjayicon)
-            2 -> p0.homeicon.setImageResource(R.drawable.pmsbyicon)
-            3 -> p0.homeicon.setImageResource(R.drawable.imagedownload)
+            0 -> p0.homeicon.setImageResource(R.drawable.registerd_icon)
+            2 -> p0.homeicon.setImageResource(R.drawable.pmjayicon)
+            3 -> p0.homeicon.setImageResource(R.drawable.pmsbyicon)
+            4 -> p0.homeicon.setImageResource(R.drawable.imagedownload)
             else -> p0.homeicon.setImageResource(R.drawable.insurance)
         }
         p0.view.setOnClickListener { mListner?.onListItemSelected(p1, itemList!![p1]) }

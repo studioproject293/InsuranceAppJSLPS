@@ -29,9 +29,7 @@ class CustomDropDownAdapter(val context: Context, val dataType: String, var list
 
         // setting adapter item height programatically.
 
-        val params = view.layoutParams
-        params.height = 60
-        view.layoutParams = params
+
         when (dataType) {
             "district" -> {
                 val districtMasterClass = listItemsTxt as ArrayList<DistrictMasterClass>

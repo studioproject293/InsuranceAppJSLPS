@@ -26,7 +26,7 @@
                 android:paddingLeft="5dp"
                 android:text="Hello"
                 android:textColor="#000"
-                android:textSize="18sp"
+                android:textSize="@dimen/text_xlarge"
                 android:textStyle="bold" />
 
         <LinearLayout
@@ -37,14 +37,14 @@
                 android:background="#FFF"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="@dimen/spacing_small">
 
             <TextView
                     android:id="@+id/registerd"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/spacing_small"
                     android:layout_weight="1.8"
                     android:gravity="center|left"
                     android:paddingLeft="5dp"
@@ -80,7 +80,7 @@
                 android:background="#FFF"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="@dimen/spacing_small">
 
             <TextView
                     android:id="@+id/underprocess"

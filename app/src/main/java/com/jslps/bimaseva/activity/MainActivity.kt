@@ -20,6 +20,7 @@ import java.io.IOException
 import java.nio.channels.FileChannel
 import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.Master
+import com.jslps.bimaseva.network.InsuranceCreate
 import com.jslps.bimaseva.ui.NewInsuranceForm
 import com.jslps.bimaseva.ui.claimSetteled.ClaimSetteledDetailsFragment
 import com.jslps.bimaseva.ui.documentFale.DocumentFalseListFragment
@@ -27,6 +28,10 @@ import com.jslps.bimaseva.ui.documentNotReady.DocumentListFragment
 import com.jslps.bimaseva.ui.documentNotReady.DocumentNotReadyDetailsFragment
 import com.jslps.bimaseva.ui.insuranceList.InsuranceDetailsFragment
 import com.jslps.bimaseva.ui.insuranceList.InsuranceListFragment
+import com.jslps.bimaseva.ui.registration.ClaimRegistrationFragmentFamily
+import com.jslps.bimaseva.ui.registration.ClaimRegistrationFragmentOthers
+import com.jslps.bimaseva.ui.registration.ClaimRegistrationFragmentSHGMember
+import com.jslps.bimaseva.ui.registration.RegistrationList
 import com.jslps.bimaseva.ui.reports.SchemeDetailsFragmentReport
 import com.jslps.bimaseva.ui.underProcess.UnderProcessDetailsFragment
 
@@ -179,6 +184,38 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                     android.R.anim.slide_out_right)
                     .addToBackStack(mFragmentTag)
                     .replace(R.id.fragment_main, DocumentNotReadyDetailsFragment.getInstance(data as Master), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
+            Constant.INSURANCE_CREATE_INSIDE_OTHER -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right)
+                    .addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, ClaimRegistrationFragmentOthers(), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
+            Constant.INSURANCE_CREATE_INSIDE_FAMILY -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right)
+                    .addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, ClaimRegistrationFragmentFamily(), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
+            Constant.INSURANCE_CREATE_INSIDE_SHG -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right)
+                    .addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, ClaimRegistrationFragmentSHGMember(), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
+            Constant.INSURANCE_CREATE_INSIDE-> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right)
+                    .addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, RegistrationList(), mFragmentTag)
                     .commitAllowingStateLoss()
             }
         }

@@ -48,7 +48,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="3dp"
                         android:layout_marginBottom="5dp"
-                        android:layout_weight="0.9"
+                        android:layout_weight="0.8"
                         android:gravity="center_vertical"
                         android:paddingLeft="3dp"
                         android:text="SHG Member"
@@ -58,9 +58,9 @@
 
                 <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="25dp"
+                        android:layout_height="35dp"
                         android:layout_gravity="center"
-                        android:layout_weight="0.1"
+                        android:layout_weight="0.2"
                         android:src="@drawable/right_arrow" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -95,7 +95,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="3dp"
                         android:layout_marginBottom="5dp"
-                        android:layout_weight="0.9"
+                        android:layout_weight="0.8"
                         android:gravity="center_vertical"
                         android:paddingLeft="3dp"
                         android:text="Family Member Of SHG"
@@ -105,9 +105,9 @@
 
                 <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="25dp"
+                        android:layout_height="35dp"
                         android:layout_gravity="center"
-                        android:layout_weight="0.1"
+                        android:layout_weight="0.2"
                         android:src="@drawable/right_arrow" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -143,7 +143,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="3dp"
                         android:layout_marginBottom="5dp"
-                        android:layout_weight="0.9"
+                        android:layout_weight="0.8"
                         android:gravity="center_vertical"
                         android:paddingLeft="3dp"
                         android:text="Others"
@@ -153,9 +153,9 @@
 
                 <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="25dp"
+                        android:layout_height="35dp"
                         android:layout_gravity="center"
-                        android:layout_weight="0.1"
+                        android:layout_weight="0.2"
                         android:src="@drawable/right_arrow" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>

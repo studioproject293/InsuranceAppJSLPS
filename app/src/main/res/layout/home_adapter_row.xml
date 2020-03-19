@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="1.8"
+                android:layout_weight="1.7"
                 android:gravity="center|left"
                 android:paddingLeft="5dp"
                 android:text="bdfsagdfsadasfdas"
@@ -41,9 +41,9 @@
 
         <ImageView
                 android:layout_width="0dp"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="0.2"
+                android:layout_weight="0.3"
                 android:src="@drawable/right_arrow" />
 
     </LinearLayout>
