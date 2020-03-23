@@ -14,7 +14,7 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 data class Table3 (
 
-	@SerializedName("villagename") val villagename : String,
+	@SerializedName("VillageName") val villagename : String,
 	@SerializedName("VillageCode") val VillageCode : String,
 	@SerializedName("ClusterCode") val clustercode : String
 

@@ -1,6 +1,13 @@
 package com.jslps.bimaseva.ui.registration
 
 import CallCenter
+import MasterLoginDb
+import Table1LoginDb
+import Table2Db
+import Table3Db
+import Table4Db
+import Table5Db
+import Table6Db
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
@@ -29,6 +36,8 @@ import com.jslps.bimaseva.model.districtModel.DistrictMasterClass
 import com.jslps.bimaseva.network.DistrictBlockClusterAndOtherGetList
 import com.jslps.bimaseva.network.InsuranceCreate
 import com.jslps.bimaseva.ui.BaseFragment
+import com.orm.query.Condition
+import com.orm.query.Select
 import kotlinx.android.synthetic.main.claim_registration_shg.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -67,7 +76,8 @@ class ClaimRegistrationFragmentSHGMember : BaseFragment() {
     var shgCode: String? = null
     val list = arrayListOf<Int>()
     var radioGroup: RadioGroup? = null
-
+    var arrayListBlock: ArrayList<Table3Db>? = null
+    var arrayListShg: ArrayList<Table4Db>? = null
     var villageCode: String? = null
     var bankCode: String? = null
     var branchCode: String? = null
@@ -261,11 +271,22 @@ class ClaimRegistrationFragmentSHGMember : BaseFragment() {
                 }
             }
         }
-        getDistrict()
-        getBankList()
+        datePicker?.setOnClickListener {
+            datePickerStrt()
+        }
+
+        val arraylistDistict: ArrayList<MasterLoginDb> =
+            Select.from<MasterLoginDb>(
+                MasterLoginDb::class.java
+            ).list() as ArrayList<MasterLoginDb>
+
+        val adapter = CustomDropDownAdapter_RegistrationInside(
+            activity!!, "district", arraylistDistict
+        )
+        sppiner_district?.adapter = adapter
+
         sppiner_district?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
             }
 
             override fun onItemSelected(
@@ -274,75 +295,34 @@ class ClaimRegistrationFragmentSHGMember : BaseFragment() {
                 position: Int,
                 id: Long
             ) {
-                if (position == 0)
-                    return
-                else {
-                    val districtMasterClass =
-                        parent?.getItemAtPosition(position) as DistrictMasterClass?
-                    val gson = Gson()
-                    Log.d(
-                        "fddgsgs",
-                        "Body of Update product" + gson.toJson(districtMasterClass)
+                val districtMasterClass = parent?.getItemAtPosition(position) as MasterLoginDb?
+                distirctCode = districtMasterClass?.districtcode
+                val arrayListBlock: ArrayList<Table1LoginDb> =
+                    Select.from<Table1LoginDb>(
+                        Table1LoginDb::class.java
+                    ).where(
+                        Condition.prop("districtcode").eq(distirctCode)
                     )
-                    distirctCode = districtMasterClass?.districtCode.toString()
-                    getBlockData(districtMasterClass?.districtCode.toString())
+                        .list() as ArrayList<Table1LoginDb>
 
-                }
+                val adapter = CustomDropDownAdapter_RegistrationInside(
+                    activity!!, "block", arrayListBlock
+                )
+                spinnerBlock?.adapter = adapter
             }
 
         }
-        spinnerShg?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0)
-                    return
-                else {
-                    val districtMasterClass =
-                        parent?.getItemAtPosition(position) as BlockMasterClass?
-                    shgCode = districtMasterClass?.groupCode.toString()
-
-                }
-            }
-
-        }
-        spinnerBlock?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0)
-                    return
-                else {
-                    val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
-                    val gson = Gson()
-                    Log.d(
-                        "fddgsgs", "Body of Update product" + gson.toJson(blockMasterClass)
-                    )
-                    blockCode = blockMasterClass?.blockCode.toString()
-                    getClusterDataList(blockMasterClass?.blockCode.toString())
-
-                }
-            }
-
-        }
+        val arraylistPanchyat: ArrayList<Table2Db> =
+            Select.from<Table2Db>(
+                Table2Db::class.java
+            ).list() as ArrayList<Table2Db>
+        arraylistPanchyat.add(0, Table2Db("", "All Panchayat"))
+        val adapterPanchyat = CustomDropDownAdapter_RegistrationInside(
+            activity!!, "cluster", arraylistPanchyat
+        )
+        spinnerPanchyt?.adapter = adapterPanchyat
         spinnerPanchyt?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -350,56 +330,23 @@ class ClaimRegistrationFragmentSHGMember : BaseFragment() {
                 position: Int,
                 id: Long
             ) {
-                if (position == 0)
+                if (position == 0) {
                     return
-                else {
-                    val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
-                    clustercode = blockMasterClass?.clusterCode
-                    getVillageDataList(blockMasterClass?.clusterCode.toString())
-                }
-
-            }
-
-        }
-        spinnerBank?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0)
-                    return
-                else {
-                    val districtMasterClass =
-                        parent?.getItemAtPosition(position) as BlockMasterClass
-                    bankCode = districtMasterClass.bankCode
-                    getBranchDataList(districtMasterClass.bankCode)
-                }
-            }
-
-        }
-        spinnerBranch?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0)
-                    return
-                else {
-                    val districtMasterClass =
-                        parent?.getItemAtPosition(position) as BlockMasterClass
-                    branchCode = districtMasterClass.branchCode
+                } else {
+                    val panchaytModel = parent?.getItemAtPosition(position) as Table2Db?
+                    clustercode = panchaytModel?.clustercode
+                    val arrayListBlock =
+                        Select.from<Table3Db>(
+                            Table3Db::class.java
+                        ).where(
+                            Condition.prop("clustercode").eq(clustercode)
+                        )
+                            .list() as ArrayList<Table3Db>
+                    arrayListBlock.add(0, Table3Db("All Village", "", ""))
+                    val adapter = CustomDropDownAdapter_RegistrationInside(
+                        activity!!, "village", arrayListBlock
+                    )
+                    spinnerVillage?.adapter = adapter
                 }
             }
 
@@ -418,475 +365,98 @@ class ClaimRegistrationFragmentSHGMember : BaseFragment() {
                 if (position == 0)
                     return
                 else {
-                    val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
-                    villageCode = blockMasterClass?.villageCode.toString()
-                    getSHGDataList(blockMasterClass?.villageCode.toString())
+                    var villageModel = parent?.getItemAtPosition(position) as Table3Db
+                    villageCode = villageModel?.villagecode
+                    clustercode = villageModel?.clustercode
+                    var arrayListShg =
+                        Select.from<Table4Db>(
+                            Table4Db::class.java
+                        ).where(
+                            Condition.prop("clustercode").eq(clustercode),
+                            Condition.prop("villagecode").eq(villageCode)
+                        )
+                            .list() as ArrayList<Table4Db>
+                    arrayListShg.add(0, Table4Db("", "", "", "All SHG"))
+                    val adapter = CustomDropDownAdapter_RegistrationInside(
+                        activity!!, "shg", arrayListShg
+                    )
+                    spinnerShg?.adapter = adapter
                 }
+            }
+
+        }
+        val arraylistBank: ArrayList<Table6Db> =
+            Select.from<Table6Db>(
+                Table6Db::class.java
+            ).list() as ArrayList<Table6Db>
+        arraylistBank.add(0, Table6Db("", "", "All Bank", "", "", ""))
+        val adapterBankNew = CustomDropDownAdapter_RegistrationInside(
+            activity!!, "bank", arraylistBank
+        )
+        spinnerBank?.adapter = adapterBankNew
+        spinnerBank?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val bankCodeModel = parent?.getItemAtPosition(position) as Table6Db
+                bankCode = bankCodeModel.bankcode
+                var arrayListBranch =
+                    Select.from<Table5Db>(
+                        Table5Db::class.java
+                    ).where(
+                        Condition.prop("bankcode").eq(arraylistBank[position].bankcode)
+                    )
+                        .list() as ArrayList<Table5Db>
+                arrayListBranch.add(0, Table5Db("", "", "All Branch", "", ""))
+                val adapterBankNew = CustomDropDownAdapter_RegistrationInside(
+                    activity!!, "branch", arrayListBranch
+                )
+                spinnerBranch?.adapter = adapterBankNew
+            }
+
+        }
+        spinnerBranch?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val shgCodeModel = parent?.getItemAtPosition(position) as Table5Db
+                branchCode = shgCodeModel.branchcode
+            }
+
+        }
+        spinnerShg?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val shgCodeModel = parent?.getItemAtPosition(position) as Table4Db
+                shgCode = shgCodeModel.SHGCode
 
             }
 
         }
 
-        datePicker?.setOnClickListener {
-            datePickerStrt()
-        }
         return rootView
     }
 
-    private fun getDistrict() {
-        if (DialogUtil.isConnectionAvailable(activity!!)) {
-            DialogUtil.displayProgress(activity!!)
-            val gson = GsonBuilder().setLenient().create()
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-            val builder = OkHttpClient.Builder()
-            //comment in live build and uncomment in uat
-            builder.interceptors().add(interceptor)
-            builder.connectTimeout(250, TimeUnit.SECONDS)
-            builder.readTimeout(250, TimeUnit.SECONDS)
-            val client = builder.build()
-            val retrofit =
-                Retrofit.Builder().baseUrl(Constant.API_BASE_URL_JICA)
-                    .addConverterFactory(
-                        ScalarsConverterFactory.create()
-                    ).client(client).build()
-            val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
-            val changePhotoResponseModelCall =
-                apiServices.fetchDistrictBlockClusterAndOtherGetList("", "s", "", "")
-            changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                override fun onResponse(
-                    call: Call<String>,
-                    response: Response<String>
-                ) {
-//                    DialogUtil.stopProgressDisplay()
-                    val fullResponse = response.body()
-                    val XmlString =
-                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                    val result = XmlString?.replace(("</string>").toRegex(), "")
-                    val mStudentObject1 =
-                        gson.fromJson(result, DistirctModelClass::class.java)
-                    updateSppinerDistrict(mStudentObject1.master)
 
-                }
-
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    DialogUtil.stopProgressDisplay()
-                    Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                        .setTitle(t.toString())
-                        .sneakError()
-                }
-            })
-        } else {
-            Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
-                .sneakError()
-        }
-    }
-
-    private fun getBankList() {
-        if (DialogUtil.isConnectionAvailable(activity!!)) {
-//            DialogUtil.displayProgress(activity!!)
-            val gson = GsonBuilder().setLenient().create()
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-            val builder = OkHttpClient.Builder()
-            //comment in live build and uncomment in uat
-            builder.interceptors().add(interceptor)
-            builder.connectTimeout(250, TimeUnit.SECONDS)
-            builder.readTimeout(250, TimeUnit.SECONDS)
-            val client = builder.build()
-            val retrofit =
-                Retrofit.Builder().baseUrl(Constant.API_BASE_URL_JICA)
-                    .addConverterFactory(
-                        ScalarsConverterFactory.create()
-                    ).client(client).build()
-            val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
-            val changePhotoResponseModelCall =
-                apiServices.fetchDistrictBlockClusterAndOtherGetList("", "BNK_NAME", "", "")
-            changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                override fun onResponse(
-                    call: Call<String>,
-                    response: Response<String>
-                ) {
-                    DialogUtil.stopProgressDisplay()
-                    val fullResponse = response.body()
-                    val XmlString =
-                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                    val result = XmlString?.replace(("</string>").toRegex(), "")
-                    val mStudentObject1 =
-                        gson.fromJson(result, BlockModelClass::class.java)
-                    updateSppinerBlock(mStudentObject1.master, "bank")
-
-                }
-
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    DialogUtil.stopProgressDisplay()
-                    Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                        .setTitle(t.toString())
-                        .sneakError()
-                }
-            })
-        } else {
-            Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
-                .sneakError()
-        }
-    }
-
-    private fun getBranchDataList(bankCode: String) {
-        if (DialogUtil.isConnectionAvailable(activity!!)) {
-            DialogUtil.displayProgress(activity!!)
-            val gson = GsonBuilder().setLenient().create()
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-            val builder = OkHttpClient.Builder()
-            //comment in live build and uncomment in uat
-            builder.interceptors().add(interceptor)
-            builder.connectTimeout(250, TimeUnit.SECONDS)
-            builder.readTimeout(250, TimeUnit.SECONDS)
-            val client = builder.build()
-            val retrofit =
-                Retrofit.Builder().baseUrl(Constant.API_BASE_URL_JICA)
-                    .addConverterFactory(
-                        ScalarsConverterFactory.create()
-                    ).client(client).build()
-            val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
-            val changePhotoResponseModelCall =
-                apiServices.fetchDistrictBlockClusterAndOtherGetList(bankCode, "BRN_NAME", "", "")
-            changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                override fun onResponse(
-                    call: Call<String>,
-                    response: Response<String>
-                ) {
-                    DialogUtil.stopProgressDisplay()
-                    val fullResponse = response.body()
-                    val XmlString =
-                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                    val result = XmlString?.replace(("</string>").toRegex(), "")
-                    val mStudentObject1 =
-                        gson.fromJson(result, BlockModelClass::class.java)
-                    updateSppinerBlock(mStudentObject1.master, "branch")
-
-                }
-
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    DialogUtil.stopProgressDisplay()
-                    Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                        .setTitle(t.toString())
-                        .sneakError()
-                }
-            })
-        } else {
-            Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
-                .sneakError()
-        }
-    }
-
-    private fun getBlockData(distictCode: String) {
-        if (DialogUtil.isConnectionAvailable(activity!!)) {
-            DialogUtil.displayProgress(activity!!)
-            val gson = GsonBuilder().setLenient().create()
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-            val builder = OkHttpClient.Builder()
-            //comment in live build and uncomment in uat
-            builder.interceptors().add(interceptor)
-            builder.connectTimeout(250, TimeUnit.SECONDS)
-            builder.readTimeout(250, TimeUnit.SECONDS)
-            val client = builder.build()
-            val retrofit =
-                Retrofit.Builder().baseUrl(Constant.API_BASE_URL_JICA)
-                    .addConverterFactory(
-                        ScalarsConverterFactory.create()
-                    ).client(client).build()
-            val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
-            val changePhotoResponseModelCall =
-                apiServices.fetchDistrictBlockClusterAndOtherGetList(distictCode, "D", "", "")
-            changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                override fun onResponse(
-                    call: Call<String>,
-                    response: Response<String>
-                ) {
-                    DialogUtil.stopProgressDisplay()
-                    val fullResponse = response.body()
-                    val XmlString =
-                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                    val result = XmlString?.replace(("</string>").toRegex(), "")
-                    val mStudentObject1 =
-                        gson.fromJson(result, BlockModelClass::class.java)
-                    updateSppinerBlock(mStudentObject1.master, "block")
-
-                }
-
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    DialogUtil.stopProgressDisplay()
-                    Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                        .setTitle(t.toString())
-                        .sneakError()
-                }
-            })
-        } else {
-            Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
-                .sneakError()
-        }
-    }
-
-    private fun getClusterDataList(blockCode: String) {
-        if (DialogUtil.isConnectionAvailable(activity!!)) {
-            DialogUtil.displayProgress(activity!!)
-            val gson = GsonBuilder().setLenient().create()
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-            val builder = OkHttpClient.Builder()
-            //comment in live build and uncomment in uat
-            builder.interceptors().add(interceptor)
-            builder.connectTimeout(250, TimeUnit.SECONDS)
-            builder.readTimeout(250, TimeUnit.SECONDS)
-            val client = builder.build()
-            val retrofit =
-                Retrofit.Builder().baseUrl(Constant.API_BASE_URL_JICA)
-                    .addConverterFactory(
-                        ScalarsConverterFactory.create()
-                    ).client(client).build()
-            val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
-            val changePhotoResponseModelCall =
-                apiServices.fetchDistrictBlockClusterAndOtherGetList(blockCode, "B", "", "")
-            changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                override fun onResponse(
-                    call: Call<String>,
-                    response: Response<String>
-                ) {
-                    DialogUtil.stopProgressDisplay()
-                    val fullResponse = response.body()
-                    val XmlString =
-                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                    val result = XmlString?.replace(("</string>").toRegex(), "")
-                    val mStudentObject1 =
-                        gson.fromJson(result, BlockModelClass::class.java)
-                    updateSppinerBlock(mStudentObject1.master, "cluster")
-
-                }
-
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    DialogUtil.stopProgressDisplay()
-                    Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                        .setTitle(t.toString())
-                        .sneakError()
-                }
-            })
-        } else {
-            Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
-                .sneakError()
-        }
-    }
-
-    private fun getVillageDataList(clusterCode: String) {
-        if (DialogUtil.isConnectionAvailable(activity!!)) {
-            DialogUtil.displayProgress(activity!!)
-            val gson = GsonBuilder().setLenient().create()
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-            val builder = OkHttpClient.Builder()
-            //comment in live build and uncomment in uat
-            builder.interceptors().add(interceptor)
-            builder.connectTimeout(250, TimeUnit.SECONDS)
-            builder.readTimeout(250, TimeUnit.SECONDS)
-            val client = builder.build()
-            val retrofit =
-                Retrofit.Builder().baseUrl(Constant.API_BASE_URL_JICA)
-                    .addConverterFactory(
-                        ScalarsConverterFactory.create()
-                    ).client(client).build()
-            val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
-            val changePhotoResponseModelCall =
-                apiServices.fetchDistrictBlockClusterAndOtherGetList(clusterCode, "C", "", "")
-            changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                override fun onResponse(
-                    call: Call<String>,
-                    response: Response<String>
-                ) {
-                    DialogUtil.stopProgressDisplay()
-                    val fullResponse = response.body()
-                    val XmlString =
-                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                    val result = XmlString?.replace(("</string>").toRegex(), "")
-                    val mStudentObject1 =
-                        gson.fromJson(result, BlockModelClass::class.java)
-                    updateSppinerBlock(mStudentObject1.master, "village")
-
-                }
-
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    DialogUtil.stopProgressDisplay()
-                    Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                        .setTitle(t.toString())
-                        .sneakError()
-                }
-            })
-        } else {
-            Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
-                .sneakError()
-        }
-    }
-
-    private fun getSHGDataList(villgaeCode: String) {
-        if (DialogUtil.isConnectionAvailable(activity!!)) {
-            DialogUtil.displayProgress(activity!!)
-            val gson = GsonBuilder().setLenient().create()
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-            val builder = OkHttpClient.Builder()
-            //comment in live build and uncomment in uat
-            builder.interceptors().add(interceptor)
-            builder.connectTimeout(250, TimeUnit.SECONDS)
-            builder.readTimeout(250, TimeUnit.SECONDS)
-            val client = builder.build()
-            val retrofit =
-                Retrofit.Builder().baseUrl(Constant.API_BASE_URL_JICA)
-                    .addConverterFactory(
-                        ScalarsConverterFactory.create()
-                    ).client(client).build()
-            val apiServices = retrofit.create(DistrictBlockClusterAndOtherGetList::class.java)
-            val changePhotoResponseModelCall =
-                apiServices.fetchDistrictBlockClusterAndOtherGetList(villgaeCode, "V", "", "")
-            changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                override fun onResponse(
-                    call: Call<String>,
-                    response: Response<String>
-                ) {
-                    DialogUtil.stopProgressDisplay()
-                    val fullResponse = response.body()
-                    val XmlString =
-                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                    val result = XmlString?.replace(("</string>").toRegex(), "")
-                    val mStudentObject1 =
-                        gson.fromJson(result, BlockModelClass::class.java)
-                    updateSppinerBlock(mStudentObject1.master, "shg")
-
-                }
-
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    DialogUtil.stopProgressDisplay()
-                    Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                        .setTitle(t.toString())
-                        .sneakError()
-                }
-            })
-        } else {
-            Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
-                .sneakError()
-        }
-    }
-
-    private fun updateSppinerDistrict(master: ArrayList<DistrictMasterClass>) {
-        master.add(0, DistrictMasterClass("", "All District", ""))
-        val adapter = CustomDropDownAdapter(
-            activity!!, "district", master
-        )
-        sppiner_district?.adapter = adapter
-    }
-
-    private fun updateSppinerBlock(master: ArrayList<BlockMasterClass>, dataType: String) {
-
-        when (dataType) {
-            "block" -> {
-                master.add(
-                    0, BlockMasterClass(
-                        "", "", "All Block", "", "",
-                        "", "", "", "", "",
-                        "", "", "", "", "", "", "",
-                        "", "", "", ""
-                    )
-                )
-                val adapter = CustomDropDownAdapter(
-                    activity!!, dataType, master
-                )
-                spinnerBlock?.adapter = adapter
-            }
-
-            "cluster" -> {
-                master.add(
-                    0, BlockMasterClass(
-                        "", "", "", "", "",
-                        "All Panchayat", "", "", "", "",
-                        "", "", "", "", "", "", "",
-                        "", "", "", ""
-                    )
-                )
-
-                val adapter = CustomDropDownAdapter(
-                    activity!!, dataType, master
-                )
-                spinnerPanchyt?.adapter = adapter
-            }
-
-            "village" -> {
-                master.add(
-                    0, BlockMasterClass(
-                        "", "", "", "", "",
-                        "", "", "", "All Village", "",
-                        "", "", "", "", "", "", "",
-                        "", "", "", ""
-                    )
-                )
-                /*  master.get(0).villageName = "All Village"*/
-                val adapter = CustomDropDownAdapter(
-                    activity!!, dataType, master
-                )
-                spinnerVillage?.adapter = adapter
-            }
-            "shg" -> {
-                master.add(
-                    0, BlockMasterClass(
-                        "", "", "", "", "",
-                        "", "", "", "",
-                        "", "", "All SHG", "", "", "", "",
-                        "", "", "", "", ""
-                    )
-                )
-                val adapter = CustomDropDownAdapter(
-                    activity!!, dataType, master
-                )
-                spinnerShg?.adapter = adapter
-            }
-            "bank" -> {
-                master.add(
-                    0, BlockMasterClass(
-                        "", "", "", "", "",
-                        "", "", "", "",
-                        "", "", "", "", "", "", "All Bank",
-                        "", "", "", "", ""
-                    )
-                )
-                /* master.get(0).bankName = "All Bank"*/
-                val adapter = CustomDropDownAdapter(
-                    activity!!, dataType, master
-                )
-                sppiner_bank?.adapter = adapter
-            }
-            "branch" -> {
-                master.add(
-                    0, BlockMasterClass(
-                        "", "", "", "", "",
-                        "", "", "", "",
-                        "", "", "", "", "", "", "",
-                        "", "", "", "All Branch", ""
-                    )
-                )
-                /*  master.get(0).branchName = "All Branch"*/
-                val adapter = CustomDropDownAdapter(
-                    activity!!, dataType, master
-                )
-                sppiner_branch?.adapter = adapter
-            }
-        }
-
-    }
 
     private fun setId() {
         nameOfnomminee = rootView?.findViewById(R.id.nameOfnomminee)

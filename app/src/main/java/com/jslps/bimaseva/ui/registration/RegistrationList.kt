@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.R
+import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.ui.BaseFragment
 
 class RegistrationList : BaseFragment() {
@@ -24,14 +25,20 @@ class RegistrationList : BaseFragment() {
         linearLayout2 = rootView.findViewById(R.id.shgFamilyregistration)
         linearLayout3 = rootView.findViewById(R.id.registrationothers)
         linearLayout1?.setOnClickListener {
-        mListener?.onFragmentInteraction(Constant.INSURANCE_CREATE_INSIDE_SHG,"")
+            mListener?.onFragmentInteraction(Constant.INSURANCE_CREATE_INSIDE_SHG, "")
         }
         linearLayout2?.setOnClickListener {
-            mListener?.onFragmentInteraction(Constant.INSURANCE_CREATE_INSIDE_FAMILY,"")
+            mListener?.onFragmentInteraction(Constant.INSURANCE_CREATE_INSIDE_FAMILY, "")
         }
         linearLayout3?.setOnClickListener {
-            mListener?.onFragmentInteraction(Constant.INSURANCE_CREATE_INSIDE_OTHER,"")
+            mListener?.onFragmentInteraction(Constant.INSURANCE_CREATE_INSIDE_OTHER, "")
         }
         return rootView
     }
+
+    override fun onResume() {
+        super.onResume()
+        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, "Registration Type"))
+
+}
 }

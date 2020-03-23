@@ -353,8 +353,7 @@ class NewInsuranceForm : BaseFragment() {
                 distirctCode = arraylistDistict.get(position).districtcode
                 val arrayListBlock: ArrayList<Table1LoginDb> =
                     Select.from<Table1LoginDb>(
-                        Table1LoginDb::class.java
-                    )
+                        Table1LoginDb::class.java)
                         .where(
                             Condition.prop("districtcode").eq(arraylistDistict[position].districtcode)
                         )

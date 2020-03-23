@@ -1,6 +1,13 @@
 package com.jslps.bimaseva.ui.registration
 
 import CallCenter
+import MasterLoginDb
+import Table1LoginDb
+import Table2Db
+import Table3Db
+import Table4Db
+import Table5Db
+import Table6Db
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
@@ -32,6 +39,8 @@ import com.jslps.bimaseva.network.DistrictBlockClusterAndOtherGetList
 import com.jslps.bimaseva.network.InsuranceCreate
 import com.jslps.bimaseva.network.InsuranceCreateOTP
 import com.jslps.bimaseva.ui.BaseFragment
+import com.orm.query.Condition
+import com.orm.query.Select
 import kotlinx.android.synthetic.main.claim_registration_shg.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -259,11 +268,18 @@ class ClaimRegistrationFragmentOthers : BaseFragment() {
             }
         }
 
-        getDistrict()
-        getBankList()
+        val arraylistDistict: ArrayList<MasterLoginDb> =
+            Select.from<MasterLoginDb>(
+                MasterLoginDb::class.java
+            ).list() as ArrayList<MasterLoginDb>
+
+        val adapterDisrtict = CustomDropDownAdapter_RegistrationInside(
+            activity!!, "district", arraylistDistict
+        )
+        sppiner_district?.adapter = adapterDisrtict
+
         sppiner_district?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
             }
 
             override fun onItemSelected(
@@ -272,55 +288,34 @@ class ClaimRegistrationFragmentOthers : BaseFragment() {
                 position: Int,
                 id: Long
             ) {
-                if (position == 0)
-                    return
-                else {
-                    val districtMasterClass =
-                        parent?.getItemAtPosition(position) as DistrictMasterClass?
-                    val gson = Gson()
-                    Log.d(
-                        "fddgsgs",
-                        "Body of Update product" + gson.toJson(districtMasterClass)
+                val districtMasterClass = parent?.getItemAtPosition(position) as MasterLoginDb?
+                distirctCode = districtMasterClass?.districtcode
+                val arrayListBlock: ArrayList<Table1LoginDb> =
+                    Select.from<Table1LoginDb>(
+                        Table1LoginDb::class.java
+                    ).where(
+                        Condition.prop("districtcode").eq(distirctCode)
                     )
-                    distirctCode = districtMasterClass?.districtCode.toString()
-                    getBlockData(districtMasterClass?.districtCode.toString())
+                        .list() as ArrayList<Table1LoginDb>
 
-                }
+                val adapter = CustomDropDownAdapter_RegistrationInside(
+                    activity!!, "block", arrayListBlock
+                )
+                spinnerBlock?.adapter = adapter
             }
 
         }
-
-        spinnerBlock?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0)
-                    return
-                else {
-                    val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
-                    val gson = Gson()
-                    Log.d(
-                        "fddgsgs",
-                        "Body of Update product" + gson.toJson(blockMasterClass)
-                    )
-                    blockCode = blockMasterClass?.blockCode.toString()
-                    getClusterDataList(blockMasterClass?.blockCode.toString())
-
-                }
-            }
-
-        }
+        val arraylistPanchyat: ArrayList<Table2Db> =
+            Select.from<Table2Db>(
+                Table2Db::class.java
+            ).list() as ArrayList<Table2Db>
+        arraylistPanchyat.add(0, Table2Db("", "All Panchayat"))
+        val adapterPanchyat = CustomDropDownAdapter_RegistrationInside(
+            activity!!, "cluster", arraylistPanchyat
+        )
+        spinnerPanchyt?.adapter = adapterPanchyat
         spinnerPanchyt?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -328,56 +323,23 @@ class ClaimRegistrationFragmentOthers : BaseFragment() {
                 position: Int,
                 id: Long
             ) {
-                if (position == 0)
+                if (position == 0) {
                     return
-                else {
-                    val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
-                    clustercode = blockMasterClass?.clusterCode
-                    getVillageDataList(blockMasterClass?.clusterCode.toString())
-                }
-
-            }
-
-        }
-        spinnerBank?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0)
-                    return
-                else {
-                    val districtMasterClass =
-                        parent?.getItemAtPosition(position) as BlockMasterClass
-                    bankCode = districtMasterClass.bankCode
-                    getBranchDataList(districtMasterClass.bankCode)
-                }
-            }
-
-        }
-        spinnerBranch?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0)
-                    return
-                else {
-                    val districtMasterClass =
-                        parent?.getItemAtPosition(position) as BlockMasterClass
-                    branchCode = districtMasterClass.branchCode
+                } else {
+                    val panchaytModel = parent?.getItemAtPosition(position) as Table2Db?
+                    clustercode = panchaytModel?.clustercode
+                    val arrayListBlock =
+                        Select.from<Table3Db>(
+                            Table3Db::class.java
+                        ).where(
+                            Condition.prop("clustercode").eq(clustercode)
+                        )
+                            .list() as ArrayList<Table3Db>
+                    arrayListBlock.add(0, Table3Db("All Village", "", ""))
+                    val adapter = CustomDropDownAdapter_RegistrationInside(
+                        activity!!, "village", arrayListBlock
+                    )
+                    spinnerVillage?.adapter = adapter
                 }
             }
 
@@ -396,13 +358,71 @@ class ClaimRegistrationFragmentOthers : BaseFragment() {
                 if (position == 0)
                     return
                 else {
-                    val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
-                    villageCode = blockMasterClass?.villageCode.toString()
+                    var villageModel = parent?.getItemAtPosition(position) as Table3Db
+                    villageCode = villageModel?.villagecode
                 }
-
             }
 
         }
+        val arraylistBank: ArrayList<Table6Db> =
+            Select.from<Table6Db>(
+                Table6Db::class.java
+            ).list() as ArrayList<Table6Db>
+        arraylistBank.add(0, Table6Db("", "", "All Bank", "", "", ""))
+        val adapterBankNew = CustomDropDownAdapter_RegistrationInside(
+            activity!!, "bank", arraylistBank
+        )
+        spinnerBank?.adapter = adapterBankNew
+        spinnerBank?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (position == 0)
+                    return
+                else {
+                    val bankCodeModel = parent?.getItemAtPosition(position) as Table6Db
+                    bankCode = bankCodeModel.bankcode
+                    var arrayListBranch =
+                        Select.from<Table5Db>(
+                            Table5Db::class.java
+                        ).where(
+                            Condition.prop("bankcode").eq(arraylistBank[position].bankcode)
+                        )
+                            .list() as ArrayList<Table5Db>
+                    arrayListBranch.add(0, Table5Db("", "", "All Branch", "", ""))
+                    val adapterBankNew = CustomDropDownAdapter_RegistrationInside(
+                        activity!!, "branch", arrayListBranch
+                    )
+                    spinnerBranch?.adapter = adapterBankNew
+                }
+            }
+
+        }
+        spinnerBranch?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (position == 0)
+                    return
+                else {
+                    val shgCodeModel = parent?.getItemAtPosition(position) as Table5Db
+                    branchCode = shgCodeModel.branchcode
+                }
+            }
+
+        }
+
 
         datePicker?.setOnClickListener {
 

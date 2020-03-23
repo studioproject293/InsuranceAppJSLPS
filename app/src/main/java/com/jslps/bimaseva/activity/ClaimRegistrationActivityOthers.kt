@@ -193,7 +193,7 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                             ScalarsConverterFactory.create()
                         ).client(client).build()
                     val apiServices = retrofit.create(InsuranceCreateOTP::class.java)
-                    val createInsurance = apiServices.createInsurance(contactnoofnominee?.text.toString())
+                    val createInsurance = apiServices.createInsurance(mobileofcaller?.text.toString())
                     createInsurance.enqueue(object : Callback<String> {
                         override fun onResponse(
                             call: Call<String>,

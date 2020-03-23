@@ -206,7 +206,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                             ScalarsConverterFactory.create()
                         ).client(client).build()
                     val apiServices = retrofit.create(InsuranceCreateOTP::class.java)
-                    val createInsurance = apiServices.createInsurance(contactnoofnominee?.text.toString())
+                    val createInsurance = apiServices.createInsurance(mobileofcaller?.text.toString())
                     createInsurance.enqueue(object : Callback<String> {
                         override fun onResponse(
                             call: Call<String>,
@@ -280,6 +280,15 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                     }
                     4 -> {
                         relationShipId = "4"
+                    }
+                    5 -> {
+                        relationShipId = "5"
+                    }
+                    6 -> {
+                        relationShipId = "6"
+                    }
+                    7 -> {
+                        relationShipId = "7"
                     }
                 }
             }

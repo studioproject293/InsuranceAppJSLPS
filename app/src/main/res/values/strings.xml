@@ -12,6 +12,10 @@
         <item>Mother</item>
         <item>Son</item>
         <item>Brother</item>
+        <item>Spouse</item>
+        <item>Sister</item>
+        <item>Daughter</item>
+
     </string-array>
     <string name="youAreNotUpdatedMessage" translatable="false">A new version of BIMA SEWA app is available. Please update to new version now.</string>
     <string name="update">Update</string>

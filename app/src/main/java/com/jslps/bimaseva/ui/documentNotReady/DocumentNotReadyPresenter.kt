@@ -116,8 +116,7 @@ class DocumentNotReadyPresenter(view: DocumentNotReadyView, context: Activity) :
                 "0",
                 ""
             )
-            val data =
-                "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
+            val data = "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
             val changePhotoResponseModelCall =
                 apiServices.uploadRegistedinsurance(data)
             changePhotoResponseModelCall.enqueue(object : Callback<String> {
