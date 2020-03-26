@@ -97,11 +97,11 @@ class DocumentNotReadyPresenter(view: DocumentNotReadyView, context: Activity) :
             val apiServices = retrofit.create(UploadRegisterDocument::class.java)
             val id = UUID.randomUUID().toString()
             val uploadRegisterData = UploadRegisterData(
-                insuranceNameeee?.Call_Id.toString(),
-                insuranceNameeee?.CreatedBy.toString(),
+                insuranceNameeee?.call_Id.toString(),
+                insuranceNameeee?.createdBy.toString(),
                 id,
                 encodedBase64.toString(),
-                insuranceNameeee?.CreatedOn.toString(),
+                insuranceNameeee?.createdOn.toString(),
                 "1",
                 "",
                 "0",

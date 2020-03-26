@@ -94,8 +94,8 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
             val apiServices = retrofit.create(UploadRegisterDocument::class.java)
             val id = UUID.randomUUID().toString()
             val uploadRegisterData = UploadRegisterData(
-                insuranceNameeee?.Call_Id.toString(),
-                insuranceNameeee?.CreatedBy.toString(),
+                insuranceNameeee?.call_Id.toString(),
+                insuranceNameeee?.createdBy.toString(),
                 id,
                 "",
                 "",
@@ -181,8 +181,8 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
             val apiServices = retrofit.create(UploadRegisterDocument::class.java)
             val id = UUID.randomUUID().toString()
             val uploadRegisterData = UploadRegisterData(
-                insuranceNameeee?.Call_Id.toString(),
-                insuranceNameeee?.CreatedBy.toString(),
+                insuranceNameeee?.call_Id.toString(),
+                insuranceNameeee?.createdBy.toString(),
                 id,
                 "",
                 "",

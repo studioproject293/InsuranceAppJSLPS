@@ -34,13 +34,12 @@ class InsuranceListAdapter(items: ArrayList<Master>, activity: Context, insuranc
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         val masterModel = itemList?.get(p1)
-        p0.nomineeName.text = masterModel?.Name
-        p0.block.text = masterModel?.Blockname
-        p0.village.text = masterModel?.Villagename
-        p0.contactNo.text = masterModel?.Phno_ofNominee
-        p0.bankbranch.text = masterModel?.BranchName
+        p0.nomineeName.text = masterModel?.name
+        p0.block.text = masterModel?.blockname
+        p0.village.text = masterModel?.villagename
+        p0.contactNo.text = masterModel?.phno_ofNominee
+        p0.bankbranch.text = masterModel?.branchName
         p0.nameOfInsurance.text =  AppCache.getCache().insurancetype
-        masterModel?.insuranceNamee = AppCache.getCache().insurancetype.toString()
         p0.view.setOnClickListener {
             if (masterModel != null) {
                 mListner?.onListItemSelected(p1, masterModel)

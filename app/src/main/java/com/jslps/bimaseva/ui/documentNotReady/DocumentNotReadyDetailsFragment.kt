@@ -27,6 +27,7 @@ import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
 import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.ui.BaseFragment
+import com.jslps.bimaseva.ui.claimSetteled.RejectDetailsFragment
 
 import java.io.*
 
@@ -156,13 +157,12 @@ class DocumentNotReadyDetailsFragment : BaseFragment(), DocumentNotReadyView, On
         var actionButton: Button? = rootView?.findViewById(R.id.actionButton)
         val uploadDocument: Button? = rootView?.findViewById(R.id.uploadDocument)
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
-        nomineeName?.text = insuranceNameeee?.Name
-        block?.text = insuranceNameeee?.Blockname
-        // block?.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.move));
-        village?.text = insuranceNameeee?.Villagename
-        contactNo?.text = insuranceNameeee?.Phno_ofNominee
-        bankbranch?.text = insuranceNameeee?.BranchName
-        nameOfInsurance?.text = insuranceNameeee?.insuranceNamee
+        nomineeName?.text = insuranceNameeee?.name
+        block?.text = insuranceNameeee?.blockname
+        village?.text = insuranceNameeee?.villagename
+        contactNo?.text = insuranceNameeee?.phno_ofNominee.toString()
+        bankbranch?.text = insuranceNameeee?.branchName
+        nameOfInsurance?.text = AppCache.getCache().insurancetype
         presenter = DocumentNotReadyPresenter(this, activity as Activity)
         actionButton?.setOnClickListener {
             if (TextUtils.isEmpty(encodedBase64)) {

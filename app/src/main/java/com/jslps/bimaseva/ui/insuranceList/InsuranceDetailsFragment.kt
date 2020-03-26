@@ -163,20 +163,19 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
         val documentfalse: Button? = rootView?.findViewById(R.id.documentfalse)
         val uploadDocument: Button? = rootView?.findViewById(R.id.uploadDocument)
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
-        nomineeName?.text = insuranceNameeee?.Name
-        block?.text = insuranceNameeee?.Blockname
-        // block?.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.move));
-        village?.text = insuranceNameeee?.Villagename
-        contactNo?.text = insuranceNameeee?.Phno_ofNominee
-        bankbranch?.text = insuranceNameeee?.BranchName
-        nameOfInsurance?.text = insuranceNameeee?.insuranceNamee
+        nomineeName?.text = insuranceNameeee?.name
+        block?.text = insuranceNameeee?.blockname
+        village?.text = insuranceNameeee?.villagename
+        contactNo?.text = insuranceNameeee?.phno_ofNominee.toString()
+        bankbranch?.text = insuranceNameeee?.branchName
+        nameOfInsurance?.text = AppCache.getCache().insurancetype
         presenter = InsurancePresenter(this, activity as Activity)
         actionButton?.text = "Under Process"
         documentReadybutnotsubmit?.setOnClickListener {
             presenter?.documentReadyService(insuranceNameeee);
         }
         documentfalse?.setOnClickListener {
-            presenter?.documentfalseService(insuranceNameeee?.Call_Id)
+            presenter?.documentfalseService(insuranceNameeee?.call_Id)
         }
         actionButton?.setOnClickListener {
             if (TextUtils.isEmpty(encodedBase64)) {

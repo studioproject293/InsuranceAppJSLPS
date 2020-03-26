@@ -164,7 +164,9 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
                         if (mStudentObject1 != null) {
                             if (mStudentObject1.Master.isNotEmpty()) {
                                 AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                                mStudentObject1.Master.get(0).insuranceTypeFetch="Registered"
                                 view?.loadDataReport(mStudentObject1.Master as ArrayList<Master>)
+
                             } else view?.showMessage("You don't have any insurance.")
                         } else {
                             view?.showMessage("You don't have any insurance.")
@@ -202,6 +204,7 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
                         if (mStudentObject1 != null) {
                             if (mStudentObject1.Master.isNotEmpty()) {
                                 AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                                mStudentObject1.Master.get(0).insuranceTypeFetch="Document ready but not received by the branch"
                                 view?.loadDataReport(mStudentObject1.Master as ArrayList<Master>)
                             } else view?.showMessage("You don't have any insurance.")
                         } else {
@@ -240,6 +243,7 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
                         if (mStudentObject1 != null) {
                             if (mStudentObject1.Master.isNotEmpty()) {
                                 AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                                mStudentObject1.Master.get(0).insuranceTypeFetch="Under Process"
                                 view?.loadDataReport(mStudentObject1.Master as ArrayList<Master>)
                             } else view?.showMessage("You don't have any insurance.")
                         } else {
@@ -278,6 +282,7 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
                         if (mStudentObject1 != null) {
                             if (mStudentObject1.Master.isNotEmpty()) {
                                 AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                                mStudentObject1.Master.get(0).insuranceTypeFetch="Claim Settled"
                                 view?.loadDataReport(mStudentObject1.Master as ArrayList<Master>)
                             } else view?.showMessage("You don't have any insurance.")
                         } else {
@@ -316,6 +321,7 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
                         if (mStudentObject1 != null) {
                             if (mStudentObject1.Master.isNotEmpty()) {
                                 AppCache.getCache().loginPojo = mStudentObject1 as LoginPojo
+                                mStudentObject1.Master.get(0).insuranceTypeFetch="Rejected"
                                 view?.loadDataReport(mStudentObject1.Master as ArrayList<Master>)
                             } else view?.showMessage("You don't have any insurance.")
                         } else {

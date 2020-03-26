@@ -13,6 +13,7 @@ class ClaimRegistrationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_claim_registration)
+        supportActionBar?.title = "Registration Type";
         linearLayout1 = findViewById(R.id.shgRegistration)
         linearLayout2 = findViewById(R.id.shgFamilyregistration)
         linearLayout3 = findViewById(R.id.registrationothers)

@@ -34,16 +34,20 @@ class ReportListAdapter(items: ArrayList<Master>, activity: Context, insuranceNa
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         val masterModel = itemList?.get(p1)
-        p0.nomineeName.text = masterModel?.Name
-        p0.contactNo.text = masterModel?.Phno_ofNominee
-        p0.textStatus.text = "Document "+masterModel?.Status
-        when (masterModel?.Status) {
-            "True" -> p0.textStatus.setTextColor(Color.parseColor("#098000"))
-            "false" -> p0.textStatus.setTextColor(Color.parseColor("#F00"))
-            else -> p0.textStatus.setTextColor(Color.parseColor("#2E2C8F"))
+        p0.nomineeName.text = masterModel?.name
+        p0.contactNo.text = masterModel?.phno_ofNominee
+        if (masterModel?.insuranceTypeFetch == "Registered") {
+            p0.statusayout.visibility = View.VISIBLE
+            p0.textStatus.text = "Document " + masterModel?.Status
+            when (masterModel.Status) {
+                "True" -> p0.textStatus.setTextColor(Color.parseColor("#098000"))
+                "false" -> p0.textStatus.setTextColor(Color.parseColor("#F00"))
+                else -> p0.textStatus.setTextColor(Color.parseColor("#2E2C8F"))
+            }
+        } else {
+            p0.statusayout.visibility = View.GONE
         }
         p0.nameOfInsurance.text = AppCache.getCache().insurancetype
-        masterModel?.insuranceNamee = AppCache.getCache().insurancetype.toString()
 
 
     }
@@ -55,6 +59,7 @@ class ReportListAdapter(items: ArrayList<Master>, activity: Context, insuranceNa
         var nomineeName: TextView = mView.findViewById(R.id.nomineeInsurance)
         var contactNo: TextView = mView.findViewById(R.id.contactNo)
         var textStatus: TextView = mView.findViewById(R.id.textStatus)
+        var statusayout: LinearLayout = mView.findViewById(R.id.statusayout)
         internal var view: View = mView
 
     }

@@ -111,12 +111,12 @@ class RejectDetailsFragment : BaseFragment(), UnderProcessDetailsView, OnFragmen
         document = rootView?.findViewById(R.id.doucment)
         val actionButton: Button? = rootView?.findViewById(R.id.actionButton)
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
-        nomineeName?.text = insuranceNameeee?.Name
-        block?.text = insuranceNameeee?.Blockname
-        village?.text = insuranceNameeee?.Villagename
-        contactNo?.text = insuranceNameeee?.Phno_ofNominee
-        bankbranch?.text = insuranceNameeee?.BranchName
-        nameOfInsurance?.text = insuranceNameeee?.insuranceNamee
+        nomineeName?.text = insuranceNameeee?.name
+        block?.text = insuranceNameeee?.blockname
+        village?.text = insuranceNameeee?.villagename
+        contactNo?.text = insuranceNameeee?.phno_ofNominee.toString()
+        bankbranch?.text = insuranceNameeee?.branchName
+        nameOfInsurance?.text = AppCache.getCache().insurancetype
         actionButton?.setOnClickListener {
             if (TextUtils.isEmpty(encodedBase64)) {
                 val toast = Toast.makeText(activity, "Please Write Reject Reason", Toast.LENGTH_SHORT)

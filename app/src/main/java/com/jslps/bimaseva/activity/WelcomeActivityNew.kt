@@ -13,6 +13,7 @@ class WelcomeActivityNew : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome_new)
+        supportActionBar?.title = "Report Type";
         linearLayout1 = findViewById(R.id.layout1)
         linearLayout2 = findViewById(R.id.layout2)
         linearLayout3 = findViewById(R.id.layout3)

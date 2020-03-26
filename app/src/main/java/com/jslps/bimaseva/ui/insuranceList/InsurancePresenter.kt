@@ -120,11 +120,11 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
             val apiServices = retrofit.create(UploadRegisterDocument::class.java)
             val id = UUID.randomUUID().toString()
             val uploadRegisterData = UploadRegisterData(
-                insuranceNameeee?.Call_Id.toString(),
-                insuranceNameeee?.CreatedBy.toString(),
+                insuranceNameeee?.call_Id.toString(),
+                insuranceNameeee?.createdBy.toString(),
                 id,
                 encodedBase64.toString(),
-                insuranceNameeee?.CreatedOn.toString(),
+                insuranceNameeee?.createdOn.toString(),
                 "1",
                 "",
                 "0",
@@ -206,11 +206,11 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
             val apiServices = retrofit.create(UploadRegisterDocument::class.java)
             val id = UUID.randomUUID().toString()
             val uploadRegisterData = UploadRegisterData(
-                insuranceNameeee?.Call_Id.toString(),
-                insuranceNameeee?.CreatedBy.toString(),
+                insuranceNameeee?.call_Id.toString(),
+                insuranceNameeee?.createdBy.toString(),
                 id,
                 "",
-                insuranceNameeee?.CreatedOn.toString(),
+                insuranceNameeee?.createdOn.toString(),
                 "0",
                 "",
                 "0",
@@ -273,7 +273,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
         }
     }
 
-    fun documentfalseService(callId: Int?) {
+    fun documentfalseService(callId: String?) {
 
         if (DialogUtil.isConnectionAvailable(context)) {
             DialogUtil.displayProgress(context!!)

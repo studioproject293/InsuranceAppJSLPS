@@ -29,12 +29,13 @@ import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.ui.BaseFragment
 import java.io.*
 
-class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView, OnFragmentListItemSelectListener {
+class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView,
+    OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
         val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
         toast.show()
         if (message != null) {
-            if (message.equals("Insurance Update Successfully")){
+            if (message.equals("Insurance Update Successfully")) {
                 val intent = Intent(activity, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -113,7 +114,11 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView, O
                     encodedBase64 = Base64.encodeToString(bytes, Base64.DEFAULT)
                 } else {
                     encodedBase64 = null
-                    Toast.makeText(context as Activity, "Your pic size more than 5 mb", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context as Activity,
+                        "Your pic size more than 5 mb",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
@@ -146,7 +151,13 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView, O
         // permissions this app might request
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    var documentPreviousAttached: ImageView? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         rootView = inflater.inflate(R.layout.claim_details, container, false)
         val nameOfInsurance: TextView? = rootView?.findViewById(R.id.insuranceName)
@@ -158,32 +169,56 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView, O
         val claimReject: Button? = rootView?.findViewById(R.id.claimReject)
         val claimSetteled: Button? = rootView?.findViewById(R.id.claimSetteled)
         val buttonlayout: LinearLayout? = rootView?.findViewById(R.id.buttonlayout)
+        val imageLayoutPrevious: LinearLayout? = rootView?.findViewById(R.id.imageLayoutPrevious)
         val imageLayout: LinearLayout? = rootView?.findViewById(R.id.imageLayout)
-
+        documentPreviousAttached = rootView?.findViewById(R.id.doucment_previous_registerd)
+       val doucment_previous_underprocess = rootView?.findViewById<ImageView>(R.id.doucment_previous_underprocess)
         val rejectReason: EditText? = rootView?.findViewById(R.id.rejectReason)
         val amount: EditText? = rootView?.findViewById(R.id.amount)
         document = rootView?.findViewById(R.id.doucment)
         var actionButton: Button? = rootView?.findViewById(R.id.actionButton)
         val uploadDocument: Button? = rootView?.findViewById(R.id.uploadDocument)
+        val previousHeading: TextView? = rootView?.findViewById(R.id.previousHeading)
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
-        nomineeName?.text = insuranceNameeee?.Name
-        block?.text = insuranceNameeee?.Blockname
+        nomineeName?.text = insuranceNameeee?.name
+        block?.text = insuranceNameeee?.blockname
         uploadDocument?.setText("Upload Receipt")
         buttonlayout?.visibility = View.VISIBLE
         amount?.visibility = View.VISIBLE
         imageLayout?.visibility = View.VISIBLE
         rejectReason?.visibility = View.GONE
         actionButton?.visibility = View.GONE
-        textHeading?.setText("Service Charged recived")
+        textHeading?.text = "Service Charged recived"
         // block?.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.move));
-        village?.text = insuranceNameeee?.Villagename
-        contactNo?.text = insuranceNameeee?.Phno_ofNominee
-        bankbranch?.text = insuranceNameeee?.BranchName
-        nameOfInsurance?.text = insuranceNameeee?.insuranceNamee
+        village?.text = insuranceNameeee?.villagename
+        contactNo?.text = insuranceNameeee?.phno_ofNominee.toString()
+        bankbranch?.text = insuranceNameeee?.branchName
+        nameOfInsurance?.text = AppCache.getCache().insurancetype
+        if (!TextUtils.isEmpty(insuranceNameeee?.imagebyte)||!TextUtils.isEmpty(insuranceNameeee?.image_UP)) {
+            previousHeading?.visibility = View.VISIBLE
+            imageLayoutPrevious?.visibility = View.VISIBLE
+            try {
+                val byteArray: ByteArray =
+                    Base64.decode(insuranceNameeee?.imagebyte, 0)
+                val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+                documentPreviousAttached?.setImageBitmap(bitmap)
+                val byteArray1: ByteArray =
+                    Base64.decode(insuranceNameeee?.image_UP, 0)
+                val bitmap1 = BitmapFactory.decodeByteArray(byteArray1, 0, byteArray.size)
+                doucment_previous_underprocess?.setImageBitmap(bitmap1)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } catch (e: java.lang.Error) {
+            }
+        } else {
+            previousHeading?.visibility = View.GONE
+            imageLayoutPrevious?.visibility = View.GONE
+        }
         presenter = ClaimSetteledDetailsPresenter(this, activity as Activity)
         actionButton?.setOnClickListener {
             if (TextUtils.isEmpty(rejectReason?.text.toString())) {
-                val toast = Toast.makeText(activity, "Please Write Reject Reason", Toast.LENGTH_SHORT)
+                val toast =
+                    Toast.makeText(activity, "Please Write Reject Reason", Toast.LENGTH_SHORT)
                 toast.show()
             } else {
                 showProgress()
@@ -200,7 +235,11 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView, O
                 toast.show()
             } else {
                 showProgress()
-                presenter?.uploadClaimSetteled(insuranceNameeee, encodedBase64,amount?.text.toString())
+                presenter?.uploadClaimSetteled(
+                    insuranceNameeee,
+                    encodedBase64,
+                    amount?.text.toString()
+                )
             }
         }
         claimReject?.setOnClickListener {
@@ -246,7 +285,11 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView, O
                         Manifest.permission.READ_EXTERNAL_STORAGE
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
-                    val toast = Toast.makeText(context as Activity, "Permission not given", Toast.LENGTH_SHORT)
+                    val toast = Toast.makeText(
+                        context as Activity,
+                        "Permission not given",
+                        Toast.LENGTH_SHORT
+                    )
                     toast.show()
                 } else {
                     attchmemntPopup(context as Activity)
@@ -255,7 +298,7 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView, O
                 attchmemntPopup(context as Activity)
             }
         }
-        return  rootView!!
+        return rootView!!
     }
 
     private fun attchmemntPopup(context: Activity) {
@@ -303,7 +346,8 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView, O
                 if (data != null) {
                     //onSelectFromGalleryResult(data)
                     val imageUri = data.data as Uri
-                    val imageStream = activity?.contentResolver?.openInputStream(imageUri) as InputStream
+                    val imageStream =
+                        activity?.contentResolver?.openInputStream(imageUri) as InputStream
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
                     document?.setImageBitmap(selectedImage)
                     val byteArrayOutputStream = ByteArrayOutputStream()
@@ -360,7 +404,8 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView, O
     fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+        val path =
+            MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
         return Uri.parse(path)
     }
 

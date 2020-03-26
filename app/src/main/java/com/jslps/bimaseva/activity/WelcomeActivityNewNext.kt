@@ -53,6 +53,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                 bank?.visibility = View.GONE
                 district?.visibility = View.VISIBLE
                 frameLayout?.visibility = View.GONE
+                supportActionBar?.title = "District Wise Report";
                 if (name.equals("Insurance2")) {
                     if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
                         DialogUtil.displayProgress(this@WelcomeActivityNewNext)
@@ -118,6 +119,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                 block?.visibility = View.VISIBLE
                 district?.visibility = View.VISIBLE
                 frameLayout?.visibility = View.VISIBLE
+                supportActionBar?.title = "All Report";
                 /* bank?.text = "Bank Name"
                  branch?.text = "Branch Name"*/
             }
@@ -127,6 +129,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                 block?.visibility = View.GONE
                 district?.visibility = View.GONE
                 frameLayout?.visibility = View.GONE
+                supportActionBar?.title = "Bank Wise Report";
                 if (name.equals("Insurance3")) {
                     if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
                         DialogUtil.displayProgress(this@WelcomeActivityNewNext)

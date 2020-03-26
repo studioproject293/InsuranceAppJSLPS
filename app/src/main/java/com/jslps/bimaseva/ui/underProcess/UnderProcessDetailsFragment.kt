@@ -29,6 +29,7 @@ import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.ui.BaseFragment
 import java.io.*
 
+
 class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
     OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
@@ -73,6 +74,7 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
     }
 
     var document: ImageView? = null
+    var documentPreviousAttached: ImageView? = null
     var encodedBase64: String? = null
     var REQUEST_CAMERA = 0
     var SELECT_FILE = 1
@@ -81,12 +83,11 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
     override fun onResume() {
         super.onResume()
         mListener!!.onFragmentUpdate(
-            Constant.setTitle,
-            HeaderData(false, AppCache.getCache().insurancetype.toString())
+            Constant.setTitle, HeaderData(false, AppCache.getCache().insurancetype.toString())
         )
     }
 
-    private fun onSelectFromGalleryResult(data: Intent) {
+   /* private fun onSelectFromGalleryResult(data: Intent) {
         val selectedImageUri = data.getData()
         val projection = arrayOf<String>(MediaStore.MediaColumns.DATA)
         val cursor = activity?.managedQuery(selectedImageUri, projection, null, null, null)
@@ -131,7 +132,7 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
 
             }
         }
-    }
+    }*/
 
     override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -157,31 +158,45 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        rootView = inflater.inflate(R.layout.insurace_details_new, container, false)
+        rootView = inflater.inflate(R.layout.insurace_details_underprocess, container, false)
         val nameOfInsurance: TextView? = rootView?.findViewById(R.id.insuranceName)
         val textHeading: TextView? = rootView?.findViewById(R.id.textHeading)
         textHeading?.text = "Claim Document Submitted at Bank. "
         val nomineeName: TextView? = rootView?.findViewById(R.id.nomineeInsurance)
         val contactNo: TextView? = rootView?.findViewById(R.id.contactNo)
         val block: TextView? = rootView?.findViewById(R.id.block)
+        val previousHeading: TextView? = rootView?.findViewById(R.id.previousHeading)
         val village: TextView? = rootView?.findViewById(R.id.village)
         document = rootView?.findViewById(R.id.doucment)
+        documentPreviousAttached = rootView?.findViewById(R.id.doucment_previous_registerd)
         val actionButton: Button? = rootView?.findViewById(R.id.actionButton)
-        val documentReadybutnotsubmit: Button? =
-            rootView?.findViewById(R.id.documentReadybutnotsubmit)
         val uploadDocument: Button? = rootView?.findViewById(R.id.uploadDocument)
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
-        documentReadybutnotsubmit?.visibility = View.INVISIBLE
-        nomineeName?.text = insuranceNameeee?.Name
-        block?.text = insuranceNameeee?.Blockname
+        nomineeName?.text = insuranceNameeee?.name
+        block?.text = insuranceNameeee?.blockname
         // block?.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.move));
-        village?.text = insuranceNameeee?.Villagename
-        contactNo?.text = insuranceNameeee?.Phno_ofNominee
-        bankbranch?.text = insuranceNameeee?.BranchName
-        nameOfInsurance?.text = insuranceNameeee?.insuranceNamee
+        village?.text = insuranceNameeee?.villagename
+        contactNo?.text = insuranceNameeee?.phno_ofNominee.toString()
+        bankbranch?.text = insuranceNameeee?.branchName
+        nameOfInsurance?.text = AppCache.getCache().insurancetype
+        if (!TextUtils.isEmpty(insuranceNameeee?.imagebyte)) {
+            previousHeading?.visibility=View.VISIBLE
+            documentPreviousAttached?.visibility=View.VISIBLE
+            try {
+                val byteArray: ByteArray =
+                    Base64.decode(insuranceNameeee?.imagebyte, 0)
+                val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+                documentPreviousAttached?.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } catch (e: java.lang.Error) {
+            }
+        }else {
+            previousHeading?.visibility=View.GONE
+            documentPreviousAttached?.visibility=View.GONE
+        }
         presenter = UnderProcessDetailsPresenter(this, activity as Activity)
         actionButton?.text = "Claim Settled"
         actionButton?.setOnClickListener {
@@ -205,8 +220,7 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
                 || ActivityCompat.checkSelfPermission(
                     context as Activity,
                     Manifest.permission.READ_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
+                ) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(
                     context as Activity,
                     arrayOf(
