@@ -27,8 +27,15 @@ class SchemeListAdapterReport(items: ArrayList<MasterX>, activity: Context, insu
     }
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-        p0.title.text = itemList?.get(p1)?.Column2.toString() + itemList?.get(p1)?.Column1.toString() + ")"
-        p0.view.setOnClickListener { mListner?.onListItemSelected(p1, insuranceName) }
+        p0.title.text =
+            itemList?.get(p1)?.Column2.toString() + itemList?.get(p1)?.Column1.toString() + ")"
+        when (p1) {
+            0 -> p0.view.setOnClickListener { mListner?.onListItemSelected(p1, "Registered") }
+            1 -> p0.view.setOnClickListener { mListner?.onListItemSelected(p1, "Document ready but not received by the branch") }
+            2 -> p0.view.setOnClickListener { mListner?.onListItemSelected(p1, "Under Process") }
+            3 -> p0.view.setOnClickListener { mListner?.onListItemSelected(p1, "Claim Settled") }
+            4 -> p0.view.setOnClickListener { mListner?.onListItemSelected(p1, "Rejected") }
+        }
         when (p1) {
             0 -> p0.homeicon.setImageResource(R.drawable.registerd_icon)
             1 -> p0.homeicon.setImageResource(R.drawable.document_icon)

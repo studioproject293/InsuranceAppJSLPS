@@ -493,6 +493,22 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
 
             datePickerStrt()
         }
+        spinnerBlock?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long) {
+                val shgCodeModel = parent?.getItemAtPosition(position) as Table1LoginDb
+                blockCode = shgCodeModel.blockcode
+
+            }
+
+        }
         return rootView
     }
 

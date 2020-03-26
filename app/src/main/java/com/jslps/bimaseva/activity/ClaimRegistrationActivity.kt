@@ -19,17 +19,14 @@ class ClaimRegistrationActivity : AppCompatActivity() {
       linearLayout1?.setOnClickListener {
             val intent = Intent(this@ClaimRegistrationActivity, ClaimRegistrationActivitySHGMember::class.java)
             startActivity(intent)
-            finish()
         }
          linearLayout2?.setOnClickListener {
            val intent = Intent(this@ClaimRegistrationActivity, ClaimRegistrationActivityFamilySHGMember::class.java)
            startActivity(intent)
-           finish()
        }
        linearLayout3?.setOnClickListener {
            val intent = Intent(this@ClaimRegistrationActivity, ClaimRegistrationActivityOthers::class.java)
            startActivity(intent)
-           finish()
        }
 
     }

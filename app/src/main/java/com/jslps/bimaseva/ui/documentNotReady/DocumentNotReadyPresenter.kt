@@ -93,8 +93,7 @@ class DocumentNotReadyPresenter(view: DocumentNotReadyView, context: Activity) :
             builder.readTimeout(180, TimeUnit.SECONDS)
             val client = builder.build()
             val retrofit = Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
-                ScalarsConverterFactory.create()
-            ).client(client).build()
+                ScalarsConverterFactory.create()).client(client).build()
             val apiServices = retrofit.create(UploadRegisterDocument::class.java)
             val id = UUID.randomUUID().toString()
             val uploadRegisterData = UploadRegisterData(
@@ -111,7 +110,7 @@ class DocumentNotReadyPresenter(view: DocumentNotReadyView, context: Activity) :
                 "0",
                 "",
                 "",
-                "3",
+                "1",
                 "",
                 "0",
                 ""

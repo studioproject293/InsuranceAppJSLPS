@@ -8,6 +8,6 @@ import retrofit2.http.Query
 interface ReportsEntryService {
     @GET("DownloadInsuranceRpt")
     fun getReportsEntryService(
-        @Query("flag") flag: String): Call<String>
+        @Query("flag") flag: String,@Query("whr")whr:String): Call<String>
 
 }

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.jslps.bimaseva.Constant
@@ -17,20 +16,26 @@ import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.model.MasterX
 
 import com.jslps.bimaseva.ui.BaseFragment
+import com.jslps.bimaseva.ui.reports.adapter.ReportListAdapter
 import com.jslps.bimaseva.ui.reports.adapter.SchemeListAdapterReport
 
-class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnFragmentListItemSelectListener {
-    var homeRecyclerviewAdapter: SchemeListAdapterReport? = null
+class ReportListFragment : BaseFragment(), SchemeDetailsViewReport, OnFragmentListItemSelectListener {
+    var homeRecyclerviewAdapter: ReportListAdapter? = null
     override fun gotoScreen(fragmentID: Int, message: Any?) {
-        mListener?.onFragmentInteraction(fragmentID,message as String)
+        mListener?.onFragmentInteraction(fragmentID,message as List<*>)
     }
 
     override fun loadData(cardInitResponse: ArrayList<MasterX>) {
 
+
+    }
+
+    override fun loadDataReport(cardInitResponse: ArrayList<Master>) {
         if (cardInitResponse != null) {
             recycleview?.visibility = View.VISIBLE
             if (homeRecyclerviewAdapter == null)
-                homeRecyclerviewAdapter = SchemeListAdapterReport(cardInitResponse,activity as Activity,
+                homeRecyclerviewAdapter = ReportListAdapter(
+                    cardInitResponse, activity as Activity,
                     AppCache.getCache().insurancetype.toString()
                 )
             else
@@ -40,10 +45,6 @@ class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnF
         } else {
             recycleview?.visibility = View.GONE
         }
-    }
-
-    override fun loadDataReport(cardInitResponse: ArrayList<Master>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showMessage(message: String) {
@@ -73,7 +74,7 @@ class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnF
     var presenter: SchemeDetailsPresenterReport? = null
     override fun onResume() {
         super.onResume()
-        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, "Reports"))
+        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, "Reports List"))
     }
 
 
@@ -83,12 +84,14 @@ class SchemeDetailsFragmentReport : BaseFragment(), SchemeDetailsViewReport, OnF
         recycleview = rootView?.findViewById(R.id.recycleview)
         presenter = SchemeDetailsPresenterReport(this, activity as Activity)
         recycleview?.layoutManager = Constant.getVerticalLayout(activity!!)
-        presenter?.resume()
+        presenter?.loadReportList(insuranceTypeFetch)
         return rootView!!
     }
     companion object {
-        fun getInstance(): SchemeDetailsFragmentReport {
-            return SchemeDetailsFragmentReport()
+        var insuranceTypeFetch:String?=null
+        fun getInstance(insuranceType:String): ReportListFragment {
+            insuranceTypeFetch=insuranceType
+            return ReportListFragment()
         }
     }
 }

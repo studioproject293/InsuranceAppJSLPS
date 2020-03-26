@@ -18,10 +18,7 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
-import android.os.AsyncTask
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
+import android.os.*
 import android.text.TextUtils
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -63,7 +60,8 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 class WelcomeActivity : AppCompatActivity() {
-    internal var images = intArrayOf(R.drawable.pmjby, R.drawable.pmsby, R.drawable.apy)
+    internal var images = intArrayOf(R.drawable.pmjby, R.drawable.pmsby, R.drawable.apy,R.drawable.images4,
+        R.drawable.images6,R.drawable.images8,R.drawable.images7,R.drawable.crop_padding)
     private var viewPager: ViewPager? = null
     private var registernewClaim: Button? = null
     private val myViewPagerAdapter: MyViewPagerAdapter? = null
@@ -117,6 +115,7 @@ class WelcomeActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_welcome_new_designe)
 
+
         viewPager = findViewById(R.id.view_pager)
         recyclerviewreports = findViewById(R.id.recyclerviewreports)
 //        recyclerviewreports = findViewById(R.id.recyclerviewreports)
@@ -145,9 +144,6 @@ class WelcomeActivity : AppCompatActivity() {
         changeStatusBarColor()
         val myCustomPagerAdapter = MyCustomPagerAdapter(this@WelcomeActivity, images)
         viewPager!!.adapter = myCustomPagerAdapter
-        // myViewPagerAdapter = new MyViewPagerAdapter();
-        // viewPager.setAdapter(myViewPagerAdapter);
-        // viewPager.setOffscreenPageLimit(layouts.length);
 
         val handler = Handler()
         val Update = Runnable {
@@ -167,30 +163,9 @@ class WelcomeActivity : AppCompatActivity() {
         }, 500, 3000)
 
         viewPager!!.addOnPageChangeListener(viewPagerPageChangeListener)
-//        recyclerviewreports?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         updateReportData()
         dotsIndicator = findViewById<DotsIndicator>(R.id.dots_indicator)
-
-        /* val text = findViewById<TextView>(R.id.text)
-         val array = intArrayOf(
-             R.string.loading_msg,
-             R.string.yes,
-             R.string.exit_message,
-             R.string.app_name,
-             R.string.logout_message
-         )
-         text.post(object : Runnable {
-              var i = 0
-             override fun run() {
-                 text.setText(array[i])
-                 i++
-                 if (i == 5)
-                     i = 0
-                 text.postDelayed(this, 5000)
-             }
-         })
- */
 
         logIn!!.setOnClickListener { showCustomDialog() }
         val shake = AnimationUtils.loadAnimation(this, R.anim.shake1)

@@ -30,12 +30,9 @@ class UnderProcessDetailsPresenter(view: UnderProcessDetailsView, context: Activ
     OnFragmentListItemSelectListener {
     override fun onListItemSelected(itemId: Int, data: Any) {
 
-
     }
-
     override fun onListItemLongClicked(itemId: Int, data: Any) {
     }
-
 
     var view: UnderProcessDetailsView? = view
     var context: Activity? = context
@@ -108,7 +105,7 @@ class UnderProcessDetailsPresenter(view: UnderProcessDetailsView, context: Activ
                 "",
                 "",
                 "",
-                "2", "",
+                "3", "",
                 "0",
                 ""
             )

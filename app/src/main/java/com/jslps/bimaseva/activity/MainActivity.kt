@@ -32,6 +32,7 @@ import com.jslps.bimaseva.ui.registration.ClaimRegistrationFragmentFamily
 import com.jslps.bimaseva.ui.registration.ClaimRegistrationFragmentOthers
 import com.jslps.bimaseva.ui.registration.ClaimRegistrationFragmentSHGMember
 import com.jslps.bimaseva.ui.registration.RegistrationList
+import com.jslps.bimaseva.ui.reports.ReportListFragment
 import com.jslps.bimaseva.ui.reports.SchemeDetailsFragmentReport
 import com.jslps.bimaseva.ui.underProcess.UnderProcessDetailsFragment
 
@@ -216,6 +217,14 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                     android.R.anim.slide_out_right)
                     .addToBackStack(mFragmentTag)
                     .replace(R.id.fragment_main, RegistrationList(), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
+            Constant.REPORT_LIST_FRAGMENT-> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right)
+                    .addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, ReportListFragment.getInstance(data as String), mFragmentTag)
                     .commitAllowingStateLoss()
             }
         }

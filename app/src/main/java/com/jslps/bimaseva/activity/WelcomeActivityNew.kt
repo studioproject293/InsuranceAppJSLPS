@@ -20,19 +20,16 @@ class WelcomeActivityNew : AppCompatActivity() {
             val intent = Intent(this@WelcomeActivityNew, WelcomeActivityNewNext::class.java)
             intent.putExtra("clicktype", "Insurance2")
             startActivity(intent)
-            finish()
         }
         linearLayout2?.setOnClickListener {
             val intent = Intent(this@WelcomeActivityNew, WelcomeActivityNewNext::class.java)
             intent.putExtra("clicktype", "Insurance3")
             startActivity(intent)
-            finish()
         }
         linearLayout3?.setOnClickListener {
             val intent = Intent(this@WelcomeActivityNew, WelcomeActivityNewNext::class.java)
             intent.putExtra("clicktype", "Insurance1")
             startActivity(intent)
-            finish()
         }
 
     }

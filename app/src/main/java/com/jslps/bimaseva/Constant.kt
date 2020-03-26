@@ -22,6 +22,7 @@ object Constant {
     const val INSURANCE_CREATE_INSIDE_FAMILY = 113
     const val INSURANCE_CREATE_INSIDE_SHG = 114
     const val INSURANCE_CREATE_INSIDE_OTHER = 115
+    const val REPORT_LIST_FRAGMENT = 116
     const val setTitle = 1111
     const val UPDATE__NO_INTERNET = 209
     const val API_BASE_URL = "http://swalekha.in/webServiceModalPopup.asmx/"

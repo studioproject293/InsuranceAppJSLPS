@@ -452,7 +452,22 @@ class ClaimRegistrationFragmentSHGMember : BaseFragment() {
             }
 
         }
+        spinnerBlock?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
 
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long) {
+                val shgCodeModel = parent?.getItemAtPosition(position) as Table1LoginDb
+                blockCode = shgCodeModel.blockcode
+
+            }
+
+        }
         return rootView
     }
 
@@ -482,12 +497,12 @@ class ClaimRegistrationFragmentSHGMember : BaseFragment() {
     }
 
     private fun datePickerStrt(): Dialog {
-        var c = Calendar.getInstance(Locale.ENGLISH)
+        val c = Calendar.getInstance(Locale.ENGLISH)
         val ALyear = c.get(Calendar.YEAR)
         val ALmonthOfYear = c.get(Calendar.MONTH)
         val ALdayOfMonth = c.get(Calendar.DAY_OF_MONTH)
-        var dpd = DatePickerDialog(
-            activity!!,
+        val dpd = DatePickerDialog(
+            activity!!,R.style.datepicker,
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 val dateSelected =
                     (getProperFormat(dayOfMonth) + "-" + getProperFormat(monthOfYear + 1) + "-" + year)
