@@ -13,6 +13,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -249,9 +250,13 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
                                     .setTitle("Insurance Create Successfully ")
                                     .sneakSuccess()
                                 val intent = Intent(activity, MainActivity::class.java)
-                                intent.flags =
-                                    Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                startActivity(intent)
+                                Handler().postDelayed(object:Runnable {
+                                    override fun run() {
+                                        intent.flags =
+                                            Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                        startActivity(intent)
+                                    }
+                                }, 2000)
 
                             } else {
                                 Sneaker.with(activity!!) // Activity, Fragment or ViewGroup

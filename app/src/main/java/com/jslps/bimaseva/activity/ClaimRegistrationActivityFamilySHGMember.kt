@@ -67,6 +67,10 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
     var radioButton: RadioButton? = null
     var radioGroup: RadioGroup? = null
     var genderId: Int? = null
+    var panchyatModel: BlockMasterClass? = null
+    var villageModel: BlockMasterClass? = null
+    var shgModel: BlockMasterClass? = null
+    var blockModel: BlockMasterClass? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.claim_registration_familymember_of_shg)
@@ -206,17 +210,22 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                             ScalarsConverterFactory.create()
                         ).client(client).build()
                     val apiServices = retrofit.create(InsuranceCreateOTP::class.java)
-                    val createInsurance = apiServices.createInsurance(mobileofcaller?.text.toString())
+                    val createInsurance =
+                        apiServices.createInsurance(mobileofcaller?.text.toString())
                     createInsurance.enqueue(object : Callback<String> {
                         override fun onResponse(
                             call: Call<String>,
-                            response: Response<String>) {
+                            response: Response<String>
+                        ) {
                             DialogUtil.stopProgressDisplay()
                             val fullResponse = response.body()
                             val XmlString =
                                 fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                             val result = XmlString?.replace(("</string>").toRegex(), "")
-                            val pref = getSharedPreferences("MyPrefInsuranceOTP", 0) // 0 - for private mode
+                            val pref = getSharedPreferences(
+                                "MyPrefInsuranceOTP",
+                                0
+                            ) // 0 - for private mode
                             val editor = pref.edit()
                             editor.putString("otp", result)
                             editor.apply()
@@ -228,13 +237,12 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                                 this@ClaimRegistrationActivityFamilySHGMember,
                                 ClaimRegistrationActivityOtpScreen::class.java
                             )
-                            Handler().postDelayed(object:Runnable {
+                            Handler().postDelayed(object : Runnable {
                                 public override fun run() {
                                     intent.putExtra("data", callCenter)
                                     startActivity(intent)
                                 }
                             }, 2000)
-
 
 
                         }
@@ -310,9 +318,18 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position == 0)
+                if (position == 0) {
+                    distirctCode=null
+                    panchyatModel = null
+                    spinnerPanchyt?.adapter = panchyatModel
+                    villageModel = null
+                    spinnerVillage?.adapter = villageModel
+                    shgModel = null
+                    spinnerShg?.adapter = shgModel
+                    blockModel = null
+                    spinnerBlock?.adapter = blockModel
                     return
-                else {
+                }else {
                     val districtMasterClass =
                         parent?.getItemAtPosition(position) as DistrictMasterClass?
                     val gson = Gson()
@@ -322,7 +339,12 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                     )
                     distirctCode = districtMasterClass?.districtCode.toString()
                     getBlockData(districtMasterClass?.districtCode.toString())
-
+                    panchyatModel = null
+                    spinnerPanchyt?.adapter = panchyatModel
+                    villageModel = null
+                    spinnerVillage?.adapter = villageModel
+                    shgModel = null
+                    spinnerShg?.adapter = shgModel
                 }
             }
 
@@ -336,13 +358,14 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long) {
-                if (position == 0)
+                id: Long
+            ) {
+                if (position == 0) {
+                    shgCode=null
                     return
-                else {
-                    val districtMasterClass =
-                        parent?.getItemAtPosition(position) as BlockMasterClass?
-                    shgCode = districtMasterClass?.groupCode.toString()
+                }else {
+                    shgModel = parent?.getItemAtPosition(position) as BlockMasterClass?
+                    shgCode = shgModel?.groupCode.toString()
 
                 }
             }
@@ -357,11 +380,17 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long
-            ) {
-                if (position == 0)
+                id: Long) {
+                if (position == 0) {
+                    blockCode=null
+                    panchyatModel = null
+                    spinnerPanchyt?.adapter = panchyatModel
+                    villageModel = null
+                    spinnerVillage?.adapter = villageModel
+                    shgModel = null
+                    spinnerShg?.adapter = shgModel
                     return
-                else {
+                }else {
                     val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
                     val gson = Gson()
                     Log.d(
@@ -386,12 +415,17 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position == 0)
+                if (position == 0) {
+                    clustercode=null
+                    panchyatModel = null
+                    spinnerPanchyt?.adapter = panchyatModel
+                    shgModel = null
+                    spinnerShg?.adapter = shgModel
                     return
-                else {
-                    val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
-                    clustercode = blockMasterClass?.clusterCode
-                    getVillageDataList(blockMasterClass?.clusterCode.toString())
+                } else {
+                    panchyatModel = parent?.getItemAtPosition(position) as BlockMasterClass?
+                    clustercode = panchyatModel?.clusterCode
+                    getVillageDataList(panchyatModel?.clusterCode.toString())
                 }
 
             }
@@ -449,14 +483,16 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long
-            ) {
-                if (position == 0)
+                id: Long) {
+                if (position == 0) {
+                    villageCode=null
+                    shgModel = null
+                    spinnerShg?.adapter = shgModel
                     return
-                else {
-                    val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
-                    villageCode = blockMasterClass?.villageCode.toString()
-                    getSHGDataList(blockMasterClass?.villageCode.toString())
+                }else {
+                    villageModel = parent?.getItemAtPosition(position) as BlockMasterClass?
+                    villageCode = villageModel?.villageCode.toString()
+                    getSHGDataList(villageModel?.villageCode.toString())
                 }
 
             }
@@ -847,21 +883,27 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                 .sneakError()
         }
     }
+
     private fun updateSppinerDistrict(master: ArrayList<DistrictMasterClass>) {
-        master.add(0, DistrictMasterClass("","All District",""))
+        master.add(0, DistrictMasterClass("", "All District", ""))
         val adapter = CustomDropDownAdapter(
             this, "district", master
         )
         sppiner_district?.adapter = adapter
     }
+
     private fun updateSppinerBlock(master: ArrayList<BlockMasterClass>, dataType: String) {
 
         when (dataType) {
             "block" -> {
-                master.add(0, BlockMasterClass("","","All Block", "","",
-                    "","","","","",
-                    "","","","","","","",
-                    "","","",""))
+                master.add(
+                    0, BlockMasterClass(
+                        "", "", "All Block", "", "",
+                        "", "", "", "", "",
+                        "", "", "", "", "", "", "",
+                        "", "", "", ""
+                    )
+                )
                 val adapter = CustomDropDownAdapter(
                     this, dataType, master
                 )
@@ -869,10 +911,14 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
             }
 
             "cluster" -> {
-                master.add(0, BlockMasterClass("","","", "","",
-                    "All Panchayat","","","","",
-                    "","","","","","","",
-                    "","","",""))
+                master.add(
+                    0, BlockMasterClass(
+                        "", "", "", "", "",
+                        "All Panchayat", "", "", "", "",
+                        "", "", "", "", "", "", "",
+                        "", "", "", ""
+                    )
+                )
 
                 val adapter = CustomDropDownAdapter(
                     this, dataType, master
@@ -881,43 +927,59 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
             }
 
             "village" -> {
-                master.add(0, BlockMasterClass("","","", "","",
-                    "","","","All Village","",
-                    "","","","","","","",
-                    "","","",""))
-              /*  master.get(0).villageName = "All Village"*/
+                master.add(
+                    0, BlockMasterClass(
+                        "", "", "", "", "",
+                        "", "", "", "All Village", "",
+                        "", "", "", "", "", "", "",
+                        "", "", "", ""
+                    )
+                )
+                /*  master.get(0).villageName = "All Village"*/
                 val adapter = CustomDropDownAdapter(
                     this, dataType, master
                 )
                 spinnerVillage?.adapter = adapter
             }
             "shg" -> {
-                master.add(0, BlockMasterClass("","","", "","",
-                    "","","","",
-                    "","","All SHG","","","","",
-                    "","","","",""))
+                master.add(
+                    0, BlockMasterClass(
+                        "", "", "", "", "",
+                        "", "", "", "",
+                        "", "", "All SHG", "", "", "", "",
+                        "", "", "", "", ""
+                    )
+                )
                 val adapter = CustomDropDownAdapter(
                     this, dataType, master
                 )
                 spinnerShg?.adapter = adapter
             }
             "bank" -> {
-                master.add(0, BlockMasterClass("","","", "","",
-                    "","","","",
-                    "","","","","","","All Bank",
-                    "","","","",""))
-               /* master.get(0).bankName = "All Bank"*/
+                master.add(
+                    0, BlockMasterClass(
+                        "", "", "", "", "",
+                        "", "", "", "",
+                        "", "", "", "", "", "", "All Bank",
+                        "", "", "", "", ""
+                    )
+                )
+                /* master.get(0).bankName = "All Bank"*/
                 val adapter = CustomDropDownAdapter(
                     this, dataType, master
                 )
                 sppiner_bank?.adapter = adapter
             }
             "branch" -> {
-                master.add(0, BlockMasterClass("","","", "","",
-                    "","","","",
-                    "","","","","","","",
-                    "","","","All Branch",""))
-              /*  master.get(0).branchName = "All Branch"*/
+                master.add(
+                    0, BlockMasterClass(
+                        "", "", "", "", "",
+                        "", "", "", "",
+                        "", "", "", "", "", "", "",
+                        "", "", "", "All Branch", ""
+                    )
+                )
+                /*  master.get(0).branchName = "All Branch"*/
                 val adapter = CustomDropDownAdapter(
                     this, dataType, master
                 )

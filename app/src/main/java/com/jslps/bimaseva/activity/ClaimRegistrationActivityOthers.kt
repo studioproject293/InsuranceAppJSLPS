@@ -66,6 +66,9 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
     var villageCode: String? = null
     var bankCode: String? = null
     var branchCode: String? = null
+    var panchyatModel: BlockMasterClass? = null
+    var villageModel: BlockMasterClass? = null
+    var blockModel: BlockMasterClass? = null
     internal var preferences: SharedPreferences? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -253,9 +256,17 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position == 0)
+                if (position == 0) {
+                    distirctCode=null
+                    panchyatModel = null
+                    spinnerPanchyt?.adapter = panchyatModel
+                    villageModel = null
+                    spinnerVillage?.adapter = villageModel
+                    blockModel = null
+                    spinnerBlock?.adapter = blockModel
                     return
-                else {
+                }else {
+
                     val districtMasterClass =
                         parent?.getItemAtPosition(position) as DistrictMasterClass?
                     val gson = Gson()
@@ -265,6 +276,10 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                     )
                     distirctCode = districtMasterClass?.districtCode.toString()
                     getBlockData(districtMasterClass?.districtCode.toString())
+                    panchyatModel = null
+                    spinnerPanchyt?.adapter = panchyatModel
+                    villageModel = null
+                    spinnerVillage?.adapter = villageModel
 
                 }
             }
@@ -280,19 +295,23 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long
-            ) {
-                if (position == 0)
+                id: Long) {
+                if (position == 0) {
+                    blockCode=null
+                    panchyatModel = null
+                    spinnerPanchyt?.adapter = panchyatModel
+                    villageModel = null
+                    spinnerVillage?.adapter = villageModel
                     return
-                else {
-                    val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
+                }else {
+                    blockModel = parent?.getItemAtPosition(position) as BlockMasterClass?
                     val gson = Gson()
                     Log.d(
                         "fddgsgs",
-                        "Body of Update product" + gson.toJson(blockMasterClass)
+                        "Body of Update product" + gson.toJson(blockModel)
                     )
-                    blockCode = blockMasterClass?.blockCode.toString()
-                    getClusterDataList(blockMasterClass?.blockCode.toString())
+                    blockCode = blockModel?.blockCode.toString()
+                    getClusterDataList(blockModel?.blockCode.toString())
 
                 }
             }
@@ -309,12 +328,15 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position == 0)
+                if (position == 0) {
+                    clustercode=null
+                    panchyatModel = null
+                    spinnerPanchyt?.adapter = panchyatModel
                     return
-                else {
-                    val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
-                    clustercode=blockMasterClass?.clusterCode
-                    getVillageDataList(blockMasterClass?.clusterCode.toString())
+                } else {
+                    panchyatModel = parent?.getItemAtPosition(position) as BlockMasterClass?
+                    clustercode = panchyatModel?.clusterCode
+                    getVillageDataList(panchyatModel?.clusterCode.toString())
                 }
 
             }
@@ -374,9 +396,10 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position == 0)
+                if (position == 0) {
+                    villageCode=null
                     return
-                else {
+                }else {
                     val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
                     villageCode = blockMasterClass?.villageCode.toString()
                 }
@@ -384,7 +407,6 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
             }
 
         }
-
         datePicker?.setOnClickListener {
 
             datePickerStrt()
