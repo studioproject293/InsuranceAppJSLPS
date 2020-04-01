@@ -20,7 +20,7 @@ class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presente
                 getAppCache().insuranceStepSend = "1"
                 view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
             }
-            data.toString() == "PMJJY" ->{
+            data.toString() == "PMJJBY" ->{
                 getAppCache().insuranceStepSend = "2"
                 view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
             }
@@ -28,7 +28,7 @@ class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presente
                 getAppCache().insuranceStepSend = "3"
                 view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
             }
-            data.toString() == "ASSET Insurance" ->{
+            data.toString() == "Asset Insurance (Crop, Livestock, Others)" ->{
                 getAppCache().insuranceStepSend = "4"
                 view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
             }
@@ -58,9 +58,9 @@ class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presente
         val schemedata = ArrayList<String>()
         schemedata.add("Registered A New Claim")
         schemedata.add("PMSBY")
-        schemedata.add("PMJJY")
+        schemedata.add("PMJJBY")
         schemedata.add("PMJAY")
-        schemedata.add("ASSET Insurance")
+        schemedata.add("Asset Insurance (Crop, Livestock, Others)")
         view?.loadData(schemedata)
     }
 

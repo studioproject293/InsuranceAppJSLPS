@@ -20,9 +20,9 @@
     <string-array name="schemeArray">
         <item>All Scheme</item>
         <item>PMSBY</item>
-        <item>PMJJY</item>
+        <item>PMJJBY</item>
         <item>PMJAY</item>
-        <item>ASSET Insurance</item>
+        <item>Asset Insurance (Crop, Livestock, Others)</item>
     </string-array>
 
     <string name="youAreNotUpdatedMessage" translatable="false">A new version of BIMA SEWA app is available. Please update to new version now.</string>

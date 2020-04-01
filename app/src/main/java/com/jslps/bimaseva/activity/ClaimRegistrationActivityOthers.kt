@@ -196,29 +196,34 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                             ScalarsConverterFactory.create()
                         ).client(client).build()
                     val apiServices = retrofit.create(InsuranceCreateOTP::class.java)
-                    val createInsurance = apiServices.createInsurance(mobileofcaller?.text.toString())
+                    val createInsurance =
+                        apiServices.createInsurance(mobileofcaller?.text.toString())
                     createInsurance.enqueue(object : Callback<String> {
                         override fun onResponse(
                             call: Call<String>,
-                            response: Response<String>) {
+                            response: Response<String>
+                        ) {
                             DialogUtil.stopProgressDisplay()
                             val fullResponse = response.body()
                             val XmlString =
                                 fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                             val result = XmlString?.replace(("</string>").toRegex(), "")
-                            val pref = getSharedPreferences("MyPrefInsuranceOTP", 0) // 0 - for private mode
+                            val pref = getSharedPreferences(
+                                "MyPrefInsuranceOTP",
+                                0
+                            ) // 0 - for private mode
                             val editor = pref.edit()
                             editor.putString("otp", result)
                             editor.apply()
 
                             Sneaker.with(this@ClaimRegistrationActivityOthers) // Activity, Fragment or ViewGroup
-                                    .setTitle("OTP sent successfully ")
-                                    .sneakSuccess()
-                                val intent = Intent(
-                                    this@ClaimRegistrationActivityOthers,
-                                    ClaimRegistrationActivityOtpScreen::class.java
-                                )
-                            Handler().postDelayed(object:Runnable {
+                                .setTitle("OTP sent successfully ")
+                                .sneakSuccess()
+                            val intent = Intent(
+                                this@ClaimRegistrationActivityOthers,
+                                ClaimRegistrationActivityOtpScreen::class.java
+                            )
+                            Handler().postDelayed(object : Runnable {
                                 public override fun run() {
                                     intent.putExtra("data", callCenter)
                                     startActivity(intent)
@@ -257,7 +262,7 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                 id: Long
             ) {
                 if (position == 0) {
-                    distirctCode=null
+                    distirctCode = null
                     panchyatModel = null
                     spinnerPanchyt?.adapter = panchyatModel
                     villageModel = null
@@ -265,7 +270,7 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                     blockModel = null
                     spinnerBlock?.adapter = blockModel
                     return
-                }else {
+                } else {
 
                     val districtMasterClass =
                         parent?.getItemAtPosition(position) as DistrictMasterClass?
@@ -295,15 +300,16 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long) {
+                id: Long
+            ) {
                 if (position == 0) {
-                    blockCode=null
+                    blockCode = null
                     panchyatModel = null
                     spinnerPanchyt?.adapter = panchyatModel
                     villageModel = null
                     spinnerVillage?.adapter = villageModel
                     return
-                }else {
+                } else {
                     blockModel = parent?.getItemAtPosition(position) as BlockMasterClass?
                     val gson = Gson()
                     Log.d(
@@ -329,9 +335,9 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                 id: Long
             ) {
                 if (position == 0) {
-                    clustercode=null
-                    panchyatModel = null
-                    spinnerPanchyt?.adapter = panchyatModel
+                    clustercode = null
+                    villageModel = null
+                    spinnerVillage?.adapter = villageModel
                     return
                 } else {
                     panchyatModel = parent?.getItemAtPosition(position) as BlockMasterClass?
@@ -397,11 +403,11 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                 id: Long
             ) {
                 if (position == 0) {
-                    villageCode=null
+                    villageCode = null
                     return
-                }else {
-                    val blockMasterClass = parent?.getItemAtPosition(position) as BlockMasterClass?
-                    villageCode = blockMasterClass?.villageCode.toString()
+                } else {
+                    villageModel = parent?.getItemAtPosition(position) as BlockMasterClass?
+                    villageCode = villageModel?.villageCode.toString()
                 }
 
             }

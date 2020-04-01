@@ -417,10 +417,10 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
             ) {
                 if (position == 0) {
                     clustercode=null
-                    panchyatModel = null
-                    spinnerPanchyt?.adapter = panchyatModel
                     shgModel = null
                     spinnerShg?.adapter = shgModel
+                    villageModel=null
+                    spinnerVillage?.adapter=villageModel
                     return
                 } else {
                     panchyatModel = parent?.getItemAtPosition(position) as BlockMasterClass?
