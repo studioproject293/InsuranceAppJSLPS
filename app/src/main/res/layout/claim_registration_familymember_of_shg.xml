@@ -436,6 +436,7 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="5dp"
+                android:visibility="gone"
                 android:text="Type of Insurance"
                 android:textColor="#000"
                 android:textSize="16sp"
@@ -447,6 +448,8 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
+                android:id="@+id/linearlayoutCheckbox"
+                android:visibility="gone"
                 android:weightSum="4">
 
             <CheckBox

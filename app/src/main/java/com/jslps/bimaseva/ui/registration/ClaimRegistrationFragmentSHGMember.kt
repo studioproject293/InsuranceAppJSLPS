@@ -29,6 +29,7 @@ import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.R
 import com.jslps.bimaseva.activity.MainActivity
 import com.jslps.bimaseva.adapter.CustomDropDownAdapter
+import com.jslps.bimaseva.cache.AppCache
 import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.blockModel.BlockMasterClass
 import com.jslps.bimaseva.model.blockModel.BlockModelClass
@@ -169,11 +170,11 @@ class ClaimRegistrationFragmentSHGMember : BaseFragment() {
                 Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
                     .setTitle("Please enter date")
                     .sneakError()
-            } else if (list.size == 0) {
+            } /*else if (list.size == 0) {
                 Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
                     .setTitle("Please select type of insurance")
                     .sneakError()
-            } else if (nameofcaller?.text.toString().isEmpty()) {
+            }*/ else if (nameofcaller?.text.toString().isEmpty()) {
                 Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
                     .setTitle("Please enter name of caller")
                     .sneakError()
@@ -200,7 +201,7 @@ class ClaimRegistrationFragmentSHGMember : BaseFragment() {
                     bankCode.toString(),
                     branchCode.toString(),
                     datePicker?.text.toString(),
-                    s, "",
+                    AppCache.getCache().schemeID.toString(), "",
                     mobileofcaller?.text.toString(),
                     nameofcaller?.text.toString(),
                     id,
@@ -209,7 +210,7 @@ class ClaimRegistrationFragmentSHGMember : BaseFragment() {
                     "0"
                 )
                 val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(callCenter) + "] } "
-                if (DialogUtil.isConnectionAvailable(activity!!)) {
+                /*if (DialogUtil.isConnectionAvailable(activity!!)) {
                     DialogUtil.displayProgress(activity!!)
                     val gson = GsonBuilder().setLenient().create()
                     val interceptor = HttpLoggingInterceptor()
@@ -275,7 +276,7 @@ class ClaimRegistrationFragmentSHGMember : BaseFragment() {
                     Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
                         .setTitle(Constant.NO_INTERNET)
                         .sneakError()
-                }
+                }*/
             }
         }
         datePicker?.setOnClickListener {

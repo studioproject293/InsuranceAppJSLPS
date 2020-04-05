@@ -3,7 +3,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +26,6 @@
                     android:textColor="#000"
                     android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
-
 
         <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -171,7 +169,6 @@
                     android:textSize="12sp" />
         </FrameLayout>
 
-
         <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
@@ -205,7 +202,6 @@
                     android:textColor="#000"
                     android:textSize="12sp" />
         </FrameLayout>
-
 
         <FrameLayout
                 android:layout_width="match_parent"
@@ -364,6 +360,7 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="5dp"
+                android:visibility="gone"
                 android:text="Type of Insurance"
                 android:textColor="#000"
                 android:textSize="16sp"
@@ -375,6 +372,8 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
+                android:id="@+id/linearlayoutCheckbox"
+                android:visibility="gone"
                 android:weightSum="4">
 
             <CheckBox

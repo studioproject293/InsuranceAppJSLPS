@@ -8,12 +8,9 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
-import android.util.Log
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.irozon.sneaker.Sneaker
 import com.jslps.bimaseva.Constant
@@ -25,7 +22,6 @@ import com.jslps.bimaseva.model.blockModel.BlockModelClass
 import com.jslps.bimaseva.model.districtModel.DistirctModelClass
 import com.jslps.bimaseva.model.districtModel.DistrictMasterClass
 import com.jslps.bimaseva.network.DistrictBlockClusterAndOtherGetList
-import com.jslps.bimaseva.network.InsuranceCreate
 import com.jslps.bimaseva.network.InsuranceCreateOTP
 import kotlinx.android.synthetic.main.claim_registration_shg.*
 import okhttp3.OkHttpClient
@@ -44,13 +40,12 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
     var contactnoofnominee: TextInputEditText? = null
     var nameofcaller: TextInputEditText? = null
     var mobileofcaller: TextInputEditText? = null
-    var sppiner_district: Spinner? = null
-    var spinnerPanchyt: Spinner? = null
-    var spinnerBlock: Spinner? = null
-    var spinnerVillage: Spinner? = null
-    var spinnerBank: Spinner? = null
-    var spinnerBranch: Spinner? = null
-    var spinnerShg: Spinner? = null
+    var sppiner_district: AutoCompleteTextView? = null
+    var spinnerPanchyt: AutoCompleteTextView? = null
+    var spinnerBlock: AutoCompleteTextView? = null
+    var spinnerVillage: AutoCompleteTextView? = null
+    var spinnerBank: AutoCompleteTextView? = null
+    var spinnerBranch: AutoCompleteTextView? = null
     var datePicker: TextView? = null
     var cal = Calendar.getInstance()
     var clustercode: String? = null
@@ -69,11 +64,15 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
     var panchyatModel: BlockMasterClass? = null
     var villageModel: BlockMasterClass? = null
     var blockModel: BlockMasterClass? = null
+    var autotextView: AutoCompleteTextView? = null
     internal var preferences: SharedPreferences? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.claim_registration_others)
+        setContentView(R.layout.claim_registration_others_new)
         setId()
+
+        val intent = intent
+        val schemeID = intent.getStringExtra("schemeID")
         supportActionBar?.title = "Other Claim Registration";
         buttonSave = findViewById(R.id.buttonSave)
         buttonSave?.setOnClickListener {
@@ -146,11 +145,11 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                 Sneaker.with(this@ClaimRegistrationActivityOthers) // Activity, Fragment or ViewGroup
                     .setTitle("Please enter date")
                     .sneakError()
-            } else if (list.size == 0) {
+            } /*else if (list.size == 0) {
                 Sneaker.with(this@ClaimRegistrationActivityOthers) // Activity, Fragment or ViewGroup
                     .setTitle("Please select type of insurance")
                     .sneakError()
-            } else if (nameofcaller?.text.toString().isEmpty()) {
+            }*/ else if (nameofcaller?.text.toString().isEmpty()) {
                 Sneaker.with(this@ClaimRegistrationActivityOthers) // Activity, Fragment or ViewGroup
                     .setTitle("Please enter name of caller")
                     .sneakError()
@@ -173,7 +172,7 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                     bankCode.toString(),
                     branchCode.toString(),
                     datePicker?.text.toString(),
-                    s, "",
+                    schemeID, "",
                     mobileofcaller?.text.toString(),
                     nameofcaller?.text.toString(),
                     id,
@@ -247,174 +246,68 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                 }
             }
         }
+        sppiner_district?.isEnabled = false
+        spinnerPanchyt?.isEnabled = false
+        spinnerVillage?.isEnabled = false
+        spinnerBlock?.isEnabled = false
+        spinnerBank?.isEnabled = false
+        spinnerBranch?.isEnabled = false
+
 
         getDistrict()
+        sppiner_district?.setOnItemClickListener() { parent, _, position, id ->
+            val selectedPoi = parent.adapter.getItem(position) as BlockMasterClass?
+            distirctCode = selectedPoi?.districtCode
+            sppiner_district?.setText(selectedPoi?.districtName)
+            spinnerBlock?.clearFocus()
+            spinnerBlock?.setText("")
+            spinnerPanchyt?.clearFocus()
+            spinnerPanchyt?.setText("")
+            spinnerVillage?.clearFocus()
+            spinnerVillage?.setText("")
+            getBlockData(distirctCode.toString())
+        }
+        spinnerBlock?.setOnItemClickListener() { parent, _, position, id ->
+            val selectedPoi = parent.getItemAtPosition(position) as BlockMasterClass?
+            blockCode = selectedPoi?.blockCode
+            spinnerBlock?.setText(selectedPoi?.blockName)
+            spinnerPanchyt?.clearFocus()
+            spinnerPanchyt?.setText("")
+            spinnerVillage?.clearFocus()
+            spinnerVillage?.setText("")
+            getClusterDataList(blockCode.toString())
+
+        }
+        spinnerBank?.setOnItemClickListener() { parent, _, position, id ->
+            val selectedPoi = parent.adapter.getItem(position) as BlockMasterClass?
+            bankCode = selectedPoi?.bankCode
+            spinnerBank?.setText(selectedPoi?.bankName)
+            spinnerBranch?.clearFocus()
+            spinnerBranch?.setText("")
+            getBranchDataList(bankCode.toString())
+        }
+        spinnerBranch?.setOnItemClickListener() { parent, _, position, id ->
+            val selectedPoi = parent.adapter.getItem(position) as BlockMasterClass?
+            branchCode = selectedPoi?.branchCode
+            spinnerBranch?.setText(selectedPoi?.branchName)
+
+        }
+        spinnerVillage?.setOnItemClickListener() { parent, _, position, id ->
+            val selectedPoi = parent.adapter.getItem(position) as BlockMasterClass?
+            villageCode = selectedPoi?.villageCode
+            spinnerVillage?.setText(selectedPoi?.villageName)
+        }
+        spinnerPanchyt?.setOnItemClickListener() { parent, _, position, id ->
+            val selectedPoi = parent.adapter.getItem(position) as BlockMasterClass?
+            clustercode = selectedPoi?.clusterCode
+            spinnerPanchyt?.setText(selectedPoi?.clusterName)
+            spinnerVillage?.clearFocus()
+            spinnerVillage?.setText("")
+            getVillageDataList(clustercode.toString())
+
+        }
         getBankList()
-        sppiner_district?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0) {
-                    distirctCode = null
-                    panchyatModel = null
-                    spinnerPanchyt?.adapter = panchyatModel
-                    villageModel = null
-                    spinnerVillage?.adapter = villageModel
-                    blockModel = null
-                    spinnerBlock?.adapter = blockModel
-                    return
-                } else {
-
-                    val districtMasterClass =
-                        parent?.getItemAtPosition(position) as DistrictMasterClass?
-                    val gson = Gson()
-                    Log.d(
-                        "fddgsgs",
-                        "Body of Update product" + gson.toJson(districtMasterClass)
-                    )
-                    distirctCode = districtMasterClass?.districtCode.toString()
-                    getBlockData(districtMasterClass?.districtCode.toString())
-                    panchyatModel = null
-                    spinnerPanchyt?.adapter = panchyatModel
-                    villageModel = null
-                    spinnerVillage?.adapter = villageModel
-
-                }
-            }
-
-        }
-
-        spinnerBlock?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0) {
-                    blockCode = null
-                    panchyatModel = null
-                    spinnerPanchyt?.adapter = panchyatModel
-                    villageModel = null
-                    spinnerVillage?.adapter = villageModel
-                    return
-                } else {
-                    blockModel = parent?.getItemAtPosition(position) as BlockMasterClass?
-                    val gson = Gson()
-                    Log.d(
-                        "fddgsgs",
-                        "Body of Update product" + gson.toJson(blockModel)
-                    )
-                    blockCode = blockModel?.blockCode.toString()
-                    getClusterDataList(blockModel?.blockCode.toString())
-
-                }
-            }
-
-        }
-        spinnerPanchyt?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0) {
-                    clustercode = null
-                    villageModel = null
-                    spinnerVillage?.adapter = villageModel
-                    return
-                } else {
-                    panchyatModel = parent?.getItemAtPosition(position) as BlockMasterClass?
-                    clustercode = panchyatModel?.clusterCode
-                    getVillageDataList(panchyatModel?.clusterCode.toString())
-                }
-
-            }
-
-        }
-        spinnerBank?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0)
-                    return
-                else {
-                    val districtMasterClass =
-                        parent?.getItemAtPosition(position) as BlockMasterClass
-                    bankCode = districtMasterClass.bankCode
-                    getBranchDataList(districtMasterClass.bankCode)
-                }
-            }
-
-        }
-        spinnerBranch?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0)
-                    return
-                else {
-                    val districtMasterClass =
-                        parent?.getItemAtPosition(position) as BlockMasterClass
-                    branchCode = districtMasterClass.branchCode
-                }
-            }
-
-        }
-        spinnerVillage?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0) {
-                    villageCode = null
-                    return
-                } else {
-                    villageModel = parent?.getItemAtPosition(position) as BlockMasterClass?
-                    villageCode = villageModel?.villageCode.toString()
-                }
-
-            }
-
-        }
         datePicker?.setOnClickListener {
-
             datePickerStrt()
         }
     }
@@ -444,14 +337,19 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                     call: Call<String>,
                     response: Response<String>
                 ) {
-//                    DialogUtil.stopProgressDisplay()
+                    DialogUtil.stopProgressDisplay()
                     val fullResponse = response.body()
                     val XmlString =
                         fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                     val result = XmlString?.replace(("</string>").toRegex(), "")
                     val mStudentObject1 =
-                        gson.fromJson(result, DistirctModelClass::class.java)
-                    updateSppinerDistrict(mStudentObject1.master)
+                        gson.fromJson(result, BlockModelClass::class.java)
+                    sppiner_district?.isEnabled=true
+                    updateSppinerDistrict(mStudentObject1.master, "district")
+
+                    /* val adapter = ArrayAdapter(this@ClaimRegistrationActivityOthers,
+                         android.R.layout.simple_list_item_1, mStudentObject1.master)*/
+
 
                 }
 
@@ -501,7 +399,8 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                     val result = XmlString?.replace(("</string>").toRegex(), "")
                     val mStudentObject1 =
                         gson.fromJson(result, BlockModelClass::class.java)
-                    updateSppinerBlock(mStudentObject1.master, "bank")
+                    spinnerBank?.isEnabled=true
+                    updateSppinerDistrict(mStudentObject1.master, "bank")
 
                 }
 
@@ -551,7 +450,8 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                     val result = XmlString?.replace(("</string>").toRegex(), "")
                     val mStudentObject1 =
                         gson.fromJson(result, BlockModelClass::class.java)
-                    updateSppinerBlock(mStudentObject1.master, "branch")
+                    spinnerBranch?.isEnabled=true
+                    updateSppinerDistrict(mStudentObject1.master, "branch")
 
                 }
 
@@ -601,7 +501,8 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                     val result = XmlString?.replace(("</string>").toRegex(), "")
                     val mStudentObject1 =
                         gson.fromJson(result, BlockModelClass::class.java)
-                    updateSppinerBlock(mStudentObject1.master, "block")
+                    spinnerBlock?.isEnabled=true
+                    updateSppinerDistrict(mStudentObject1.master, "block")
 
                 }
 
@@ -651,7 +552,8 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                     val result = XmlString?.replace(("</string>").toRegex(), "")
                     val mStudentObject1 =
                         gson.fromJson(result, BlockModelClass::class.java)
-                    updateSppinerBlock(mStudentObject1.master, "cluster")
+                    spinnerPanchyt?.isEnabled=true
+                    updateSppinerDistrict(mStudentObject1.master, "cluster")
 
                 }
 
@@ -701,7 +603,8 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                     val result = XmlString?.replace(("</string>").toRegex(), "")
                     val mStudentObject1 =
                         gson.fromJson(result, BlockModelClass::class.java)
-                    updateSppinerBlock(mStudentObject1.master, "village")
+                    spinnerVillage?.isEnabled=true
+                    updateSppinerDistrict(mStudentObject1.master, "village")
 
                 }
 
@@ -719,59 +622,82 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
         }
     }
 
+    private fun updateSppinerDistrict(master: ArrayList<BlockMasterClass>, value: String) {
+        val adapter1 = PoiAdapte(this, R.layout.spiner_row, master, value)
+        when (value) {
+            "district" -> {
+                sppiner_district?.setAdapter(adapter1)
+                sppiner_district?.threshold = 1
+            }
+            "block" -> {
+                spinnerBlock?.setAdapter(adapter1)
+                spinnerBlock?.threshold = 1
+            }
+            "cluster" -> {
+                spinnerPanchyt?.setAdapter(adapter1)
+                spinnerPanchyt?.threshold = 1
+            }
+            "village" -> {
+                spinnerVillage?.setAdapter(adapter1)
+                spinnerVillage?.threshold = 1
+            }
 
-    private fun updateSppinerDistrict(master: ArrayList<DistrictMasterClass>) {
-        master.add(0, DistrictMasterClass("", "All District", ""))
-        val adapter = CustomDropDownAdapter(
-            this, "district", master
-        )
-        sppiner_district?.adapter = adapter
+            "bank" -> {
+                spinnerBank?.setAdapter(adapter1)
+                spinnerBank?.threshold = 1
+            }
+            "branch" -> {
+                spinnerBranch?.setAdapter(adapter1)
+                spinnerBranch?.threshold = 1
+            }
+        }
+
     }
 
-    private fun updateSppinerBlock(master: ArrayList<BlockMasterClass>, dataType: String) {
+    /* private fun updateSppinerBlock(master: ArrayList<BlockMasterClass>, dataType: String) {
 
-        when (dataType) {
-            "block" -> {
-                master.add(
-                    0, BlockMasterClass(
-                        "", "", "All Block", "", "",
-                        "", "", "", "", "",
-                        "", "", "", "", "", "", "",
-                        "", "", "", ""
-                    )
-                )
-                val adapter = CustomDropDownAdapter(
-                    this, dataType, master
-                )
-                spinnerBlock?.adapter = adapter
-            }
+         when (dataType) {
+             "block" -> {
+                 master.add(
+                     0, BlockMasterClass(
+                         "", "", "All Block", "", "",
+                         "", "", "", "", "",
+                         "", "", "", "", "", "", "",
+                         "", "", "", ""
+                     )
+                 )
+                 val adapter = CustomDropDownAdapter(
+                     this, dataType, master
+                 )
+                 spinnerBlock?.adapter = adapter
+             }
 
-            "cluster" -> {
-                master.add(
-                    0, BlockMasterClass(
-                        "", "", "", "", "",
-                        "All Panchayat", "", "", "", "",
-                        "", "", "", "", "", "", "",
-                        "", "", "", ""
-                    )
-                )
+             "cluster" -> {
+                 master.add(
+                     0, BlockMasterClass(
+                         "", "", "", "", "",
+                         "All Panchayat", "", "", "", "",
+                         "", "", "", "", "", "", "",
+                         "", "", "", ""
+                     )
+                 )
 
-                val adapter = CustomDropDownAdapter(
-                    this, dataType, master
-                )
-                spinnerPanchyt?.adapter = adapter
-            }
+                 val adapter = CustomDropDownAdapter(
+                     this, dataType, master
+                 )
+                 spinnerPanchyt?.adapter = adapter
+             }
 
-            "village" -> {
-                master.add(
-                    0, BlockMasterClass(
-                        "", "", "", "", "",
-                        "", "", "", "All Village", "",
-                        "", "", "", "", "", "", "",
-                        "", "", "", ""
-                    )
-                )
-                /*  master.get(0).villageName = "All Village"*/
+             "village" -> {
+                 master.add(
+                     0, BlockMasterClass(
+                         "", "", "", "", "",
+                         "", "", "", "All Village", "",
+                         "", "", "", "", "", "", "",
+                         "", "", "", ""
+                     )
+                 )
+                 *//*  master.get(0).villageName = "All Village"*//*
                 val adapter = CustomDropDownAdapter(
                     this, dataType, master
                 )
@@ -801,7 +727,7 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                         "", "", "", "All Branch", ""
                     )
                 )
-                /*  master.get(0).branchName = "All Branch"*/
+                *//*  master.get(0).branchName = "All Branch"*//*
                 val adapter = CustomDropDownAdapter(
                     this, dataType, master
                 )
@@ -809,7 +735,7 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
             }
         }
 
-    }
+    }*/
 
     private fun setId() {
         nameOfnomminee = findViewById(R.id.nameOfnomminee)
@@ -823,12 +749,12 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
         checkBox2 = findViewById(R.id.checkBox2)
         checkBox3 = findViewById(R.id.checkBox3)
         checkBox4 = findViewById(R.id.checkBox4)
-        sppiner_district = findViewById<Spinner>(R.id.sppiner_district)
-        spinnerPanchyt = findViewById<Spinner>(R.id.spinner_panchayt)
-        spinnerVillage = findViewById<Spinner>(R.id.spinner_village)
-        spinnerBank = findViewById<Spinner>(R.id.sppiner_bank)
-        spinnerBlock = findViewById<Spinner>(R.id.spinner_block)
-        spinnerBranch = findViewById<Spinner>(R.id.sppiner_branch)
+        sppiner_district = findViewById<AutoCompleteTextView>(R.id.sppiner_district)
+        spinnerPanchyt = findViewById<AutoCompleteTextView>(R.id.spinner_panchayt)
+        spinnerVillage = findViewById<AutoCompleteTextView>(R.id.spinner_village)
+        spinnerBank = findViewById<AutoCompleteTextView>(R.id.sppiner_bank)
+        spinnerBlock = findViewById<AutoCompleteTextView>(R.id.spinner_block)
+        spinnerBranch = findViewById<AutoCompleteTextView>(R.id.sppiner_branch)
 
     }
 

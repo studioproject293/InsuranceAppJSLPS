@@ -23,5 +23,7 @@ data class BlockMasterClass (
     @SerializedName("ActLenght") var actLenght : String,
     @SerializedName("BranchCode") var branchCode : String,
     @SerializedName("BranchName") var branchName : String,
-    @SerializedName("BranchName_Hindi") var branchName_Hindi : String
+    @SerializedName("BranchName_Hindi") var branchName_Hindi : String,
+    @SerializedName("DistrictName") var districtName : String,
+    @SerializedName("DistrictName_H") var DistrictName_H: String
 )

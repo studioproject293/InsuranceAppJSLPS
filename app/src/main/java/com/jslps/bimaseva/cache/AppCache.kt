@@ -11,6 +11,7 @@ class AppCache {
     var insuranceStep: String? = null
     var insuranceOtp: String? = null
     var insuranceStepSend: String? = null
+    var schemeID: String? = null
 
     companion object {
         private var cache: AppCache? = null

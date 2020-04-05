@@ -39,9 +39,12 @@
                 android:theme="@style/AppThemeNoActionBar" />
         <activity android:name=".activity.WelcomeActivityNewNext" />
         <activity android:name=".activity.ClaimRegistrationActivity" />
-        <activity android:name=".activity.ClaimRegistrationActivitySHGMember" />
-        <activity android:name=".activity.ClaimRegistrationActivityFamilySHGMember" />
-        <activity android:name=".activity.ClaimRegistrationActivityOthers" />
+        <activity android:name=".activity.ClaimRegistrationActivitySHGMember"
+                android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activity.ClaimRegistrationActivityFamilySHGMember"
+                android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activity.ClaimRegistrationActivityOthers"
+                android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.ClaimRegistrationActivityOtpScreen" />
 
         <meta-data

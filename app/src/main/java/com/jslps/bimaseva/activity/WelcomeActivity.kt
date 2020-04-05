@@ -82,6 +82,10 @@ class WelcomeActivity : AppCompatActivity() {
     private var imagerightarrow: ImageView? = null
     private var runningThread = true
     var dotsIndicator: DotsIndicator? = null
+    override fun onResume() {
+        super.onResume()
+        forceUpdate()
+    }
     internal var viewPagerPageChangeListener: ViewPager.OnPageChangeListener =
         object : ViewPager.OnPageChangeListener {
 
@@ -114,7 +118,7 @@ class WelcomeActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.activity_welcome_new_designe)
-
+        forceUpdate()
 
         viewPager = findViewById(R.id.view_pager)
         recyclerviewreports = findViewById(R.id.recyclerviewreports)

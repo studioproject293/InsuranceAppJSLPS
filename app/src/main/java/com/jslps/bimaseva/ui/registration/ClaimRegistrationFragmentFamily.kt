@@ -29,6 +29,7 @@ import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.R
 import com.jslps.bimaseva.activity.MainActivity
 import com.jslps.bimaseva.adapter.CustomDropDownAdapter
+import com.jslps.bimaseva.cache.AppCache
 import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.blockModel.BlockMasterClass
 import com.jslps.bimaseva.model.blockModel.BlockModelClass
@@ -172,11 +173,11 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
                 Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
                     .setTitle("Please enter date")
                     .sneakError()
-            } else if (list.size == 0) {
+            } /*else if (list.size == 0) {
                 Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
                     .setTitle("Please select type of insurance")
                     .sneakError()
-            } else if (nameofcaller?.text.toString().isEmpty()) {
+            }*/ else if (nameofcaller?.text.toString().isEmpty()) {
                 Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
                     .setTitle("Please enter name of caller")
                     .sneakError()
@@ -209,7 +210,7 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
                     bankCode.toString(),
                     branchCode.toString(),
                     datePicker?.text.toString(),
-                    s, "",
+                    AppCache.getCache().schemeID.toString(), "",
                     mobileofcaller?.text.toString(),
                     nameofcaller?.text.toString(),
                     id,
@@ -903,7 +904,7 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
     }
     private fun updateSppinerBlock(master: ArrayList<BlockMasterClass>, dataType: String) {
 
-        when (dataType) {
+      /*  when (dataType) {
             "block" -> {
                 master.add(0, BlockMasterClass("","","All Block", "","",
                     "","","","","",
@@ -932,7 +933,7 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
                     "","","","All Village","",
                     "","","","","","","",
                     "","","",""))
-              /*  master.get(0).villageName = "All Village"*/
+              *//*  master.get(0).villageName = "All Village"*//*
                 val adapter = CustomDropDownAdapter(
                     activity!!, dataType, master
                 )
@@ -953,7 +954,7 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
                     "","","","",
                     "","","","","","","All Bank",
                     "","","","",""))
-               /* master.get(0).bankName = "All Bank"*/
+               *//* master.get(0).bankName = "All Bank"*//*
                 val adapter = CustomDropDownAdapter(
                     activity!!, dataType, master
                 )
@@ -964,13 +965,13 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
                     "","","","",
                     "","","","","","","",
                     "","","","All Branch",""))
-              /*  master.get(0).branchName = "All Branch"*/
+              *//*  master.get(0).branchName = "All Branch"*//*
                 val adapter = CustomDropDownAdapter(
                     activity!!, dataType, master
                 )
                 sppiner_branch?.adapter = adapter
             }
-        }
+        }*/
 
     }
 

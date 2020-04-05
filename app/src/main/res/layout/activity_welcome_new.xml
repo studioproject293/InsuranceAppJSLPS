@@ -25,7 +25,7 @@
             android:paddingTop="10dp"
             android:paddingRight="20dp"
             android:text="स्वयं सहायता समूह सदस्यों एवं अन्य बीमित व्यक्तियों के बीमा दावा निपटारे
-हेतु मोबाईल एप्लीकेषन"
+हेतु मोबाईल एप्लीकेशन"
             android:textColor="#000"
             android:textSize="20sp"
             android:textStyle="bold" />

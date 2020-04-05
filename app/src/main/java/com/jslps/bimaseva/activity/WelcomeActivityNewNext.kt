@@ -52,9 +52,9 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                 block?.visibility = View.GONE
                 bank?.visibility = View.GONE
                 district?.visibility = View.VISIBLE
-                frameLayout?.visibility = View.GONE
+                frameLayout?.visibility = View.VISIBLE
                 supportActionBar?.title = "District Wise Report";
-                if (name.equals("Insurance2")) {
+                /*if (name.equals("Insurance2")) {
                     if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
                         DialogUtil.displayProgress(this@WelcomeActivityNewNext)
                         val gson = GsonBuilder().setLenient().create()
@@ -111,7 +111,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                             .setTitle(Constant.NO_INTERNET)
                             .sneakError()
                     }
-                }
+                }*/
             }
             name.equals("Insurance1") -> {
                 branch?.visibility = View.VISIBLE
@@ -128,9 +128,9 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                 bank?.visibility = View.VISIBLE
                 block?.visibility = View.GONE
                 district?.visibility = View.GONE
-                frameLayout?.visibility = View.GONE
+                frameLayout?.visibility = View.VISIBLE
                 supportActionBar?.title = "Bank Wise Report";
-                if (name.equals("Insurance3")) {
+                /*if (name.equals("Insurance3")) {
                     if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
                         DialogUtil.displayProgress(this@WelcomeActivityNewNext)
                         val gson = GsonBuilder().setLenient().create()
@@ -187,7 +187,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                             .setTitle(Constant.NO_INTERNET)
                             .sneakError()
                     }
-                }
+                }*/
             }
             /* name.equals("Insurance4") -> {
                  branch?.visibility = View.GONE
@@ -222,7 +222,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                 view: View, position: Int, id: Long) {
                 when (position) {
                     0 -> {
-                        if (name.equals("Insurance1")) {
+
                             if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
                                 DialogUtil.displayProgress(this@WelcomeActivityNewNext)
                                 val gson = GsonBuilder().setLenient().create()
@@ -245,8 +245,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                                     override fun onResponse(
                                         call: Call<String>,
-                                        response: Response<String>
-                                    ) {
+                                        response: Response<String>) {
                                         DialogUtil.stopProgressDisplay()
                                         val gson = Gson()
                                         val fullResponse = response.body()
@@ -280,71 +279,73 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                                     .sneakError()
                             }
                         }
-                    }
+
                     1 -> {
                         schemeId = "1"
-                        if (name.equals("Insurance1")) {
-                            if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
-                                DialogUtil.displayProgress(this@WelcomeActivityNewNext)
-                                val gson = GsonBuilder().setLenient().create()
-                                val interceptor = HttpLoggingInterceptor()
-                                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                                val builder = OkHttpClient.Builder()
-                                //comment in live build and uncomment in uat
-                                builder.interceptors().add(interceptor)
-                                builder.connectTimeout(250, TimeUnit.SECONDS)
-                                builder.readTimeout(250, TimeUnit.SECONDS)
-                                val client = builder.build()
-                                val retrofit =
-                                    Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
-                                        .addConverterFactory(
-                                            ScalarsConverterFactory.create()
-                                        ).client(client).build()
-                                val apiServices = retrofit.create(ReportsEntryService::class.java)
-                                val changePhotoResponseModelCall =
-                                    apiServices.getReportsEntryService("Insurance1",schemeId.toString())
-                                changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                                    override fun onResponse(
-                                        call: Call<String>,
-                                        response: Response<String>
-                                    ) {
-                                        DialogUtil.stopProgressDisplay()
-                                        val gson = Gson()
-                                        val fullResponse = response.body()
-                                        val XmlString =
-                                            fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                                        val result = XmlString?.replace(("</string>").toRegex(), "")
-                                        val mStudentObject1 =
-                                            gson.fromJson(result, BaseClassReports::class.java)
-                                        System.out.println("vvh" + gson.toJson(mStudentObject1))
-                                        val benifisheryRowRecyclerviewAdapter =
-                                            EntryReportsRecyclerviewAdapter(
-                                                this@WelcomeActivityNewNext,
-                                                mStudentObject1.master as ArrayList<MasterReports>,
-                                                name
-                                            )
-                                        recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
 
-                                    }
+                        if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
+                            DialogUtil.displayProgress(this@WelcomeActivityNewNext)
+                            val gson = GsonBuilder().setLenient().create()
+                            val interceptor = HttpLoggingInterceptor()
+                            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+                            val builder = OkHttpClient.Builder()
+                            //comment in live build and uncomment in uat
+                            builder.interceptors().add(interceptor)
+                            builder.connectTimeout(250, TimeUnit.SECONDS)
+                            builder.readTimeout(250, TimeUnit.SECONDS)
+                            val client = builder.build()
+                            val retrofit =
+                                Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
+                                    .addConverterFactory(
+                                        ScalarsConverterFactory.create()
+                                    ).client(client).build()
+                            val apiServices = retrofit.create(ReportsEntryService::class.java)
+                            val changePhotoResponseModelCall =
+                                apiServices.getReportsEntryService(
+                                    "Insurance1",
+                                    schemeId.toString()
+                                )
+                            changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                override fun onResponse(
+                                    call: Call<String>,
+                                    response: Response<String>
+                                ) {
+                                    DialogUtil.stopProgressDisplay()
+                                    val gson = Gson()
+                                    val fullResponse = response.body()
+                                    val XmlString =
+                                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                    val result = XmlString?.replace(("</string>").toRegex(), "")
+                                    val mStudentObject1 =
+                                        gson.fromJson(result, BaseClassReports::class.java)
+                                    System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                    val benifisheryRowRecyclerviewAdapter =
+                                        EntryReportsRecyclerviewAdapter(
+                                            this@WelcomeActivityNewNext,
+                                            mStudentObject1.master as ArrayList<MasterReports>,
+                                            name
+                                        )
+                                    recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
 
-                                    override fun onFailure(call: Call<String>, t: Throwable) {
-                                        DialogUtil.stopProgressDisplay()
-                                        Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                            .setTitle("Server error,Please Try Again")
-                                            .sneakError()
-                                    }
-                                })
-                            } else {
+                                }
 
-                                Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                    .setTitle(Constant.NO_INTERNET)
-                                    .sneakError()
-                            }
+                                override fun onFailure(call: Call<String>, t: Throwable) {
+                                    DialogUtil.stopProgressDisplay()
+                                    Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                        .setTitle("Server error,Please Try Again")
+                                        .sneakError()
+                                }
+                            })
+                        } else {
+
+                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                .setTitle(Constant.NO_INTERNET)
+                                .sneakError()
                         }
                     }
                     2 -> {
                         schemeId = "2"
-                        if (name.equals("Insurance1")) {
+
                             if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
                                 DialogUtil.displayProgress(this@WelcomeActivityNewNext)
                                 val gson = GsonBuilder().setLenient().create()
@@ -401,11 +402,11 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                                     .setTitle(Constant.NO_INTERNET)
                                     .sneakError()
                             }
-                        }
+
                     }
                     3 -> {
                         schemeId = "3"
-                        if (name.equals("Insurance1")) {
+
                             if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
                                 DialogUtil.displayProgress(this@WelcomeActivityNewNext)
                                 val gson = GsonBuilder().setLenient().create()
@@ -462,11 +463,11 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                                     .setTitle(Constant.NO_INTERNET)
                                     .sneakError()
                             }
-                        }
+
                     }
                     4 -> {
                         schemeId = "4"
-                        if (name.equals("Insurance1")) {
+
                             if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
                                 DialogUtil.displayProgress(this@WelcomeActivityNewNext)
                                 val gson = GsonBuilder().setLenient().create()
@@ -518,12 +519,11 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                                     }
                                 })
                             } else {
-
                                 Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
                                     .setTitle(Constant.NO_INTERNET)
                                     .sneakError()
                             }
-                        }
+
                     }
                 }
             }
