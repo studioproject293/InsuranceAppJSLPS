@@ -134,176 +134,103 @@
                     android:textColor="#000"
                     android:textSize="12sp" />
         </FrameLayout>
-
-        <FrameLayout
+        <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Please Select Panchyat"
+                android:textColorHint="#000">
 
-            <FrameLayout
+            <AutoCompleteTextView
+                    android:id="@+id/spinner_panchayt"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/drawable_spinner_border">
-
-                <Spinner
-                        android:id="@+id/spinner_panchayt"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:backgroundTint="#000"
-                        android:spinnerMode="dropdown"
-                        android:textSize="12sp" />
-            </FrameLayout>
-
-            <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="#FFFFFF"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
-                    android:text="Select Panchayat"
+                    android:singleLine="true"
+                    android:inputType="textCapWords"
+                    android:padding="15dp"
+                    android:maxLength="40"
                     android:textColor="#000"
-                    android:textSize="12sp" />
-        </FrameLayout>
-
-        <FrameLayout
+                    android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Please Select Village"
+                android:textColorHint="#000">
 
-            <FrameLayout
+            <AutoCompleteTextView
+                    android:id="@+id/spinner_village"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/drawable_spinner_border">
-
-                <Spinner
-                        android:id="@+id/spinner_village"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:backgroundTint="#000"
-                        android:spinnerMode="dropdown"
-                        android:textSize="12sp" />
-            </FrameLayout>
-
-            <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="#FFFFFF"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
-                    android:text="Select Village"
+                    android:singleLine="true"
+                    android:inputType="textCapWords"
+                    android:padding="15dp"
+                    android:maxLength="40"
                     android:textColor="#000"
-                    android:textSize="12sp" />
-        </FrameLayout>
-
-        <FrameLayout
+                    android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Please Select SHG"
+                android:textColorHint="#000">
 
-            <FrameLayout
+            <AutoCompleteTextView
+                    android:id="@+id/sppiner_shg"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/drawable_spinner_border">
-
-                <Spinner
-                        android:id="@+id/sppiner_shg"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:backgroundTint="#000"
-                        android:spinnerMode="dropdown"
-                        android:textSize="12sp" />
-            </FrameLayout>
-
-            <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="#FFFFFF"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
-                    android:text="Select SHG"
+                    android:singleLine="true"
+                    android:inputType="textCapWords"
+                    android:padding="15dp"
+                    android:maxLength="40"
                     android:textColor="#000"
-                    android:textSize="12sp" />
-        </FrameLayout>
-
-        <FrameLayout
+                    android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Please Select Bank"
+                android:textColorHint="#000">
 
-            <FrameLayout
+            <AutoCompleteTextView
+                    android:id="@+id/sppiner_bank"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/drawable_spinner_border">
-
-                <Spinner
-                        android:id="@+id/sppiner_bank"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:backgroundTint="#000"
-                        android:spinnerMode="dropdown"
-                        android:textSize="12sp" />
-            </FrameLayout>
-
-            <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="#FFFFFF"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
-                    android:text="Select Bank"
+                    android:singleLine="true"
+                    android:inputType="textCapWords"
+                    android:padding="15dp"
+                    android:maxLength="40"
                     android:textColor="#000"
-                    android:textSize="12sp" />
-        </FrameLayout>
-
-        <FrameLayout
+                    android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Please Select Branch"
+                android:textColorHint="#000">
 
-            <FrameLayout
+            <AutoCompleteTextView
+                    android:id="@+id/sppiner_branch"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/drawable_spinner_border">
-
-                <Spinner
-                        android:id="@+id/sppiner_branch"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:backgroundTint="#000"
-                        android:spinnerMode="dropdown"
-                        android:textSize="12sp" />
-            </FrameLayout>
-
-            <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="#FFFFFF"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
-                    android:text="Select Branch"
+                    android:singleLine="true"
+                    android:inputType="textCapWords"
+                    android:padding="15dp"
+                    android:maxLength="40"
                     android:textColor="#000"
-                    android:textSize="12sp" />
-        </FrameLayout>
+                    android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
 
         <FrameLayout
                 android:layout_width="match_parent"

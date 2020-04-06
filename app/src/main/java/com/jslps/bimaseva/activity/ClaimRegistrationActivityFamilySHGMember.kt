@@ -70,7 +70,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
     var blockModel: BlockMasterClass? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.claim_registration_familymember_of_shg_new)
+        setContentView(R.layout.claim_registration_familymember_of_shg)
         setId()
         val intent = intent
         val schemeID = intent.getStringExtra("schemeID")

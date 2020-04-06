@@ -15,7 +15,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,9 +37,9 @@ import com.jslps.bimaseva.model.districtModel.DistrictMasterClass
 import com.jslps.bimaseva.network.DistrictBlockClusterAndOtherGetList
 import com.jslps.bimaseva.network.InsuranceCreate
 import com.jslps.bimaseva.ui.BaseFragment
+import com.jslps.bimaseva.ui.registration.adapter.*
 import com.orm.query.Condition
 import com.orm.query.Select
-import kotlinx.android.synthetic.main.claim_registration_shg.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -60,12 +59,12 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
     var nameofcaller: TextInputEditText? = null
     var mobileofcaller: TextInputEditText? = null
     var sppiner_district: Spinner? = null
-    var spinnerPanchyt: Spinner? = null
+    var spinnerPanchyt: AutoCompleteTextView? = null
     var spinnerBlock: Spinner? = null
-    var spinnerVillage: Spinner? = null
-    var spinnerBank: Spinner? = null
-    var spinnerBranch: Spinner? = null
-    var spinnerShg: Spinner? = null
+    var spinnerVillage: AutoCompleteTextView? = null
+    var spinnerBank: AutoCompleteTextView? = null
+    var spinnerBranch: AutoCompleteTextView? = null
+    var spinnerShg: AutoCompleteTextView? = null
     var datePicker: TextView? = null
     var cal = Calendar.getInstance()
     var clustercode: String? = null
@@ -282,11 +281,11 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
                 }
             }
         }
-        val adapter = ArrayAdapter(
+        val adapter1 = ArrayAdapter(
             activity!!,
             R.layout.spiner_row, languages
         )
-        sppiner_relationship?.adapter = adapter
+        sppiner_relationship?.adapter = adapter1
 
         sppiner_relationship?.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
@@ -322,10 +321,10 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
                 MasterLoginDb::class.java
             ).list() as ArrayList<MasterLoginDb>
 
-        val adapterDisrtict = CustomDropDownAdapter_RegistrationInside(
+        val adapter = CustomDropDownAdapter_RegistrationInside(
             activity!!, "district", arraylistDistict
         )
-        sppiner_district?.adapter = adapterDisrtict
+        sppiner_district?.adapter = adapter
 
         sppiner_district?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -354,151 +353,6 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
             }
 
         }
-        val arraylistPanchyat: ArrayList<Table2Db> =
-            Select.from<Table2Db>(
-                Table2Db::class.java
-            ).list() as ArrayList<Table2Db>
-        arraylistPanchyat.add(0, Table2Db("", "All Panchayat"))
-        val adapterPanchyat = CustomDropDownAdapter_RegistrationInside(
-            activity!!, "cluster", arraylistPanchyat
-        )
-        spinnerPanchyt?.adapter = adapterPanchyat
-        spinnerPanchyt?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0) {
-                    return
-                } else {
-                    val panchaytModel = parent?.getItemAtPosition(position) as Table2Db?
-                    clustercode = panchaytModel?.clustercode
-                    val arrayListBlock =
-                        Select.from<Table3Db>(
-                            Table3Db::class.java
-                        ).where(
-                            Condition.prop("clustercode").eq(clustercode)
-                        )
-                            .list() as ArrayList<Table3Db>
-                    arrayListBlock.add(0, Table3Db("All Village", "", ""))
-                    val adapter = CustomDropDownAdapter_RegistrationInside(
-                        activity!!, "village", arrayListBlock
-                    )
-                    spinnerVillage?.adapter = adapter
-                }
-            }
-
-        }
-        spinnerVillage?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0)
-                    return
-                else {
-                    var villageModel = parent?.getItemAtPosition(position) as Table3Db
-                    villageCode = villageModel?.villagecode
-                    clustercode = villageModel?.clustercode
-                    var arrayListShg =
-                        Select.from<Table4Db>(
-                            Table4Db::class.java
-                        ).where(
-                            Condition.prop("clustercode").eq(clustercode),
-                            Condition.prop("villagecode").eq(villageCode)
-                        )
-                            .list() as ArrayList<Table4Db>
-                    arrayListShg.add(0, Table4Db("", "", "", "All SHG"))
-                    val adapter = CustomDropDownAdapter_RegistrationInside(
-                        activity!!, "shg", arrayListShg
-                    )
-                    spinnerShg?.adapter = adapter
-                }
-            }
-
-        }
-        val arraylistBank: ArrayList<Table6Db> =
-            Select.from<Table6Db>(
-                Table6Db::class.java
-            ).list() as ArrayList<Table6Db>
-        arraylistBank.add(0, Table6Db("", "", "All Bank", "", "", ""))
-        val adapterBankNew = CustomDropDownAdapter_RegistrationInside(
-            activity!!, "bank", arraylistBank
-        )
-        spinnerBank?.adapter = adapterBankNew
-        spinnerBank?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val bankCodeModel = parent?.getItemAtPosition(position) as Table6Db
-                bankCode = bankCodeModel.bankcode
-                var arrayListBranch =
-                    Select.from<Table5Db>(
-                        Table5Db::class.java
-                    ).where(
-                        Condition.prop("bankcode").eq(arraylistBank[position].bankcode)
-                    )
-                        .list() as ArrayList<Table5Db>
-                arrayListBranch.add(0, Table5Db("", "", "All Branch", "", ""))
-                val adapterBankNew = CustomDropDownAdapter_RegistrationInside(
-                    activity!!, "branch", arrayListBranch
-                )
-                spinnerBranch?.adapter = adapterBankNew
-            }
-
-        }
-        spinnerBranch?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val shgCodeModel = parent?.getItemAtPosition(position) as Table5Db
-                branchCode = shgCodeModel.branchcode
-            }
-
-        }
-        spinnerShg?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val shgCodeModel = parent?.getItemAtPosition(position) as Table4Db
-                shgCode = shgCodeModel.SHGCode
-
-            }
-
-        }
-
-        datePicker?.setOnClickListener {
-
-            datePickerStrt()
-        }
         spinnerBlock?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -508,11 +362,94 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long) {
+                id: Long
+            ) {
                 val shgCodeModel = parent?.getItemAtPosition(position) as Table1LoginDb
                 blockCode = shgCodeModel.blockcode
 
             }
+
+        }
+
+        val arraylistPanchyat: ArrayList<Table2Db> =
+            Select.from<Table2Db>(
+                Table2Db::class.java
+            ).list() as ArrayList<Table2Db>
+        val adapterPanchyat = AutocompleteAdapterPanchayt(
+            activity!!, R.layout.spiner_row_new, arraylistPanchyat, "cluster"
+        )
+        spinnerPanchyt?.setAdapter(adapterPanchyat)
+        spinnerPanchyt?.threshold = 1
+        val arraylistBank: ArrayList<Table6Db> =
+            Select.from<Table6Db>(
+                Table6Db::class.java
+            ).list() as ArrayList<Table6Db>
+        val adapterBankNew = AutocompleteAdapterBank(
+            activity!!, R.layout.spiner_row_new, arraylistBank, "bank"
+        )
+        spinnerBank?.setAdapter(adapterBankNew)
+        spinnerBank?.threshold = 1
+
+        spinnerBank?.setOnItemClickListener() { parent, _, position, id ->
+            spinnerBranch?.clearFocus()
+            spinnerBranch?.setText("")
+            val bankCodeModel = parent.adapter.getItem(position) as Table6Db
+            bankCode = bankCodeModel.bankcode
+            val arrayListBranch =
+                Select.from<Table5Db>(
+                    Table5Db::class.java).where(
+                    Condition.prop("bankcode").eq(arraylistBank[position].bankcode))
+                    .list() as ArrayList<Table5Db>
+            val adapterBankNew = AutocompleteAdapterBranch(
+                activity!!, R.layout.spiner_row_new,arrayListBranch,"branch"
+            )
+            spinnerBranch?.setAdapter(adapterBankNew)
+            spinnerBranch?.threshold=1
+
+        }
+        spinnerBranch?.setOnItemClickListener() { parent, _, position, id ->
+            val selectedPoi = parent.adapter.getItem(position) as Table5Db?
+            branchCode = selectedPoi?.branchcode
+            spinnerBranch?.setText(selectedPoi?.branchname)
+
+        }
+
+        spinnerVillage?.setOnItemClickListener() { parent, _, position, id ->
+            val villageModel = parent?.getItemAtPosition(position) as Table3Db
+            villageCode = villageModel.villagecode
+            clustercode = villageModel.clustercode
+            spinnerVillage?.setText(villageModel.villagename)
+            val arrayListShg =
+                Select.from<Table4Db>(
+                    Table4Db::class.java).where(
+                    Condition.prop("clustercode").eq(clustercode),
+                    Condition.prop("villagecode").eq(villageCode))
+                    .list() as ArrayList<Table4Db>
+            val adapter = AutocompleteAdapterSHG(
+                activity!!, R.layout.spiner_row_new,arrayListShg,"shg")
+            spinnerShg?.setAdapter(adapter)
+            spinnerShg?.threshold = 1
+
+        }
+        spinnerPanchyt?.setOnItemClickListener() { parent, _, position, id ->
+            spinnerVillage?.clearFocus()
+            spinnerVillage?.setText("")
+            val panchaytModel = parent?.getItemAtPosition(position) as Table2Db?
+            clustercode = panchaytModel?.clustercode
+            spinnerPanchyt?.setText(panchaytModel?.clustername)
+            val arrayListBlock = Select.from<Table3Db>(Table3Db::class.java).where(
+                Condition.prop("clustercode").eq(clustercode))
+                .list() as ArrayList<Table3Db>
+            val adapter = AutocompleteAdapterVillage(
+                activity!!, R.layout.spiner_row_new,arrayListBlock,"village")
+            spinnerVillage?.setAdapter(adapter)
+            spinnerVillage?.threshold = 1
+
+        }
+        spinnerShg?.setOnItemClickListener { parent, _, position, id ->
+            val selectedPoi = parent.adapter.getItem(position) as Table4Db?
+            shgCode = selectedPoi?.SHGCode
+            spinnerShg?.setText(selectedPoi?.groupname)
 
         }
         return rootView
@@ -535,12 +472,12 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
         checkBox3 = rootView?.findViewById(R.id.checkBox3)
         checkBox4 = rootView?.findViewById(R.id.checkBox4)
         sppiner_district = rootView?.findViewById<Spinner>(R.id.sppiner_district)
-        spinnerPanchyt = rootView?.findViewById<Spinner>(R.id.spinner_panchayt)
-        spinnerVillage = rootView?.findViewById<Spinner>(R.id.spinner_village)
-        spinnerBank = rootView?.findViewById<Spinner>(R.id.sppiner_bank)
+        spinnerPanchyt = rootView?.findViewById<AutoCompleteTextView>(R.id.spinner_panchayt)
+        spinnerVillage = rootView?.findViewById<AutoCompleteTextView>(R.id.spinner_village)
+        spinnerBank = rootView?.findViewById<AutoCompleteTextView>(R.id.sppiner_bank)
         spinnerBlock = rootView?.findViewById<Spinner>(R.id.spinner_block)
-        spinnerBranch = rootView?.findViewById<Spinner>(R.id.sppiner_branch)
-        spinnerShg = rootView?.findViewById<Spinner>(R.id.sppiner_shg)
+        spinnerBranch = rootView?.findViewById<AutoCompleteTextView>(R.id.sppiner_branch)
+        spinnerShg = rootView?.findViewById<AutoCompleteTextView>(R.id.sppiner_shg)
         radioGroup = rootView?.findViewById<RadioGroup>(R.id.radioSex)
 
     }
