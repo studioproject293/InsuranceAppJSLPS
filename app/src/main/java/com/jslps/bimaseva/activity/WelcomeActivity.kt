@@ -32,6 +32,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.creativityapps.gmailbackgroundlibrary.BackgroundMail
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.irozon.sneaker.Sneaker
@@ -171,7 +172,10 @@ class WelcomeActivity : AppCompatActivity() {
         updateReportData()
         dotsIndicator = findViewById<DotsIndicator>(R.id.dots_indicator)
 
-        logIn!!.setOnClickListener { showCustomDialog() }
+        logIn!!.setOnClickListener {
+            showCustomDialog()
+
+        }
         val shake = AnimationUtils.loadAnimation(this, R.anim.shake1)
         val handler1 = Handler()
         val r = Runnable {
