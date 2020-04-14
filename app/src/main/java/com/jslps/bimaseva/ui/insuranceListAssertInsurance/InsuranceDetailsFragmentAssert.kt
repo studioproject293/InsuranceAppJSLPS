@@ -1,4 +1,4 @@
-package com.jslps.bimaseva.ui.underProcess
+package com.jslps.bimaseva.ui.insuranceListAssertInsurance
 
 import android.Manifest
 import android.app.Activity
@@ -27,17 +27,15 @@ import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
 import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.ui.BaseFragment
-import com.jslps.bimaseva.ui.underProcessAssertInsurance.UnderProcessDetailsFragmentAssert
+
 import java.io.*
 
-
-class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
-    OnFragmentListItemSelectListener {
+class InsuranceDetailsFragmentAssert : BaseFragment(), InsuranceView, OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
         val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
         toast.show()
         if (message != null) {
-            if (message.equals("Insurance Update Successfully")){
+            if (message == "Insurance Update Successfully"){
                 val intent = Intent(activity, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -75,20 +73,17 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
     }
 
     var document: ImageView? = null
-    var documentPreviousAttached: ImageView? = null
     var encodedBase64: String? = null
     var REQUEST_CAMERA = 0
     var SELECT_FILE = 1
-    var presenter: UnderProcessDetailsPresenter? = null
+    var presenter: InsurancePresenter? = null
     private var rootView: View? = null
     override fun onResume() {
         super.onResume()
-        mListener!!.onFragmentUpdate(
-            Constant.setTitle, HeaderData(false, AppCache.getCache().insurancetype.toString())
-        )
+        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, "Step 2"))
     }
 
-   /* private fun onSelectFromGalleryResult(data: Intent) {
+    private fun onSelectFromGalleryResult(data: Intent) {
         val selectedImageUri = data.getData()
         val projection = arrayOf<String>(MediaStore.MediaColumns.DATA)
         val cursor = activity?.managedQuery(selectedImageUri, projection, null, null, null)
@@ -119,11 +114,7 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
                     encodedBase64 = Base64.encodeToString(bytes, Base64.DEFAULT)
                 } else {
                     encodedBase64 = null
-                    Toast.makeText(
-                        context as Activity,
-                        "Your pic size more than 5 mb",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(context as Activity, "Your pic size more than 5 mb", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
@@ -133,7 +124,7 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
 
             }
         }
-    }*/
+    }
 
     override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -156,57 +147,42 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
         // permissions this app might request
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        rootView = inflater.inflate(R.layout.insurace_details_underprocess, container, false)
+        rootView = inflater.inflate(R.layout.insurace_details_underprocess_assert, container, false)
         val nameOfInsurance: TextView? = rootView?.findViewById(R.id.insuranceName)
         val textHeading: TextView? = rootView?.findViewById(R.id.textHeading)
-        textHeading?.text = "Claim Document Submitted at Bank. "
         val nomineeName: TextView? = rootView?.findViewById(R.id.nomineeInsurance)
         val contactNo: TextView? = rootView?.findViewById(R.id.contactNo)
         val block: TextView? = rootView?.findViewById(R.id.block)
-        val previousHeading: TextView? = rootView?.findViewById(R.id.previousHeading)
         val village: TextView? = rootView?.findViewById(R.id.village)
         document = rootView?.findViewById(R.id.doucment)
-        documentPreviousAttached = rootView?.findViewById(R.id.doucment_previous_registerd)
         val actionButton: Button? = rootView?.findViewById(R.id.actionButton)
+        val documentReadybutnotsubmit: Button? = rootView?.findViewById(R.id.documentReadybutnotsubmit)
+        val documentfalse: Button? = rootView?.findViewById(R.id.documentfalse)
         val uploadDocument: Button? = rootView?.findViewById(R.id.uploadDocument)
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
-        nomineeName?.text = insuranceNameeee?.name
+        /*nomineeName?.text = insuranceNameeee?.name
         block?.text = insuranceNameeee?.blockname
-        // block?.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.move));
         village?.text = insuranceNameeee?.villagename
         contactNo?.text = insuranceNameeee?.phno_ofNominee.toString()
-        bankbranch?.text = insuranceNameeee?.branchName
+        bankbranch?.text = insuranceNameeee?.branchName*/
         nameOfInsurance?.text = AppCache.getCache().insurancetype
-        if (!TextUtils.isEmpty(insuranceNameeee?.imagebyte)) {
-            previousHeading?.visibility=View.VISIBLE
-            documentPreviousAttached?.visibility=View.VISIBLE
-            try {
-                val byteArray: ByteArray =
-                    Base64.decode(insuranceNameeee?.imagebyte, 0)
-                val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-                documentPreviousAttached?.setImageBitmap(bitmap)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            } catch (e: java.lang.Error) {
-            }
-        }else {
-            previousHeading?.visibility=View.GONE
-            documentPreviousAttached?.visibility=View.GONE
+        presenter = InsurancePresenter(this, activity as Activity)
+        actionButton?.text = "Under Process"
+        documentReadybutnotsubmit?.setOnClickListener {
+//            presenter?.documentReadyService(insuranceNameeee);
         }
-        presenter = UnderProcessDetailsPresenter(this, activity as Activity)
-        actionButton?.text = "Claim Settled"
+        documentfalse?.setOnClickListener {
+//            presenter?.documentfalseService(insuranceNameeee?.call_Id)
+        }
         actionButton?.setOnClickListener {
             if (TextUtils.isEmpty(encodedBase64)) {
                 val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
                 toast.show()
             } else {
                 showProgress()
-                presenter?.uploadUnderProcess(insuranceNameeee, encodedBase64)
+//                presenter?.uploadRegisterDocument(insuranceNameeee,encodedBase64)
             }
         }
         uploadDocument?.setOnClickListener {
@@ -221,7 +197,8 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
                 || ActivityCompat.checkSelfPermission(
                     context as Activity,
                     Manifest.permission.READ_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED) {
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 ActivityCompat.requestPermissions(
                     context as Activity,
                     arrayOf(
@@ -242,11 +219,7 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
                         Manifest.permission.READ_EXTERNAL_STORAGE
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
-                    val toast = Toast.makeText(
-                        context as Activity,
-                        "Permission not given",
-                        Toast.LENGTH_SHORT
-                    )
+                    val toast = Toast.makeText(context as Activity, "Permission not given", Toast.LENGTH_SHORT)
                     toast.show()
                 } else {
                     attchmemntPopup(context as Activity)
@@ -303,14 +276,13 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
                 if (data != null) {
                     //onSelectFromGalleryResult(data)
                     val imageUri = data.data as Uri
-                    val imageStream =
-                        activity?.contentResolver?.openInputStream(imageUri) as InputStream
+                    val imageStream = activity?.contentResolver?.openInputStream(imageUri) as InputStream
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
                     document?.setImageBitmap(selectedImage)
                     val byteArrayOutputStream = ByteArrayOutputStream()
-                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
+                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 10, byteArrayOutputStream)
                     val imagedata = byteArrayOutputStream.toByteArray()
-                    encodedBase64 = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                     encodedBase64 = Base64.encodeToString(imagedata, Base64.DEFAULT)
                     Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64)
                 }
             } else if (requestCode == REQUEST_CAMERA) {
@@ -361,8 +333,7 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
     fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path =
-            MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+        val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
         return Uri.parse(path)
     }
 
@@ -374,10 +345,10 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
     }
 
     companion object {
-        var insuranceNameeee: Master? = null
-        fun getInstance(insuranceNamee: Master): UnderProcessDetailsFragment {
-            insuranceNameeee = insuranceNamee
-            return UnderProcessDetailsFragment()
+
+        fun getInstance(): InsuranceDetailsFragmentAssert {
+
+            return InsuranceDetailsFragmentAssert()
         }
     }
 }

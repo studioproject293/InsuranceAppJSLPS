@@ -175,6 +175,38 @@ class WelcomeActivity : AppCompatActivity() {
         logIn!!.setOnClickListener {
             showCustomDialog()
 
+            /* BackgroundMail.newBuilder(this)
+                .withUsername("vikramjha11.1994@gmail.com")
+                .withPassword("7277542610")
+                 .withMailTo("vikramjha293@gmail.com,vikkyjha293@gmail.com")
+                *//* .withMailCc("vikkyjha293@gmail.com")
+                 .withMailBcc("khushboojha15011997@gmail.com")*//*
+                 .withType(BackgroundMail.TYPE_PLAIN)
+                .withSubject("this")
+                .withBody("Name of the message-Insurance claim status information\n" +
+                        "Name of the insured-\n" +
+                        "Name of the Nominee-\n" +
+                        "Name of the insurance scheme-PMSBY/PMJJBY/Asset Insurance\n" +
+                        "Date of death/incidence-\n" +
+                        "District-\n" +
+                        "Block-\n" +
+                        "Village-\n" +
+                        "Name of the SHG-\n" +
+                        "Name of the bank and branch-\n" +
+                        "Name of the caller/Bima Mitra-\n" +
+                        "Contact name of the caller-\n" +
+                        "Contact number of the caller-\n" +
+                        "\n" +
+                        "This is for your kind information and official action.\n" +
+                        "Bima Sewa\n")
+                 .withOnSuccessCallback {
+
+                 }
+                 .withOnFailCallback {
+
+                 }
+
+                 .send();*/
         }
         val shake = AnimationUtils.loadAnimation(this, R.anim.shake1)
         val handler1 = Handler()
@@ -573,7 +605,7 @@ class WelcomeActivity : AppCompatActivity() {
         override fun doInBackground(vararg params: String): JSONObject {
             try {
                 latestVersion =
-                    Jsoup.connect("https://play.google.com/store/apps/details?id= $packageName &hl=en")
+                    Jsoup.connect("https://play.google.com/store/apps/details?id=com.jslps.bimaseva")
                         .timeout(10000)
                         .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                         .referrer("http://www.google.com")

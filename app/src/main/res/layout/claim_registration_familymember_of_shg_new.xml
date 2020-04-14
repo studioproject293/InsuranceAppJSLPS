@@ -203,6 +203,38 @@
                     android:textColor="#000"
                     android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+        <FrameLayout
+                android:layout_marginTop="10dp"
+                android:background="@drawable/drawable_spinner_border"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <Spinner
+                    android:id="@+id/sppiner_relationship"
+                    android:layout_width="match_parent"
+                    android:textSize="12sp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:backgroundTint="#000"
+                    android:spinnerMode="dropdown"
+                    android:layout_height="40dp" />
+        </FrameLayout>
+            <TextView
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:layout_marginBottom="15dp"
+                    android:textSize="12sp"
+                    android:textColor="#000"
+                    android:layout_marginLeft="10dp"
+                    android:text="Select Relationship"
+                    android:background="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </FrameLayout>
         <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"

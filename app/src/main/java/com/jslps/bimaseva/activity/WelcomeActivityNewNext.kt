@@ -407,7 +407,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                     3 -> {
                         schemeId = "3"
 
-                            if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
+                        if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
                                 DialogUtil.displayProgress(this@WelcomeActivityNewNext)
                                 val gson = GsonBuilder().setLenient().create()
                                 val interceptor = HttpLoggingInterceptor()
@@ -421,8 +421,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                                 val retrofit =
                                     Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
                                         .addConverterFactory(
-                                            ScalarsConverterFactory.create()
-                                        ).client(client).build()
+                                            ScalarsConverterFactory.create()).client(client).build()
                                 val apiServices = retrofit.create(ReportsEntryService::class.java)
                                 val changePhotoResponseModelCall =
                                     apiServices.getReportsEntryService("Insurance1",schemeId.toString())

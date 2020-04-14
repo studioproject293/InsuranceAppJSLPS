@@ -30,7 +30,7 @@ class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presente
             }
             data.toString() == "Asset Insurance (Crop, Livestock, Others)" ->{
                 getAppCache().insuranceStepSend = "4"
-                view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
+                view?.gotoScreen(Constant.ASSERTINSURNCE, data)
             }
             data.toString() == "Registered A New Claim"-> view?.gotoScreen(Constant.INSURANCE_CREATE_INSIDE, data)
         }

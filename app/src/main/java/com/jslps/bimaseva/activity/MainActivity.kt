@@ -20,7 +20,6 @@ import java.io.IOException
 import java.nio.channels.FileChannel
 import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.Master
-import com.jslps.bimaseva.network.InsuranceCreate
 import com.jslps.bimaseva.ui.NewInsuranceForm
 import com.jslps.bimaseva.ui.claimSetteled.ClaimSetteledDetailsFragment
 import com.jslps.bimaseva.ui.documentFale.DocumentFalseListFragment
@@ -28,6 +27,7 @@ import com.jslps.bimaseva.ui.documentNotReady.DocumentListFragment
 import com.jslps.bimaseva.ui.documentNotReady.DocumentNotReadyDetailsFragment
 import com.jslps.bimaseva.ui.insuranceList.InsuranceDetailsFragment
 import com.jslps.bimaseva.ui.insuranceList.InsuranceListFragment
+import com.jslps.bimaseva.ui.insuranceListAssertInsurance.InsuranceDetailsFragmentAssert
 import com.jslps.bimaseva.ui.registration.ClaimRegistrationFragmentFamily
 import com.jslps.bimaseva.ui.registration.ClaimRegistrationFragmentOthers
 import com.jslps.bimaseva.ui.registration.ClaimRegistrationFragmentSHGMember
@@ -225,6 +225,14 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                     android.R.anim.slide_out_right)
                     .addToBackStack(mFragmentTag)
                     .replace(R.id.fragment_main, ReportListFragment.getInstance(data as String), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
+            Constant.ASSERTINSURNCE-> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right)
+                    .addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, InsuranceDetailsFragmentAssert.getInstance(), mFragmentTag)
                     .commitAllowingStateLoss()
             }
         }
