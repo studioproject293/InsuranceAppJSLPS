@@ -26,11 +26,13 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class UnderProcessDetailsPresenterAssert(view: UnderProcessDetailsViewAssert, context: Activity) : BasePresenter, Presenter(),
+class UnderProcessDetailsPresenterAssert(view: UnderProcessDetailsViewAssert, context: Activity) :
+    BasePresenter, Presenter(),
     OnFragmentListItemSelectListener {
     override fun onListItemSelected(itemId: Int, data: Any) {
 
     }
+
     override fun onListItemLongClicked(itemId: Int, data: Any) {
     }
 
@@ -74,7 +76,15 @@ class UnderProcessDetailsPresenterAssert(view: UnderProcessDetailsViewAssert, co
         return this
     }
 
-    fun uploadUnderProcess(insuranceNameeee: Master?, encodedBase64: String?) {
+    fun uploadUnderProcess(
+        insuranceNameeee: Master?,
+        deathImage: String?,
+        panchnamaImage: String?,
+        posmatamImage: String?
+        ,
+        tagImage: String?,
+        claimImage: String?
+    ) {
         if (DialogUtil.isConnectionAvailable(context)) {
             DialogUtil.displayProgress(context!!)
             val gson = GsonBuilder().setLenient().create()
@@ -95,21 +105,23 @@ class UnderProcessDetailsPresenterAssert(view: UnderProcessDetailsViewAssert, co
                 insuranceNameeee?.call_Id.toString(),
                 insuranceNameeee?.createdBy.toString(),
                 id,
-               "",
+                "",
                 insuranceNameeee?.createdOn.toString(),
-                "0",
-                encodedBase64.toString(),
+                "",
+                claimImage,
                 "1",
                 "",
                 "",
-                "",
+                "0",
                 "",
                 "",
                 "3", "",
                 "0",
-                ""
+                "",
+                deathImage, panchnamaImage, posmatamImage, tagImage
             )
-            val data = "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
+            val data =
+                "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
             val changePhotoResponseModelCall =
                 apiServices.uploadRegistedinsurance(data)
             changePhotoResponseModelCall.enqueue(object : Callback<String> {
@@ -130,7 +142,7 @@ class UnderProcessDetailsPresenterAssert(view: UnderProcessDetailsViewAssert, co
                             val jsonObject = categoryObject?.getJSONObject(0)
                             val Result = jsonObject?.getString("RetValue")
                             if (Result.equals("1", ignoreCase = true)) {
-                             view?.showMessage("Insurance Update Sucessfully")
+                                view?.showMessage("Insurance Update Successfully")
                             } else {
                                 /* Snackbar.with(getActivity(), null)
                                      .type(Type.ERROR)
@@ -151,7 +163,7 @@ class UnderProcessDetailsPresenterAssert(view: UnderProcessDetailsViewAssert, co
 
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     DialogUtil.stopProgressDisplay()
-                    view?.showMessage(t.localizedMessage)
+                    view?.showMessage("Please Try again")
                 }
             })
         } else {

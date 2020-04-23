@@ -208,7 +208,8 @@ class ClaimRegistrationFragmentSHGMember : BaseFragment() {
                     id,
                     createdBy.toString(),
                     "0",
-                    "0"
+                    "0",
+                    "","","",""
                 )
                 val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(callCenter) + "] } "
                 if (DialogUtil.isConnectionAvailable(activity!!)) {

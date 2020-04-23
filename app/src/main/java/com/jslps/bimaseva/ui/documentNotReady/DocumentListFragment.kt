@@ -14,7 +14,6 @@ import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
 import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.ui.BaseFragment
-
 import com.jslps.bimaseva.ui.documentNotReady.adapter.DocumentNotReadyListAdapter
 
 

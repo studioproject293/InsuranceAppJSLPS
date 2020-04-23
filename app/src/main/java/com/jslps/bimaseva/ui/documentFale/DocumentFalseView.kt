@@ -1,4 +1,4 @@
-package com.jslps.bimaseva.ui.documentNotReady
+package com.jslps.bimaseva.ui.documentFale
 
 import com.jslps.bimaseva.base.BaseView
 import com.jslps.bimaseva.model.Master

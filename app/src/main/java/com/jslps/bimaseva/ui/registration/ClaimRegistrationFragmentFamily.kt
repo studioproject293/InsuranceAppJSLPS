@@ -215,8 +215,8 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
                     id,
                     createdBy.toString(),
                     genderId.toString(),
-                    relationShipId.toString()
-                )
+                    relationShipId.toString(),
+                "","","","")
 
                 val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(callCenter) + "] } "
                 if (DialogUtil.isConnectionAvailable(activity!!)) {
@@ -451,6 +451,9 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
             shgCode = selectedPoi?.SHGCode
             spinnerShg?.setText(selectedPoi?.groupname)
 
+        }
+        datePicker?.setOnClickListener {
+            datePickerStrt()
         }
         return rootView
     }

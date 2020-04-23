@@ -56,7 +56,7 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
     }
 
     override fun showProgress() {
-        activity?.let { DialogUtil.displayProgress(it) }
+        DialogUtil.displayProgress(activity!!)
     }
 
     override fun hideProgress() {

@@ -17,7 +17,6 @@ import android.view.*
 import android.widget.*
 import androidx.annotation.NonNull
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.FragmentActivity
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.R
@@ -36,7 +35,7 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
         val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
         toast.show()
         if (message != null) {
-            if (message.equals("Insurance Update Successfully")){
+            if (message == "Insurance Update Successfully") {
                 val intent = Intent(activity, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -73,11 +72,32 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
     override fun onListItemLongClicked(itemId: Int, data: Any) {
     }
 
-    var document: ImageView? = null
+    var documentpostmatem: ImageView? = null
+    var documentTag: ImageView? = null
+    var documentPanchnama: ImageView? = null
+    var documentClaimImage: ImageView? = null
+    var documentAnimal: ImageView? = null
     var documentPreviousAttached: ImageView? = null
-    var encodedBase64: String? = null
-    var REQUEST_CAMERA = 0
-    var SELECT_FILE = 1
+    var uploadDocumentAnimal: Button? = null
+    var uploadDocumentPanchnma: Button? = null
+    var uploadDocumentPostmatem: Button? = null
+    var uploadDocumentTag: Button? = null
+    var uploadDocumentClaimImage: Button? = null
+    var encodedBase64Animal: String? = null
+    var encodedBase64TagImage: String? = null
+    var encodedBase64Postmotom: String? = null
+    var encodedBase64Panchnama: String? = null
+    var encodedBase64ClaimImage: String? = null
+    var REQUEST_CAMERA_ANIMAL = 0
+    var SELECT_FILE_ANIMAL = 1
+    var REQUEST_CAMERA_TAG = 2
+    var SELECT_FILE_TAG = 3
+    var REQUEST_CAMERA_PANCHNAMA = 4
+    var SELECT_FILE_PANCHNAMA = 5
+    var REQUEST_CAMERA_CLAIM_IMAGE = 6
+    var SELECT_FILE_CLAIM_IMAGE = 7
+    var REQUEST_CAMERA_POSTMOTOM = 8
+    var SELECT_FILE_POSTMOTOM = 9
     var presenter: UnderProcessDetailsPresenterAssert? = null
     private var rootView: View? = null
     override fun onResume() {
@@ -87,52 +107,6 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
         )
     }
 
-   /* private fun onSelectFromGalleryResult(data: Intent) {
-        val selectedImageUri = data.getData()
-        val projection = arrayOf<String>(MediaStore.MediaColumns.DATA)
-        val cursor = activity?.managedQuery(selectedImageUri, projection, null, null, null)
-        val column_index = cursor?.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
-        cursor?.moveToFirst()
-        val selectedImagePath = column_index?.let { cursor.getString(it) }
-        val bm: Bitmap
-        val options = BitmapFactory.Options()
-        options.inJustDecodeBounds = true
-        BitmapFactory.decodeFile(selectedImagePath, options)
-        val REQUIRED_SIZE = 200
-        var scale = 1
-        while ((options.outWidth / scale / 2 >= REQUIRED_SIZE && options.outHeight / scale / 2 >= REQUIRED_SIZE))
-            scale *= 2
-        options.inSampleSize = scale
-        options.inJustDecodeBounds = false
-        bm = BitmapFactory.decodeFile(selectedImagePath, options)
-        document?.setImageBitmap(bm)
-        val imgFile = File(selectedImagePath)
-        if (imgFile.exists()) {
-            val fileInputStreamReader: FileInputStream
-            try {
-                fileInputStreamReader = FileInputStream(imgFile)
-                val fileSizeInBytes = fileInputStreamReader.available()
-                val bytes = ByteArray(imgFile.length().toInt())
-                fileInputStreamReader.read(bytes)
-                if (fileSizeInBytes < 5000000) {
-                    encodedBase64 = Base64.encodeToString(bytes, Base64.DEFAULT)
-                } else {
-                    encodedBase64 = null
-                    Toast.makeText(
-                        context as Activity,
-                        "Your pic size more than 5 mb",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            } catch (e: FileNotFoundException) {
-                e.printStackTrace()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            } catch (e: Error) {
-
-            }
-        }
-    }*/
 
     override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -140,7 +114,7 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
             0 -> {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    attchmemntPopup(activity as Activity)
+//                    attchmemntPopup(activity as Activity)
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
 
@@ -158,9 +132,10 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        rootView = inflater.inflate(R.layout.insurace_details_underprocess, container, false)
+        rootView = inflater.inflate(R.layout.insurace_details_underprocess_assert, container, false)
         val nameOfInsurance: TextView? = rootView?.findViewById(R.id.insuranceName)
         val textHeading: TextView? = rootView?.findViewById(R.id.textHeading)
         textHeading?.text = "Claim Document Submitted at Bank. "
@@ -169,10 +144,9 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
         val block: TextView? = rootView?.findViewById(R.id.block)
         val previousHeading: TextView? = rootView?.findViewById(R.id.previousHeading)
         val village: TextView? = rootView?.findViewById(R.id.village)
-        document = rootView?.findViewById(R.id.doucment)
-        documentPreviousAttached = rootView?.findViewById(R.id.doucment_previous_registerd)
+        setId()
         val actionButton: Button? = rootView?.findViewById(R.id.actionButton)
-        val uploadDocument: Button? = rootView?.findViewById(R.id.uploadDocument)
+
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
         nomineeName?.text = insuranceNameeee?.name
         block?.text = insuranceNameeee?.blockname
@@ -182,8 +156,8 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
         bankbranch?.text = insuranceNameeee?.branchName
         nameOfInsurance?.text = AppCache.getCache().insurancetype
         if (!TextUtils.isEmpty(insuranceNameeee?.imagebyte)) {
-            previousHeading?.visibility=View.VISIBLE
-            documentPreviousAttached?.visibility=View.VISIBLE
+            previousHeading?.visibility = View.VISIBLE
+            documentPreviousAttached?.visibility = View.VISIBLE
             try {
                 val byteArray: ByteArray =
                     Base64.decode(insuranceNameeee?.imagebyte, 0)
@@ -193,22 +167,48 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
                 e.printStackTrace()
             } catch (e: java.lang.Error) {
             }
-        }else {
-            previousHeading?.visibility=View.GONE
-            documentPreviousAttached?.visibility=View.GONE
+        } else {
+            previousHeading?.visibility = View.GONE
+            documentPreviousAttached?.visibility = View.GONE
         }
         presenter = UnderProcessDetailsPresenterAssert(this, activity as Activity)
         actionButton?.text = "Claim Settled"
         actionButton?.setOnClickListener {
-            if (TextUtils.isEmpty(encodedBase64)) {
-                val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
-                toast.show()
-            } else {
-                showProgress()
-                presenter?.uploadUnderProcess(insuranceNameeee, encodedBase64)
+            when {
+                TextUtils.isEmpty(encodedBase64Animal) -> {
+                    val toast = Toast.makeText(activity, "Please Upload death photograph of the animal", Toast.LENGTH_SHORT)
+                    toast.show()
+                }
+                TextUtils.isEmpty(encodedBase64TagImage) -> {
+                    val toast = Toast.makeText(activity, "Please Upload photo with Tag", Toast.LENGTH_SHORT)
+                    toast.show()
+                }
+                TextUtils.isEmpty(encodedBase64Panchnama) -> {
+                    val toast = Toast.makeText(activity, "Please Upload panchnama signed by VO/PG", Toast.LENGTH_SHORT)
+                    toast.show()
+                }
+                TextUtils.isEmpty(encodedBase64Postmotom) -> {
+                    val toast = Toast.makeText(activity, "Please Upload Post-mortem report", Toast.LENGTH_SHORT)
+                    toast.show()
+                }
+                TextUtils.isEmpty(encodedBase64ClaimImage) -> {
+                    val toast = Toast.makeText(activity, "Please Upload photograph of the claim form", Toast.LENGTH_SHORT)
+                    toast.show()
+                }
+                else -> {
+                    showProgress()
+                    presenter?.uploadUnderProcess(
+                        insuranceNameeee,
+                        encodedBase64Animal,
+                        encodedBase64Panchnama,
+                        encodedBase64Postmotom,
+                        encodedBase64TagImage,
+                        encodedBase64ClaimImage
+                    )
+                }
             }
         }
-        uploadDocument?.setOnClickListener {
+        uploadDocumentAnimal?.setOnClickListener {
             if (ActivityCompat.checkSelfPermission(
                     context as Activity,
                     Manifest.permission.CAMERA
@@ -220,7 +220,8 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
                 || ActivityCompat.checkSelfPermission(
                     context as Activity,
                     Manifest.permission.READ_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED) {
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 ActivityCompat.requestPermissions(
                     context as Activity,
                     arrayOf(
@@ -248,16 +249,219 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
                     )
                     toast.show()
                 } else {
-                    attchmemntPopup(context as Activity)
+                    attchmemntPopup(context as Activity, "ANIMAL")
                 }
             } else {
-                attchmemntPopup(context as Activity)
+                attchmemntPopup(context as Activity, "ANIMAL")
             }
         }
+        uploadDocumentTag?.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(
+                    context as Activity,
+                    Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(
+                    context as Activity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(
+                    context as Activity,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    context as Activity,
+                    arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ),
+                    0
+                )
+                if (ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.CAMERA
+                    ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    val toast = Toast.makeText(
+                        context as Activity,
+                        "Permission not given",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
+                } else {
+                    attchmemntPopup(context as Activity, "TAG")
+                }
+            } else {
+                attchmemntPopup(context as Activity, "TAG")
+            }
+        }
+        uploadDocumentPanchnma?.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(
+                    context as Activity,
+                    Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(
+                    context as Activity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(
+                    context as Activity,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    context as Activity,
+                    arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ),
+                    0
+                )
+                if (ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.CAMERA
+                    ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    val toast = Toast.makeText(
+                        context as Activity,
+                        "Permission not given",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
+                } else {
+                    attchmemntPopup(context as Activity, "PANCHNAMA")
+                }
+            } else {
+                attchmemntPopup(context as Activity, "PANCHNAMA")
+            }
+        }
+        uploadDocumentPostmatem?.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(
+                    context as Activity,
+                    Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(
+                    context as Activity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(
+                    context as Activity,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    context as Activity,
+                    arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ),
+                    0
+                )
+                if (ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.CAMERA
+                    ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    val toast = Toast.makeText(
+                        context as Activity,
+                        "Permission not given",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
+                } else {
+                    attchmemntPopup(context as Activity, "POSTMOTOM")
+                }
+            } else {
+                attchmemntPopup(context as Activity, "POSTMOTOM")
+            }
+        }
+        uploadDocumentClaimImage?.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(
+                    context as Activity,
+                    Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(
+                    context as Activity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(
+                    context as Activity,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    context as Activity,
+                    arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ),
+                    0
+                )
+                if (ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.CAMERA
+                    ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                        context as Activity,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    val toast = Toast.makeText(
+                        context as Activity,
+                        "Permission not given",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
+                } else {
+                    attchmemntPopup(context as Activity, "CLAIM_IMAGE")
+                }
+            } else {
+                attchmemntPopup(context as Activity, "CLAIM_IMAGE")
+            }
+        }
+
         return rootView!!
     }
 
-    private fun attchmemntPopup(context: Activity) {
+    private fun setId() {
+        documentAnimal = rootView?.findViewById(R.id.doucmentAnimal)
+        documentpostmatem = rootView?.findViewById(R.id.doucmentPostmartem)
+        documentPanchnama = rootView?.findViewById(R.id.doucmentPanchnama)
+        documentTag = rootView?.findViewById(R.id.doucmentTag)
+        documentClaimImage = rootView?.findViewById(R.id.doucmentClaimForm)
+        documentPreviousAttached = rootView?.findViewById(R.id.doucment_previous_registerd)
+        uploadDocumentAnimal = rootView?.findViewById(R.id.uploadDocumentAnimal)
+        uploadDocumentPanchnma = rootView?.findViewById(R.id.uploadDocumentPanchnam)
+        uploadDocumentTag = rootView?.findViewById(R.id.uploadDocumentTag)
+        uploadDocumentPostmatem = rootView?.findViewById(R.id.uploadDocumentPostmartem)
+        uploadDocumentClaimImage = rootView?.findViewById(R.id.uploadDocumentClaimForm)
+    }
+
+    private fun attchmemntPopup(context: Activity, imageFor: String) {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val layout = inflater.inflate(R.layout.attachment_popup, null)
         val alertD = android.app.AlertDialog.Builder(context).create()
@@ -275,7 +479,13 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
         camera.setOnClickListener {
             alertD.dismiss()
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(intent, REQUEST_CAMERA)
+            when (imageFor) {
+                "ANIMAL" -> startActivityForResult(intent, REQUEST_CAMERA_ANIMAL)
+                "TAG" -> startActivityForResult(intent, REQUEST_CAMERA_TAG)
+                "PANCHNAMA" -> startActivityForResult(intent, REQUEST_CAMERA_PANCHNAMA)
+                "POSTMOTOM" -> startActivityForResult(intent, REQUEST_CAMERA_POSTMOTOM)
+                "CLAIM_IMAGE" -> startActivityForResult(intent, REQUEST_CAMERA_CLAIM_IMAGE)
+            }
         }
 
         gallery.setOnClickListener {
@@ -285,10 +495,28 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             )
             intent.setType("image/*")
-            startActivityForResult(
-                Intent.createChooser(intent, "Select File"),
-                SELECT_FILE
-            )
+            when (imageFor) {
+                "ANIMAL" -> startActivityForResult(
+                    Intent.createChooser(intent, "Select File"),
+                    SELECT_FILE_ANIMAL
+                )
+                "TAG" -> startActivityForResult(
+                    Intent.createChooser(intent, "Select File"),
+                    SELECT_FILE_TAG
+                )
+                "PANCHNAMA" -> startActivityForResult(
+                    Intent.createChooser(intent, "Select File"),
+                    SELECT_FILE_PANCHNAMA
+                )
+                "POSTMOTOM" -> startActivityForResult(
+                    Intent.createChooser(intent, "Select File"),
+                    SELECT_FILE_POSTMOTOM
+                )
+                "CLAIM_IMAGE" -> startActivityForResult(
+                    Intent.createChooser(intent, "Select File"),
+                    SELECT_FILE_CLAIM_IMAGE)
+        }
+
         }
         alertD.setView(layout)
         alertD.show()
@@ -298,31 +526,151 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == SELECT_FILE) {
+            if (requestCode == SELECT_FILE_ANIMAL) {
                 if (data != null) {
                     //onSelectFromGalleryResult(data)
                     val imageUri = data.data as Uri
                     val imageStream =
                         activity?.contentResolver?.openInputStream(imageUri) as InputStream
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
-                    document?.setImageBitmap(selectedImage)
+                    documentAnimal?.setImageBitmap(selectedImage)
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
                     val imagedata = byteArrayOutputStream.toByteArray()
-                    encodedBase64 = Base64.encodeToString(imagedata, Base64.DEFAULT)
-                    Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64)
+                    encodedBase64Animal = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                    Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64Animal)
                 }
-            } else if (requestCode == REQUEST_CAMERA) {
+            } else if (requestCode == REQUEST_CAMERA_ANIMAL) {
                 try {
                     if (data != null) {
                         //onCaptureImageResult(data)
                         val photo = data.extras!!.get("data") as Bitmap
-                        document?.setImageBitmap(photo)
+                        documentAnimal?.setImageBitmap(photo)
                         val byteArrayOutputStream = ByteArrayOutputStream()
                         photo.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
                         val imagedata = byteArrayOutputStream.toByteArray()
-                        encodedBase64 = Base64.encodeToString(imagedata, Base64.DEFAULT)
-                        Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64)
+                        encodedBase64Animal = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                        Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64Animal)
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+            } else if (requestCode == SELECT_FILE_PANCHNAMA) {
+                if (data != null) {
+                    //onSelectFromGalleryResult(data)
+                    val imageUri = data.data as Uri
+                    val imageStream =
+                        activity?.contentResolver?.openInputStream(imageUri) as InputStream
+                    val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
+                    documentPanchnama?.setImageBitmap(selectedImage)
+                    val byteArrayOutputStream = ByteArrayOutputStream()
+                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
+                    val imagedata = byteArrayOutputStream.toByteArray()
+                    encodedBase64Panchnama = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                    Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64Panchnama)
+                }
+            } else if (requestCode == REQUEST_CAMERA_PANCHNAMA) {
+                try {
+                    if (data != null) {
+                        //onCaptureImageResult(data)
+                        val photo = data.extras!!.get("data") as Bitmap
+                        documentPanchnama?.setImageBitmap(photo)
+                        val byteArrayOutputStream = ByteArrayOutputStream()
+                        photo.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
+                        val imagedata = byteArrayOutputStream.toByteArray()
+                        encodedBase64Panchnama = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                        Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64Panchnama)
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+            } else if (requestCode == SELECT_FILE_POSTMOTOM) {
+                if (data != null) {
+                    //onSelectFromGalleryResult(data)
+                    val imageUri = data.data as Uri
+                    val imageStream =
+                        activity?.contentResolver?.openInputStream(imageUri) as InputStream
+                    val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
+                    documentpostmatem?.setImageBitmap(selectedImage)
+                    val byteArrayOutputStream = ByteArrayOutputStream()
+                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
+                    val imagedata = byteArrayOutputStream.toByteArray()
+                    encodedBase64Postmotom = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                    Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64Postmotom)
+                }
+            } else if (requestCode == REQUEST_CAMERA_POSTMOTOM) {
+                try {
+                    if (data != null) {
+                        //onCaptureImageResult(data)
+                        val photo = data.extras!!.get("data") as Bitmap
+                        documentpostmatem?.setImageBitmap(photo)
+                        val byteArrayOutputStream = ByteArrayOutputStream()
+                        photo.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
+                        val imagedata = byteArrayOutputStream.toByteArray()
+                        encodedBase64Postmotom = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                        Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64Postmotom)
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+            } else if (requestCode == SELECT_FILE_TAG) {
+                if (data != null) {
+                    //onSelectFromGalleryResult(data)
+                    val imageUri = data.data as Uri
+                    val imageStream =
+                        activity?.contentResolver?.openInputStream(imageUri) as InputStream
+                    val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
+                    documentTag?.setImageBitmap(selectedImage)
+                    val byteArrayOutputStream = ByteArrayOutputStream()
+                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
+                    val imagedata = byteArrayOutputStream.toByteArray()
+                    encodedBase64TagImage = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                    Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64TagImage)
+                }
+            } else if (requestCode == REQUEST_CAMERA_TAG) {
+                try {
+                    if (data != null) {
+                        //onCaptureImageResult(data)
+                        val photo = data.extras!!.get("data") as Bitmap
+                        documentTag?.setImageBitmap(photo)
+                        val byteArrayOutputStream = ByteArrayOutputStream()
+                        photo.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
+                        val imagedata = byteArrayOutputStream.toByteArray()
+                        encodedBase64TagImage = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                        Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64TagImage)
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+            } else if (requestCode == SELECT_FILE_CLAIM_IMAGE) {
+                if (data != null) {
+                    //onSelectFromGalleryResult(data)
+                    val imageUri = data.data as Uri
+                    val imageStream =
+                        activity?.contentResolver?.openInputStream(imageUri) as InputStream
+                    val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
+                    documentClaimImage?.setImageBitmap(selectedImage)
+                    val byteArrayOutputStream = ByteArrayOutputStream()
+                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
+                    val imagedata = byteArrayOutputStream.toByteArray()
+                    encodedBase64ClaimImage = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                    Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64ClaimImage)
+                }
+            } else if (requestCode == REQUEST_CAMERA_CLAIM_IMAGE) {
+                try {
+                    if (data != null) {
+                        //onCaptureImageResult(data)
+                        val photo = data.extras!!.get("data") as Bitmap
+                        documentClaimImage?.setImageBitmap(photo)
+                        val byteArrayOutputStream = ByteArrayOutputStream()
+                        photo.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
+                        val imagedata = byteArrayOutputStream.toByteArray()
+                        encodedBase64ClaimImage = Base64.encodeToString(imagedata, Base64.DEFAULT)
+                        Log.d("mdfmwrgsdig", "dfhgjsg" + encodedBase64ClaimImage)
                     }
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -332,30 +680,30 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
         }
     }
 
-    @Throws(IOException::class)
-    private fun onCaptureImageResult(data: Intent) {
-        val photo = data.getExtras()?.get("data") as Bitmap
-        document?.setImageBitmap(photo)
-        val tempUri = getImageUri(activity as FragmentActivity, photo)
-        // CALL THIS METHOD TO GET THE ACTUAL PATH
-        val finalFile = File(getRealPathFromURI(tempUri))
-        Log.i("gbhvhjcbvhjcvbv:", finalFile.toString())
-        if (finalFile.exists()) {
-            val fileInputStreamReader: FileInputStream
-            try {
-                fileInputStreamReader = FileInputStream(finalFile)
-                val bytes = ByteArray(finalFile.length() as Int)
-                fileInputStreamReader.read(bytes)
-                encodedBase64 = Base64.encodeToString(bytes, Base64.DEFAULT)
-            } catch (e: FileNotFoundException) {
-                e.printStackTrace()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            } catch (e: Error) {
+    /* @Throws(IOException::class)
+     private fun onCaptureImageResult(data: Intent) {
+         val photo = data.getExtras()?.get("data") as Bitmap
+         document?.setImageBitmap(photo)
+         val tempUri = getImageUri(activity as FragmentActivity, photo)
+         // CALL THIS METHOD TO GET THE ACTUAL PATH
+         val finalFile = File(getRealPathFromURI(tempUri))
+         Log.i("gbhvhjcbvhjcvbv:", finalFile.toString())
+         if (finalFile.exists()) {
+             val fileInputStreamReader: FileInputStream
+             try {
+                 fileInputStreamReader = FileInputStream(finalFile)
+                 val bytes = ByteArray(finalFile.length() as Int)
+                 fileInputStreamReader.read(bytes)
+                 encodedBase64 = Base64.encodeToString(bytes, Base64.DEFAULT)
+             } catch (e: FileNotFoundException) {
+                 e.printStackTrace()
+             } catch (e: IOException) {
+                 e.printStackTrace()
+             } catch (e: Error) {
 
-            }
-        }
-    }
+             }
+         }
+     }*/
 
     fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()

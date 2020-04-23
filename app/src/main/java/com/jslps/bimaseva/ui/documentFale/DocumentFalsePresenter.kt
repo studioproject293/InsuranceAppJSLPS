@@ -6,7 +6,6 @@ import com.jslps.bimaseva.base.Presenter
 import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
 import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.network.ServiceUpdateListner
-import com.jslps.bimaseva.ui.documentNotReady.DocumentFalseView
 import com.twidpay.beta.model.ApiRequest
 import java.util.*
 import kotlin.collections.ArrayList

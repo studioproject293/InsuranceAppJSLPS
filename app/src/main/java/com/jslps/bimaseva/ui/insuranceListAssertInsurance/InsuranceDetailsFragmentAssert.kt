@@ -27,10 +27,11 @@ import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
 import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.ui.BaseFragment
+import com.jslps.bimaseva.ui.insuranceList.InsuranceDetailsFragment
 
 import java.io.*
 
-class InsuranceDetailsFragmentAssert : BaseFragment(), InsuranceView, OnFragmentListItemSelectListener {
+class InsuranceDetailsFragmentAssert : BaseFragment(), InsuranceAssertView, OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
         val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
         toast.show()
@@ -76,11 +77,11 @@ class InsuranceDetailsFragmentAssert : BaseFragment(), InsuranceView, OnFragment
     var encodedBase64: String? = null
     var REQUEST_CAMERA = 0
     var SELECT_FILE = 1
-    var presenter: InsurancePresenter? = null
+    var presenter: InsuranceAssertPresenter? = null
     private var rootView: View? = null
     override fun onResume() {
         super.onResume()
-        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, "Step 2"))
+        mListener!!.onFragmentUpdate(Constant.setTitle, HeaderData(false, "Claim Registered "))
     }
 
     private fun onSelectFromGalleryResult(data: Intent) {
@@ -149,7 +150,7 @@ class InsuranceDetailsFragmentAssert : BaseFragment(), InsuranceView, OnFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        rootView = inflater.inflate(R.layout.insurace_details_underprocess_assert, container, false)
+        rootView = inflater.inflate(R.layout.insurace_details_assert, container, false)
         val nameOfInsurance: TextView? = rootView?.findViewById(R.id.insuranceName)
         val textHeading: TextView? = rootView?.findViewById(R.id.textHeading)
         val nomineeName: TextView? = rootView?.findViewById(R.id.nomineeInsurance)
@@ -162,19 +163,19 @@ class InsuranceDetailsFragmentAssert : BaseFragment(), InsuranceView, OnFragment
         val documentfalse: Button? = rootView?.findViewById(R.id.documentfalse)
         val uploadDocument: Button? = rootView?.findViewById(R.id.uploadDocument)
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
-        /*nomineeName?.text = insuranceNameeee?.name
+        nomineeName?.text = insuranceNameeee?.name
         block?.text = insuranceNameeee?.blockname
         village?.text = insuranceNameeee?.villagename
         contactNo?.text = insuranceNameeee?.phno_ofNominee.toString()
-        bankbranch?.text = insuranceNameeee?.branchName*/
+        bankbranch?.text = insuranceNameeee?.branchName
         nameOfInsurance?.text = AppCache.getCache().insurancetype
-        presenter = InsurancePresenter(this, activity as Activity)
+        presenter = InsuranceAssertPresenter(this, activity as Activity)
         actionButton?.text = "Under Process"
         documentReadybutnotsubmit?.setOnClickListener {
-//            presenter?.documentReadyService(insuranceNameeee);
+            presenter?.documentReadyService(insuranceNameeee);
         }
         documentfalse?.setOnClickListener {
-//            presenter?.documentfalseService(insuranceNameeee?.call_Id)
+            presenter?.documentfalseService(insuranceNameeee?.call_Id)
         }
         actionButton?.setOnClickListener {
             if (TextUtils.isEmpty(encodedBase64)) {
@@ -182,7 +183,7 @@ class InsuranceDetailsFragmentAssert : BaseFragment(), InsuranceView, OnFragment
                 toast.show()
             } else {
                 showProgress()
-//                presenter?.uploadRegisterDocument(insuranceNameeee,encodedBase64)
+                presenter?.uploadRegisterDocument(insuranceNameeee,encodedBase64)
             }
         }
         uploadDocument?.setOnClickListener {
@@ -197,8 +198,7 @@ class InsuranceDetailsFragmentAssert : BaseFragment(), InsuranceView, OnFragment
                 || ActivityCompat.checkSelfPermission(
                     context as Activity,
                     Manifest.permission.READ_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
+                ) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(
                     context as Activity,
                     arrayOf(
@@ -345,9 +345,9 @@ class InsuranceDetailsFragmentAssert : BaseFragment(), InsuranceView, OnFragment
     }
 
     companion object {
-
-        fun getInstance(): InsuranceDetailsFragmentAssert {
-
+        var insuranceNameeee: Master? = null
+        fun getInstance(insuranceNamee: Master): InsuranceDetailsFragmentAssert {
+            insuranceNameeee = insuranceNamee
             return InsuranceDetailsFragmentAssert()
         }
     }

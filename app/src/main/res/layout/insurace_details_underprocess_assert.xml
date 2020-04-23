@@ -279,14 +279,14 @@
                     android:layout_margin="10dp">
 
                 <ImageView
-                        android:id="@+id/doucment"
+                        android:id="@+id/doucmentAnimal"
                         android:layout_width="0dp"
                         android:layout_height="130dp"
                         android:layout_margin="5dp"
                         android:layout_weight="0.5" />
 
                 <Button
-                        android:id="@+id/uploadDocument1"
+                        android:id="@+id/uploadDocumentAnimal"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -305,14 +305,14 @@
                     android:layout_margin="10dp">
 
                 <ImageView
-                        android:id="@+id/doucment2"
+                        android:id="@+id/doucmentTag"
                         android:layout_width="0dp"
                         android:layout_height="130dp"
                         android:layout_margin="5dp"
                         android:layout_weight="0.5" />
 
                 <Button
-                        android:id="@+id/uploadDocument2"
+                        android:id="@+id/uploadDocumentTag"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -331,14 +331,14 @@
                     android:layout_margin="10dp">
 
                 <ImageView
-                        android:id="@+id/doucment3"
+                        android:id="@+id/doucmentPanchnama"
                         android:layout_width="0dp"
                         android:layout_height="130dp"
                         android:layout_margin="5dp"
                         android:layout_weight="0.5" />
 
                 <Button
-                        android:id="@+id/uploadDocument3"
+                        android:id="@+id/uploadDocumentPanchnam"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -357,14 +357,14 @@
                     android:layout_margin="10dp">
 
                 <ImageView
-                        android:id="@+id/doucment4"
+                        android:id="@+id/doucmentPostmartem"
                         android:layout_width="0dp"
                         android:layout_height="130dp"
                         android:layout_margin="5dp"
                         android:layout_weight="0.5" />
 
                 <Button
-                        android:id="@+id/uploadDocument4"
+                        android:id="@+id/uploadDocumentPostmartem"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -383,14 +383,14 @@
                     android:layout_margin="10dp">
 
                 <ImageView
-                        android:id="@+id/doucment5"
+                        android:id="@+id/doucmentClaimForm"
                         android:layout_width="0dp"
                         android:layout_height="130dp"
                         android:layout_margin="5dp"
                         android:layout_weight="0.5" />
 
                 <Button
-                        android:id="@+id/uploadDocument5"
+                        android:id="@+id/uploadDocumentClaimForm"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

@@ -29,24 +29,25 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter, Presenter(),
+class InsuranceAssertPresenter(view: InsuranceAssertView, context: Activity) : BasePresenter,
+    Presenter(),
     OnFragmentListItemSelectListener {
     override fun onListItemSelected(itemId: Int, data: Any) {
 
-        when {
-            AppCache.getCache().insuranceStep == "Registered" -> {
-                view?.gotoScreen(Constant.INSURANCE_DETAILS_FRAGMENT, data as Master)
+        when (AppCache.getCache().insuranceStep) {
+            "Registered" -> {
+                view?.gotoScreen(Constant.INSURANCE_DETAILS_FRAGMENT_ASSERT, data as Master)
             }
-            AppCache.getCache().insuranceStep == "Under Process" -> {
-                view?.gotoScreen(Constant.UNDER_PROCESS_DETAILS_FRAGMENT, data as Master)
+            "Under Process" -> {
+                view?.gotoScreen(Constant.UNDER_PROCESS_DETAILS_FRAGMENT_ASSERT, data as Master)
             }
-            AppCache.getCache().insuranceStep == "Claim Settled" -> {
-                view?.gotoScreen(Constant.CLAIM_SETTELED_DETAILS_FRAGMENT, data as Master)
+            "Claim Settled" -> {
+                view?.gotoScreen(Constant.CLAIM_SETTELED_DETAILS_FRAGMENT_ASSERT, data as Master)
             }
-            AppCache.getCache().insuranceStep == "Rejected" -> {
+            "Rejected" -> {
 
             }
-            AppCache.getCache().insuranceStep == "Total Claim" -> {
+            "Total Claim" -> {
 
             }
         }
@@ -57,7 +58,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
     }
 
 
-    var view: InsuranceView? = view
+    var view: InsuranceAssertView? = view
     var context: Activity? = context
 
     override fun init() {
@@ -122,30 +123,33 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
             val uploadRegisterData = UploadRegisterData(
                 insuranceNameeee?.call_Id.toString(),
                 insuranceNameeee?.createdBy.toString(),
-                id,
-                encodedBase64.toString(),
+                id, encodedBase64,
                 insuranceNameeee?.createdOn.toString(),
                 "1",
                 "",
                 "0",
                 "",
                 "",
-                "0",
+                "",
                 "",
                 "",
                 "1",
                 "",
-                "0",
-                ""
-            )
-            val data = "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
+                "",
+                "",
+                "",
+                "",
+                "",
+                "")
+            val data =
+                "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
             println("jdfjhjds$data")
             val changePhotoResponseModelCall =
                 apiServices.uploadRegistedinsurance(data)
             changePhotoResponseModelCall.enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>, response: Response<String>) {
                     if (response.isSuccessful) {
-                       DialogUtil.stopProgressDisplay()
+                        DialogUtil.stopProgressDisplay()
                         val fullResponse = response.body()
                         val XmlString = fullResponse?.substring(fullResponse.indexOf("\">") + 2)
                         val result = XmlString?.replace(("</string>").toRegex(), "")
@@ -160,7 +164,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
                             val jsonObject = categoryObject?.getJSONObject(0)
                             val Result = jsonObject?.getString("RetValue")
                             if (Result.equals("1", ignoreCase = true)) {
-                             view?.showMessage("Insurance Update Successfully")
+                                view?.showMessage("Insurance Update Successfully")
                             } else {
                                 /* Snackbar.with(getActivity(), null)
                                      .type(Type.ERROR)
@@ -178,6 +182,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
                         view?.showMessage(response.message())
                     }
                 }
+
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     DialogUtil.stopProgressDisplay()
                     view?.showMessage("Server Error,Please Try Again")
@@ -222,9 +227,10 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
                 "2",
                 "",
                 "1",
-                ""
-            )
-            val data = "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
+                "",
+                "","","","")
+            val data =
+                "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
             val changePhotoResponseModelCall =
                 apiServices.uploadRegistedinsurance(data)
             changePhotoResponseModelCall.enqueue(object : Callback<String> {
@@ -263,6 +269,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
                         view?.showMessage(response.message())
                     }
                 }
+
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     DialogUtil.stopProgressDisplay()
                     view?.showMessage(t.localizedMessage.toString())
@@ -291,7 +298,8 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
             ).client(client).build()
             val apiServices = retrofit.create(UploadRegisterDocumentFalse::class.java)
             val uploadRegisterData = UploadRegisterDataDocumentFalse(callId.toString())
-            val data = "{" + "\"tblCallCenter_IsStatus\"" + " : " + Gson().toJson(uploadRegisterData) + "}"
+            val data =
+                "{" + "\"tblCallCenter_IsStatus\"" + " : " + Gson().toJson(uploadRegisterData) + "}"
             val changePhotoResponseModelCall =
                 apiServices.uploadRegisterDocumentFalse(data)
             changePhotoResponseModelCall.enqueue(object : Callback<String> {
@@ -314,7 +322,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
                             if (Result.equals("1", ignoreCase = true)) {
                                 view?.showMessage("Insurance Update Successfully")
                             } else {
-                               view?.showMessage("Please Try again")
+                                view?.showMessage("Please Try again")
                             }
                         } catch (e: JSONException) {
                             e.printStackTrace()
@@ -324,6 +332,7 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
                         view?.showMessage(response.message())
                     }
                 }
+
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     DialogUtil.stopProgressDisplay()
                     view?.showMessage(t.localizedMessage.toString())

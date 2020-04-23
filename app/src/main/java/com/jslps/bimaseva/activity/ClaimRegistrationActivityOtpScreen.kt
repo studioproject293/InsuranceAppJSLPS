@@ -23,6 +23,7 @@ import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.R
 import com.jslps.bimaseva.network.InsuranceCreate
 import com.jslps.bimaseva.network.InsuranceCreateOTP
+import com.jslps.bimaseva.network.InsuranceCreateTest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -79,6 +80,7 @@ class ClaimRegistrationActivityOtpScreen : AppCompatActivity() {
         val model: CallCenter = intent.getParcelableExtra("data")
         val preferences = getSharedPreferences("MyPrefInsuranceOTP", Context.MODE_PRIVATE)
         var value = preferences?.getString("otp", "")
+        var valueInsurnceType = preferences?.getString("insurnceType", "")
         val pinView = findViewById<PinView>(R.id.pinView)
         button = findViewById<Button>(R.id.button)
         resendOtp = findViewById<TextView>(R.id.resendOtp)
@@ -137,75 +139,143 @@ class ClaimRegistrationActivityOtpScreen : AppCompatActivity() {
         button?.setOnClickListener {
             if (pinView.text.toString().length == 4) {
                 if (pinView.text.toString().equals(value)) {
-                    val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(model) + "] } "
-                    if (DialogUtil.isConnectionAvailable(this@ClaimRegistrationActivityOtpScreen)) {
-                        DialogUtil.displayProgress(this@ClaimRegistrationActivityOtpScreen)
-                        val gson = GsonBuilder().setLenient().create()
-                        val interceptor = HttpLoggingInterceptor()
-                        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                        val builder = OkHttpClient.Builder()
-                        //comment in live build and uncomment in uat
-                        builder.interceptors().add(interceptor)
-                        builder.connectTimeout(120, TimeUnit.SECONDS)
-                        builder.readTimeout(120, TimeUnit.SECONDS)
-                        val client = builder.build()
-                        val retrofit =
-                            Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
-                                ScalarsConverterFactory.create()
-                            ).client(client).build()
-                        val apiServices = retrofit.create(InsuranceCreate::class.java)
-                        val createInsurance = apiServices.createInsurance(data)
-                        createInsurance.enqueue(object : Callback<String> {
-                            override fun onResponse(
-                                call: Call<String>,
-                                response: Response<String>
-                            ) {
-                                DialogUtil.stopProgressDisplay()
-                                val fullResponse = response.body()
-                                val XmlString =
-                                    fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                                val result = XmlString?.replace(("</string>").toRegex(), "")
-                                if (result.equals("\"1\"")) {
-                                    Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
-                                        .setTitle("Insurance Create Successfully ")
-                                        .sneakSuccess()
-                                    val intent = Intent(
-                                        this@ClaimRegistrationActivityOtpScreen,
-                                        WelcomeActivity::class.java
-                                    )
+                    if (valueInsurnceType == "Assert") {
+                        val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(model) + "] } "
+                        if (DialogUtil.isConnectionAvailable(this@ClaimRegistrationActivityOtpScreen)) {
+                            DialogUtil.displayProgress(this@ClaimRegistrationActivityOtpScreen)
+                            val gson = GsonBuilder().setLenient().create()
+                            val interceptor = HttpLoggingInterceptor()
+                            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+                            val builder = OkHttpClient.Builder()
+                            //comment in live build and uncomment in uat
+                            builder.interceptors().add(interceptor)
+                            builder.connectTimeout(120, TimeUnit.SECONDS)
+                            builder.readTimeout(120, TimeUnit.SECONDS)
+                            val client = builder.build()
+                            val retrofit =
+                                Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
+                                    .addConverterFactory(
+                                        ScalarsConverterFactory.create()
+                                    ).client(client).build()
+                            val apiServices = retrofit.create(InsuranceCreateTest::class.java)
+                            val createInsurance = apiServices.createInsurance(data)
+                            createInsurance.enqueue(object : Callback<String> {
+                                override fun onResponse(
+                                    call: Call<String>,
+                                    response: Response<String>) {
+                                    DialogUtil.stopProgressDisplay()
+                                    val fullResponse = response.body()
+                                    val XmlString =
+                                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                    val result = XmlString?.replace(("</string>").toRegex(), "")
+                                    if (result.equals("\"1\"")) {
+                                        Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
+                                            .setTitle("Insurance Create Successfully ")
+                                            .sneakSuccess()
+                                        val intent = Intent(
+                                            this@ClaimRegistrationActivityOtpScreen,
+                                            WelcomeActivity::class.java
+                                        )
 
-                                    Handler().postDelayed(object : Runnable {
-                                        override fun run() {
-                                            intent.flags =
-                                                Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                            startActivity(intent)
-                                        }
-                                    }, 2000)
+                                        Handler().postDelayed(object : Runnable {
+                                            override fun run() {
+                                                intent.flags =
+                                                    Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                                startActivity(intent)
+                                            }
+                                        }, 2000)
 
-                                } else {
+                                    } else {
+                                        Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
+                                            .setTitle("Please Try Again")
+                                            .sneakError()
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<String>, t: Throwable) {
+                                    DialogUtil.stopProgressDisplay()
                                     Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
-                                        .setTitle("Please Try Again")
+                                        .setTitle("Server Error Please Try Again")
                                         .sneakError()
                                 }
-                            }
+                            })
 
-                            override fun onFailure(call: Call<String>, t: Throwable) {
-                                DialogUtil.stopProgressDisplay()
-                                Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
-                                    .setTitle("Server Error Please Try Again")
-                                    .sneakError()
-                            }
-                        })
+                        } else {
+                            Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
+                                .setTitle(Constant.NO_INTERNET)
+                                .sneakError()
+                        }
                     } else {
-                        Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
-                            .setTitle(Constant.NO_INTERNET)
-                            .sneakError()
+                        val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(model) + "] } "
+                        if (DialogUtil.isConnectionAvailable(this@ClaimRegistrationActivityOtpScreen)) {
+                            DialogUtil.displayProgress(this@ClaimRegistrationActivityOtpScreen)
+                            val gson = GsonBuilder().setLenient().create()
+                            val interceptor = HttpLoggingInterceptor()
+                            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+                            val builder = OkHttpClient.Builder()
+                            //comment in live build and uncomment in uat
+                            builder.interceptors().add(interceptor)
+                            builder.connectTimeout(120, TimeUnit.SECONDS)
+                            builder.readTimeout(120, TimeUnit.SECONDS)
+                            val client = builder.build()
+                            val retrofit =
+                                Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
+                                    .addConverterFactory(
+                                        ScalarsConverterFactory.create()
+                                    ).client(client).build()
+                            val apiServices = retrofit.create(InsuranceCreate::class.java)
+                            val createInsurance = apiServices.createInsurance(data)
+                            createInsurance.enqueue(object : Callback<String> {
+                                override fun onResponse(
+                                    call: Call<String>,
+                                    response: Response<String>) {
+                                    DialogUtil.stopProgressDisplay()
+                                    val fullResponse = response.body()
+                                    val XmlString =
+                                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                    val result = XmlString?.replace(("</string>").toRegex(), "")
+                                    if (result.equals("\"1\"")) {
+                                        Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
+                                            .setTitle("Insurance Create Successfully ")
+                                            .sneakSuccess()
+                                        val intent = Intent(
+                                            this@ClaimRegistrationActivityOtpScreen,
+                                            WelcomeActivity::class.java
+                                        )
+
+                                        Handler().postDelayed(object : Runnable {
+                                            override fun run() {
+                                                intent.flags =
+                                                    Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                                startActivity(intent)
+                                            }
+                                        }, 2000)
+
+                                    } else {
+                                        Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
+                                            .setTitle("Please Try Again")
+                                            .sneakError()
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<String>, t: Throwable) {
+                                    DialogUtil.stopProgressDisplay()
+                                    Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
+                                        .setTitle("Server Error Please Try Again")
+                                        .sneakError()
+                                }
+                            })
+
+                        } else {
+                            Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
+                                .setTitle(Constant.NO_INTERNET)
+                                .sneakError()
+                        }
                     }
                 } else {
                     Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
                         .setTitle("Please enter valid OTP")
-                        .sneakError()
-                }
+                        .sneakError() }
 
             } else {
                 Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup

@@ -1,25 +1,24 @@
-package com.jslps.bimaseva.ui.insuranceListAssertInsurance
+package com.jslps.bimaseva.ui.documentAssertNotReady
 
 import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.irozon.sneaker.Sneaker
+import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.R
+import com.jslps.bimaseva.cache.AppCache
 import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
 import com.jslps.bimaseva.model.HeaderData
-import com.jslps.bimaseva.ui.BaseFragment
-
-import com.jslps.bimaseva.Constant
-import com.jslps.bimaseva.cache.AppCache
 import com.jslps.bimaseva.model.Master
-import com.jslps.bimaseva.ui.insuranceList.adapter.InsuranceListAdapter
+import com.jslps.bimaseva.ui.BaseFragment
+import com.jslps.bimaseva.ui.documentAssertNotReady.adapter.DocumentNotReadyAssertListAdapter
 
-class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemSelectListener {
+
+
+class DocumentAssertListFragment : BaseFragment(), DocumentNotReadyAssertView, OnFragmentListItemSelectListener {
     override fun showMessage(message: Any?) {
         val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
         toast.show()
@@ -30,7 +29,7 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
             recycleview?.visibility = View.VISIBLE
             if (homeRecyclerviewAdapter == null)
                 homeRecyclerviewAdapter =
-                    InsuranceListAdapter(cardInitResponse, activity as Activity, "")
+                    DocumentNotReadyAssertListAdapter(cardInitResponse, activity as Activity, "")
             else
                 homeRecyclerviewAdapter?.updateList(cardInitResponse)
             homeRecyclerviewAdapter?.setListner(presenter?.getListner())
@@ -46,7 +45,7 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
         }
     }
 
-    var homeRecyclerviewAdapter: InsuranceListAdapter? = null
+    var homeRecyclerviewAdapter: DocumentNotReadyAssertListAdapter? = null
 
     override fun showProgress() {
     }
@@ -55,6 +54,8 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
     }
 
     override fun noInternet() {
+        val toast = Toast.makeText(context, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
+        toast.show()
     }
 
     override fun onListItemSelected(itemId: Int, data: Any) {
@@ -65,7 +66,7 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
 
     private var rootView: View? = null
     private var recycleview: RecyclerView? = null
-    var presenter: InsurancePresenter? = null
+    var presenter: DocumentNotReadyAssertPresenter? = null
     override fun onResume() {
         super.onResume()
         mListener!!.onFragmentUpdate(
@@ -73,8 +74,6 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
             HeaderData(false, AppCache.getCache().insurancetype.toString())
         )
     }
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -82,7 +81,7 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
         super.onCreateView(inflater, container, savedInstanceState)
         rootView = inflater.inflate(R.layout.fragment_home, container, false)
         recycleview = rootView?.findViewById(R.id.recycleview)
-        presenter = InsurancePresenter(this, activity as Activity)
+        presenter = DocumentNotReadyAssertPresenter(this, activity as Activity)
         recycleview?.layoutManager = Constant.getVerticalLayout(activity!!)
         presenter?.resume(insuranceName)
         return rootView!!
@@ -90,9 +89,9 @@ class InsuranceListFragment : BaseFragment(), InsuranceView, OnFragmentListItemS
 
     companion object {
         var insuranceName: List<Master>? = null
-        fun getInstance(insuranceNamee: List<Master>): InsuranceListFragment {
+        fun getInstance(insuranceNamee: List<Master>): DocumentAssertListFragment {
             insuranceName = insuranceNamee
-            return InsuranceListFragment()
+            return DocumentAssertListFragment()
         }
     }
 }

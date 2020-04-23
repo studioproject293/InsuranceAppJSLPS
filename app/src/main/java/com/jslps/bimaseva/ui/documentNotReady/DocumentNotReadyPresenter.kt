@@ -113,7 +113,8 @@ class DocumentNotReadyPresenter(view: DocumentNotReadyView, context: Activity) :
                 "1",
                 "",
                 "0",
-                ""
+                "",
+                "","","",""
             )
             val data = "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
             val changePhotoResponseModelCall =

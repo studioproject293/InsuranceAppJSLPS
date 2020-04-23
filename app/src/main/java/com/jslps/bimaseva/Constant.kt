@@ -24,6 +24,15 @@ object Constant {
     const val INSURANCE_CREATE_INSIDE_OTHER = 115
     const val REPORT_LIST_FRAGMENT = 116
     const val ASSERTINSURNCE = 117
+    const val ASSERT_INSURANCE_LIST = 118
+    const val SCHEME_DETAILS_ASSERT_FRAGMENT = 119
+    const val CLAIM_SETTELED_DETAILS_FRAGMENT_ASSERT = 120
+    const val UNDER_PROCESS_DETAILS_FRAGMENT_ASSERT = 121
+    const val INSURANCE_DETAILS_FRAGMENT_ASSERT = 122
+    const val DOCUMENT_FALSE_LIST_FRAGMENT_ASSERT = 123
+    const val DOCUMENT_LIST_FRAGMENT_ASSERT = 124
+    const val ASSERT_SHG_REGISTRATION = 125
+    const val ASSERT_REGISTRATION_OTHER = 126
     const val setTitle = 1111
     const val UPDATE__NO_INTERNET = 209
     const val API_BASE_URL = "http://swalekha.in/webServiceModalPopup.asmx/"

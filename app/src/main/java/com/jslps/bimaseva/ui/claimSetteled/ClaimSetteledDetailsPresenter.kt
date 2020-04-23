@@ -109,8 +109,8 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
                     amount,
                 "3", "",
                 "0",
-                ""
-            )
+                "",
+                "","","","")
             val data = "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
             println("jdfjhjds$data")
             val changePhotoResponseModelCall =
@@ -196,8 +196,8 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
                 "",
                 "4",reason.toString(),
                 "0",
-                ""
-            )
+                "",
+            "","","","")
             val data = "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
             println("jdfjhjds$data")
             val changePhotoResponseModelCall =

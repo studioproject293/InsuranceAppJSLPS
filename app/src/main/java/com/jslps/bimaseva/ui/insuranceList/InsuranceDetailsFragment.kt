@@ -198,8 +198,7 @@ class InsuranceDetailsFragment : BaseFragment(), InsuranceView, OnFragmentListIt
                 || ActivityCompat.checkSelfPermission(
                     context as Activity,
                     Manifest.permission.READ_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
+                ) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(
                     context as Activity,
                     arrayOf(

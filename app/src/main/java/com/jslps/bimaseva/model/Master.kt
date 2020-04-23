@@ -45,7 +45,11 @@ data class Master(
     @SerializedName("Amount") val amount : String,
     @SerializedName("RejectReason") val rejectReason : String,
     @SerializedName("Status") val Status : String,
-    @SerializedName("insuranceTypeFetch") var insuranceTypeFetch : String
+    @SerializedName("insuranceTypeFetch") var insuranceTypeFetch : String,
+    @SerializedName("Death_image") var Death_image : String,
+    @SerializedName("Panchnama_image") var Panchnama_image : String,
+    @SerializedName("Postmortem_image") var Postmortem_image : String,
+    @SerializedName("Tag_image") var Tag_image : String
 
 
 )

@@ -46,6 +46,8 @@
         <activity android:name=".activity.ClaimRegistrationActivityOthers"
                 android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.ClaimRegistrationActivityOtpScreen" />
+        <activity android:name=".assetsReg.AssetsRegistrationShgMember" />
+        <activity android:name=".assetsReg.AssetsRegistrationOther" />
 
         <meta-data
                 android:name="DATABASE"

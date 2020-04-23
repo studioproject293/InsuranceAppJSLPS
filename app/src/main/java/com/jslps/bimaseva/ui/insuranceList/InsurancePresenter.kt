@@ -136,8 +136,8 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
                 "1",
                 "",
                 "0",
-                ""
-            )
+                "",
+            "","","","")
             val data = "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
             println("jdfjhjds$data")
             val changePhotoResponseModelCall =
@@ -222,8 +222,9 @@ class InsurancePresenter(view: InsuranceView, context: Activity) : BasePresenter
                 "2",
                 "",
                 "1",
-                ""
-            )
+                "",
+                "","","","")
+
             val data = "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
             val changePhotoResponseModelCall =
                 apiServices.uploadRegistedinsurance(data)

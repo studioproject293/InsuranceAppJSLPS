@@ -202,7 +202,8 @@ class ClaimRegistrationFragmentOthers : BaseFragment() {
                     nameofcaller?.text.toString(),
                     id,
                     createdBy.toString(),
-                    "", ""
+                    "", "",
+                    "","","",""
                 )
                 val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(callCenter) + "] } "
                 if (DialogUtil.isConnectionAvailable(activity!!)) {

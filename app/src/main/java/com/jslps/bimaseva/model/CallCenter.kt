@@ -22,6 +22,10 @@ data class CallCenter(
 	val guid: String,
 	val CreatedBy: String,
 	val Gender: String,
-	val Relation: String
+	val Relation: String,
+	val InstitutionType: String,
+	val AssetType: String,
+	val DiedAnimals_No: String,
+	val Reason_Death: String
 
 ): Parcelable

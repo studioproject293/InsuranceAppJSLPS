@@ -182,7 +182,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                     id,
                     "Admin",
                     "0",
-                    "0"
+                    "0","","","",""
                 )
                 val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(callCenter) + "] } "
 
@@ -215,6 +215,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                             val result = XmlString?.replace(("</string>").toRegex(), "")
                             val pref = getSharedPreferences("MyPrefInsuranceOTP", 0) // 0 - for private mode
                             val editor = pref.edit()
+                            editor.putString("insurnceType", "Not")
                             editor.putString("otp", result)
                             editor.apply()
 

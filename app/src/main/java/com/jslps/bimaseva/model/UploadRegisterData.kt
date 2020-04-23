@@ -17,5 +17,9 @@ data class UploadRegisterData(
     val Step:String,
     val RejectReason: String?,
     val Flag_NU :String?,
-    val CreatedOn_NU :String
+    val CreatedOn_NU :String,
+    val Death_image: String?,
+    val Panchnama_image: String?,
+    val Postmortem_image: String?,
+    val Tag_image: String?
 )

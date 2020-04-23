@@ -30,9 +30,7 @@ class HomeFragment : BaseFragment(), HomeView, OnFragmentListItemSelectListener 
     override fun gotoScreen(fragmentID: Int, message: Any?) {
         if (fragmentID == Constant.INSURANCE_CREATE_INSIDE) {
             mListener?.onFragmentInteraction(Constant.INSURANCE_CREATE_INSIDE,"")
-        } else if (fragmentID == Constant.ASSERTINSURNCE) {
-            mListener?.onFragmentInteraction(Constant.ASSERTINSURNCE,"")
-        } else
+        }  else
             mListener?.onFragmentInteraction(fragmentID, message as String)
     }
 

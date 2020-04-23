@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentManager
 import com.jslps.bimaseva.R
 import com.jslps.bimaseva.listener.OnFragmentInteractionListener
 import com.jslps.bimaseva.ui.home.HomeFragment
-import com.jslps.bimaseva.ui.scheme.SchemeDetailsFragment
 import com.jslps.bimaseva.Constant
 import java.io.File
 import java.io.FileInputStream
@@ -22,19 +21,26 @@ import com.jslps.bimaseva.model.HeaderData
 import com.jslps.bimaseva.model.Master
 import com.jslps.bimaseva.ui.NewInsuranceForm
 import com.jslps.bimaseva.ui.claimSetteled.ClaimSetteledDetailsFragment
+import com.jslps.bimaseva.ui.documentAssertNotReady.DocumentAssertListFragment
 import com.jslps.bimaseva.ui.documentFale.DocumentFalseListFragment
 import com.jslps.bimaseva.ui.documentNotReady.DocumentListFragment
 import com.jslps.bimaseva.ui.documentNotReady.DocumentNotReadyDetailsFragment
 import com.jslps.bimaseva.ui.insuranceList.InsuranceDetailsFragment
 import com.jslps.bimaseva.ui.insuranceList.InsuranceListFragment
 import com.jslps.bimaseva.ui.insuranceListAssertInsurance.InsuranceDetailsFragmentAssert
+import com.jslps.bimaseva.ui.insuranceListAssertInsurance.InsuranceListAssertFragment
 import com.jslps.bimaseva.ui.registration.ClaimRegistrationFragmentFamily
 import com.jslps.bimaseva.ui.registration.ClaimRegistrationFragmentOthers
 import com.jslps.bimaseva.ui.registration.ClaimRegistrationFragmentSHGMember
 import com.jslps.bimaseva.ui.registration.RegistrationList
+import com.jslps.bimaseva.ui.registration.claimRegister.ClaimRegistrationFragmentSHGOthers
+import com.jslps.bimaseva.ui.registration.claimRegisterAssert.ClaimRegistrationFragment
 import com.jslps.bimaseva.ui.reports.ReportListFragment
 import com.jslps.bimaseva.ui.reports.SchemeDetailsFragmentReport
+import com.jslps.bimaseva.ui.scheme.SchemeDetailsFragment
+import com.jslps.bimaseva.ui.schemeAssert.SchemeAssertDetailsFragment
 import com.jslps.bimaseva.ui.underProcess.UnderProcessDetailsFragment
+import com.jslps.bimaseva.ui.underProcessAssertInsurance.UnderProcessDetailsFragmentAssert
 
 
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
@@ -105,6 +111,20 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                     )
                     .commitAllowingStateLoss()
             }
+            Constant.DOCUMENT_LIST_FRAGMENT_ASSERT -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                    .addToBackStack(mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        DocumentAssertListFragment.getInstance(data as List<Master>),
+                        mFragmentTag
+                    )
+                    .commitAllowingStateLoss()
+            }
+
             Constant.DOCUMENT_FALSE_LIST_FRAGMENT -> {
                 mFragmentManager?.beginTransaction()!!.setCustomAnimations(
                     android.R.anim.slide_in_left,
@@ -227,12 +247,106 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                     .replace(R.id.fragment_main, ReportListFragment.getInstance(data as String), mFragmentTag)
                     .commitAllowingStateLoss()
             }
-            Constant.ASSERTINSURNCE-> {
+            /*Constant.ASSERTINSURNCE-> {
                 mFragmentManager?.beginTransaction()!!.setCustomAnimations(
                     android.R.anim.slide_in_left,
                     android.R.anim.slide_out_right)
                     .addToBackStack(mFragmentTag)
                     .replace(R.id.fragment_main, InsuranceDetailsFragmentAssert.getInstance(), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }*/
+            Constant.ASSERT_INSURANCE_LIST-> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right)
+                    .addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, InsuranceListAssertFragment.getInstance(data as List<Master>), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
+            Constant.SCHEME_DETAILS_ASSERT_FRAGMENT-> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right)
+                    .addToBackStack(mFragmentTag)
+                    .replace(R.id.fragment_main, SchemeAssertDetailsFragment.getInstance(data as String), mFragmentTag)
+                    .commitAllowingStateLoss()
+            }
+            Constant.UNDER_PROCESS_DETAILS_FRAGMENT_ASSERT -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                    .addToBackStack(mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        UnderProcessDetailsFragmentAssert.getInstance(data as Master),
+                        mFragmentTag
+                    )
+                    .commitAllowingStateLoss()
+            }
+            Constant.INSURANCE_DETAILS_FRAGMENT_ASSERT -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                    .addToBackStack(mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        InsuranceDetailsFragmentAssert.getInstance(data as Master),
+                        mFragmentTag
+                    )
+                    .commitAllowingStateLoss()
+            }
+            Constant.CLAIM_SETTELED_DETAILS_FRAGMENT_ASSERT -> {
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                    .addToBackStack(mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        com.jslps.bimaseva.ui.claimSetteledAssert.ClaimSetteledDetailsFragment.getInstance(data as Master),
+                        mFragmentTag
+                    )
+                    .commitAllowingStateLoss()
+            }
+            Constant.DOCUMENT_FALSE_LIST_FRAGMENT_ASSERT ->{
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                    .addToBackStack(mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        com.jslps.bimaseva.ui.documentFalseAssert.DocumentFalseListFragment.getInstance(data as List<Master>),
+                        mFragmentTag
+                    )
+                    .commitAllowingStateLoss()
+            }
+            Constant.ASSERT_SHG_REGISTRATION ->{
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                    .addToBackStack(mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        ClaimRegistrationFragment(),
+                        mFragmentTag
+                    )
+                    .commitAllowingStateLoss()
+            }
+            Constant.ASSERT_REGISTRATION_OTHER ->{
+                mFragmentManager?.beginTransaction()!!.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                    .addToBackStack(mFragmentTag)
+                    .replace(
+                        R.id.fragment_main,
+                        ClaimRegistrationFragmentSHGOthers(),
+                        mFragmentTag
+                    )
                     .commitAllowingStateLoss()
             }
         }

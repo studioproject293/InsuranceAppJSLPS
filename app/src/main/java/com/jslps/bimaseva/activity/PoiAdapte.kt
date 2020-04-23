@@ -61,6 +61,10 @@ import com.jslps.bimaseva.model.districtModel.DistrictMasterClass
                 val districtMasterClass = mPois as ArrayList<BlockMasterClass>
                 vh.label.text = districtMasterClass.get(position).group_Name
             }
+            "PG" -> {
+                val districtMasterClass = mPois as ArrayList<BlockMasterClass>
+                vh.label.text = districtMasterClass.get(position).pgnmae
+            }
             "bank" -> {
                 val districtMasterClass = mPois as ArrayList<BlockMasterClass>
                 vh.label.text = districtMasterClass.get(position).bankName
@@ -108,6 +112,9 @@ import com.jslps.bimaseva.model.districtModel.DistrictMasterClass
                             }
                             "shg" -> {
                                 it.group_Name.toLowerCase().contains(queryString)
+                            }
+                            "PG" -> {
+                                it.pgnmae.toLowerCase().contains(queryString)
                             }
                             "bank" -> {
                                 it.bankName.toLowerCase().contains(queryString)

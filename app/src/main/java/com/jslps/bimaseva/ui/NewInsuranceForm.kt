@@ -172,7 +172,7 @@ class NewInsuranceForm : BaseFragment() {
                     id,
                     createdBy!!,
                     genderId?.toString()!!,
-                "")
+                "","","","","")
                 val data = "{" + "\"CallCenter\"" + " : [" + Gson().toJson(callCenter) + "] } "
                 if (DialogUtil.isConnectionAvailable(activity!!)) {
                     DialogUtil.displayProgress(activity!!)
@@ -187,8 +187,7 @@ class NewInsuranceForm : BaseFragment() {
                     val client = builder.build()
                     val retrofit =
                         Retrofit.Builder().baseUrl(Constant.API_BASE_URL).addConverterFactory(
-                            ScalarsConverterFactory.create()
-                        ).client(client).build()
+                            ScalarsConverterFactory.create()).client(client).build()
                     val apiServices = retrofit.create(InsuranceCreate::class.java)
                     val createInsurance = apiServices.createInsurance(data)
                     createInsurance.enqueue(object : Callback<String> {

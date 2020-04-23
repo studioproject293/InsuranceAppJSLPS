@@ -39,7 +39,7 @@ class InsuranceListAdapter(items: ArrayList<Master>, activity: Context, insuranc
         p0.village.text = masterModel?.villagename
         p0.contactNo.text = masterModel?.phno_ofNominee
         p0.bankbranch.text = masterModel?.branchName
-        p0.nameOfInsurance.text =  AppCache.getCache().insurancetype
+        p0.nameOfInsurance.text =  "Asset Insurance"
         p0.view.setOnClickListener {
             if (masterModel != null) {
                 mListner?.onListItemSelected(p1, masterModel)

@@ -223,7 +223,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                 when (position) {
                     0 -> {
 
-                            if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
+                        if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
                                 DialogUtil.displayProgress(this@WelcomeActivityNewNext)
                                 val gson = GsonBuilder().setLenient().create()
                                 val interceptor = HttpLoggingInterceptor()
@@ -241,7 +241,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                                         ).client(client).build()
                                 val apiServices = retrofit.create(ReportsEntryService::class.java)
                                 val changePhotoResponseModelCall =
-                                    apiServices.getReportsEntryService("Insurance1","")
+                                    apiServices.getReportsEntryService("Insurance1",schemeId.toString())
                                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                                     override fun onResponse(
                                         call: Call<String>,
@@ -388,7 +388,6 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                                         recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
 
                                     }
-
                                     override fun onFailure(call: Call<String>, t: Throwable) {
                                         DialogUtil.stopProgressDisplay()
                                         Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
@@ -428,8 +427,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                                 changePhotoResponseModelCall.enqueue(object : Callback<String> {
                                     override fun onResponse(
                                         call: Call<String>,
-                                        response: Response<String>
-                                    ) {
+                                        response: Response<String>) {
                                         DialogUtil.stopProgressDisplay()
                                         val gson = Gson()
                                         val fullResponse = response.body()
@@ -500,13 +498,19 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                                         val mStudentObject1 =
                                             gson.fromJson(result, BaseClassReports::class.java)
                                         System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                        if (mStudentObject1!= null){
                                         val benifisheryRowRecyclerviewAdapter =
                                             EntryReportsRecyclerviewAdapter(
                                                 this@WelcomeActivityNewNext,
                                                 mStudentObject1.master as ArrayList<MasterReports>,
                                                 name
                                             )
-                                        recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+                                    }else{
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("No Data Available")
+                                                .sneakError()
+                                        }
 
                                     }
 

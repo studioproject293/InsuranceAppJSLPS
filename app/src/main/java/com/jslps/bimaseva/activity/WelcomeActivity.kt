@@ -8,6 +8,7 @@ import Table3Db
 import Table4Db
 import Table5Db
 import Table6Db
+import Table7Db
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -507,6 +508,16 @@ class WelcomeActivity : AppCompatActivity() {
                                                             mStudentObject1.table6[i].BankType,
                                                             mStudentObject1.table6[i].IFSCCode,
                                                             mStudentObject1.table6[i].BankName_Hindi
+                                                        )
+                                                        stateModel1.save()
+                                                    }
+                                                    SugarRecord.deleteAll(Table7Db::class.java)
+                                                    for (i in mStudentObject1.table7.indices) {
+                                                        val stateModel1 = Table7Db(
+                                                            mStudentObject1.table7[i].ClusterCode,
+                                                            mStudentObject1.table7[i].VillageCode,
+                                                            mStudentObject1.table7[i].Pg_Name,
+                                                            mStudentObject1.table7[i].VillageCode
                                                         )
                                                         stateModel1.save()
                                                     }

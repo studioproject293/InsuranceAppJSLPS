@@ -1,4 +1,5 @@
 import com.google.gson.annotations.SerializedName
+import com.jslps.bimaseva.model.Table7
 
 
 data class BaseClass (
@@ -9,6 +10,7 @@ data class BaseClass (
 	@SerializedName("Table3") val table3 : List<Table3>,
 	@SerializedName("Table4") val table4 : List<Table4>,
 	@SerializedName("Table5") val table5 : List<Table5>,
-	@SerializedName("Table6") val table6 : List<Table6>
+	@SerializedName("Table6") val table6 : List<Table6>,
+	@SerializedName("Table7") val table7 : List<Table7>
 
 )

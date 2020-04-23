@@ -177,7 +177,7 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                     nameofcaller?.text.toString(),
                     id,
                     "Admin",
-                    "", ""
+                    "", "","","","",""
                 )
                 if (DialogUtil.isConnectionAvailable(this@ClaimRegistrationActivityOthers)) {
                     DialogUtil.displayProgress(this@ClaimRegistrationActivityOthers)
@@ -212,6 +212,7 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                                 0
                             ) // 0 - for private mode
                             val editor = pref.edit()
+                            editor.putString("insurnceType", "Not")
                             editor.putString("otp", result)
                             editor.apply()
 

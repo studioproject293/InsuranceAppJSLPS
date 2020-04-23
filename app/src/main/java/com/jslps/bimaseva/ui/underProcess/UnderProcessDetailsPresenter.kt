@@ -107,8 +107,8 @@ class UnderProcessDetailsPresenter(view: UnderProcessDetailsView, context: Activ
                 "",
                 "3", "",
                 "0",
-                ""
-            )
+                "",
+                "","","","")
             val data = "{" + "\"InsuranceImages\"" + " : [" + Gson().toJson(uploadRegisterData) + "] }"
             val changePhotoResponseModelCall =
                 apiServices.uploadRegistedinsurance(data)

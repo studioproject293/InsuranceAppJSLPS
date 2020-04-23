@@ -190,7 +190,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                     id,
                     "Admin",
                     genderId.toString(),
-                    relationShipId.toString()
+                    relationShipId.toString(),"","","",""
                 )
 
                 if (DialogUtil.isConnectionAvailable(this@ClaimRegistrationActivityFamilySHGMember)) {
@@ -226,6 +226,7 @@ class ClaimRegistrationActivityFamilySHGMember : AppCompatActivity() {
                                 0
                             ) // 0 - for private mode
                             val editor = pref.edit()
+                            editor.putString("insurnceType", "Not")
                             editor.putString("otp", result)
                             editor.apply()
 
