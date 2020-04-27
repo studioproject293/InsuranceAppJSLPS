@@ -35,7 +35,7 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView,
         val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
         toast.show()
         if (message != null) {
-            if (message.equals("Insurance Update Successfully")) {
+            if (message == getString(R.string.InsuranceUpdateSuccessfully)) {
                 val intent = Intent(activity, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -62,7 +62,7 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView,
     }
 
     override fun noInternet() {
-        val toast = Toast.makeText(context, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(context, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT)
         toast.show()
     }
 
@@ -135,7 +135,7 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView,
         when (requestCode) {
             0 -> {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     attchmemntPopup(activity as Activity)
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
@@ -188,7 +188,7 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView,
         imageLayout?.visibility = View.VISIBLE
         rejectReason?.visibility = View.GONE
         actionButton?.visibility = View.GONE
-        textHeading?.text = "Service Charged recived"
+        textHeading?.text = "Service Charged received"
         // block?.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.move));
         village?.text = insuranceNameeee?.villagename
         contactNo?.text = insuranceNameeee?.phno_ofNominee.toString()
@@ -204,7 +204,7 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView,
                 documentPreviousAttached?.setImageBitmap(bitmap)
                 val byteArray1: ByteArray =
                     Base64.decode(insuranceNameeee?.image_UP, 0)
-                val bitmap1 = BitmapFactory.decodeByteArray(byteArray1, 0, byteArray.size)
+                val bitmap1 = BitmapFactory.decodeByteArray(byteArray1, 0, byteArray1.size)
                 doucment_previous_underprocess?.setImageBitmap(bitmap1)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -228,10 +228,10 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView,
         claimSetteled?.setOnClickListener {
 
             if (TextUtils.isEmpty(encodedBase64)) {
-                val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
+                val toast = Toast.makeText(activity, getString(R.string.select_image_validation), Toast.LENGTH_SHORT)
                 toast.show()
             } else if (TextUtils.isEmpty(amount?.text.toString())) {
-                val toast = Toast.makeText(activity, "Please Enter Amount", Toast.LENGTH_SHORT)
+                val toast = Toast.makeText(activity, getString(R.string.amountvalidation), Toast.LENGTH_SHORT)
                 toast.show()
             } else {
                 showProgress()
@@ -248,7 +248,7 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView,
             buttonlayout?.visibility = View.GONE
             amount?.visibility = View.GONE
             actionButton?.visibility = View.VISIBLE
-            textHeading?.text = "Write Reject Reason for Rejection"
+            textHeading?.text = getString(R.string.rejectreason)
 
         }
         uploadDocument?.setOnClickListener {

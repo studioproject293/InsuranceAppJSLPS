@@ -88,8 +88,7 @@ class ClaimRegistrationFragmentSHGMember : BaseFragment() {
         super.onResume()
         mListener?.onFragmentUpdate(
             Constant.setTitle,
-            HeaderData(false, "SHG Claim Registration")
-        )
+            HeaderData(false, getString(R.string.selfhelpgroupmember)))
     }
 
     override fun onCreateView(
@@ -276,7 +275,7 @@ class ClaimRegistrationFragmentSHGMember : BaseFragment() {
                     })
                 } else {
                     Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                        .setTitle(Constant.NO_INTERNET)
+                        .setTitle(getString(R.string.no_internet_connection))
                         .sneakError()
                 }
             }

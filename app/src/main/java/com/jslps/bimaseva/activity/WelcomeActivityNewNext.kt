@@ -53,65 +53,8 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                 bank?.visibility = View.GONE
                 district?.visibility = View.VISIBLE
                 frameLayout?.visibility = View.VISIBLE
-                supportActionBar?.title = "District Wise Report";
-                /*if (name.equals("Insurance2")) {
-                    if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
-                        DialogUtil.displayProgress(this@WelcomeActivityNewNext)
-                        val gson = GsonBuilder().setLenient().create()
-                        val interceptor = HttpLoggingInterceptor()
-                        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                        val builder = OkHttpClient.Builder()
-                        //comment in live build and uncomment in uat
-                        builder.interceptors().add(interceptor)
-                        builder.connectTimeout(250, TimeUnit.SECONDS)
-                        builder.readTimeout(250, TimeUnit.SECONDS)
-                        val client = builder.build()
-                        val retrofit =
-                            Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
-                                .addConverterFactory(
-                                    ScalarsConverterFactory.create()
-                                ).client(client).build()
-                        val apiServices = retrofit.create(ReportsEntryService::class.java)
-                        val changePhotoResponseModelCall =
-                            apiServices.getReportsEntryService("Insurance2","")
-                        changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                            override fun onResponse(
-                                call: Call<String>,
-                                response: Response<String>
-                            ) {
-                                DialogUtil.stopProgressDisplay()
-                                val gson = Gson()
-                                val fullResponse = response.body()
-                                val XmlString =
-                                    fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                                val result = XmlString?.replace(("</string>").toRegex(), "")
-                                val mStudentObject1 =
-                                    gson.fromJson(result, BaseClassReports::class.java)
-                                System.out.println("vvh" + gson.toJson(mStudentObject1))
-                                val benifisheryRowRecyclerviewAdapter =
-                                    EntryReportsRecyclerviewAdapter(
-                                        this@WelcomeActivityNewNext,
-                                        mStudentObject1.master as ArrayList<MasterReports>,
-                                        name
-                                    )
-                                recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+                supportActionBar?.title = getString(R.string.districtreport);
 
-                            }
-
-                            override fun onFailure(call: Call<String>, t: Throwable) {
-                                DialogUtil.stopProgressDisplay()
-                                Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                    .setTitle("Server error,Please Try Again")
-                                    .sneakError()
-                            }
-                        })
-                    } else {
-
-                        Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                            .setTitle(Constant.NO_INTERNET)
-                            .sneakError()
-                    }
-                }*/
             }
             name.equals("Insurance1") -> {
                 branch?.visibility = View.VISIBLE
@@ -119,7 +62,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                 block?.visibility = View.VISIBLE
                 district?.visibility = View.VISIBLE
                 frameLayout?.visibility = View.VISIBLE
-                supportActionBar?.title = "All Report";
+                supportActionBar?.title = getString(R.string.allreport);
                 /* bank?.text = "Bank Name"
                  branch?.text = "Branch Name"*/
             }
@@ -184,7 +127,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                     } else {
 
                         Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                            .setTitle(Constant.NO_INTERNET)
+                            .setTitle(getString(R.string.no_internet_connection))
                             .sneakError()
                     }
                 }*/
@@ -275,7 +218,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                             } else {
 
                                 Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                    .setTitle(Constant.NO_INTERNET)
+                                    .setTitle(getString(R.string.no_internet_connection))
                                     .sneakError()
                             }
                         }
@@ -339,7 +282,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                         } else {
 
                             Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                .setTitle(Constant.NO_INTERNET)
+                                .setTitle(getString(R.string.no_internet_connection))
                                 .sneakError()
                         }
                     }
@@ -398,7 +341,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                             } else {
 
                                 Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                    .setTitle(Constant.NO_INTERNET)
+                                    .setTitle(getString(R.string.no_internet_connection))
                                     .sneakError()
                             }
 
@@ -457,7 +400,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                             } else {
 
                                 Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                    .setTitle(Constant.NO_INTERNET)
+                                    .setTitle(getString(R.string.no_internet_connection))
                                     .sneakError()
                             }
 
@@ -523,7 +466,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                                 })
                             } else {
                                 Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                    .setTitle(Constant.NO_INTERNET)
+                                    .setTitle(getString(R.string.no_internet_connection))
                                     .sneakError()
                             }
 

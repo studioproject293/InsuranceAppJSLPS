@@ -249,7 +249,7 @@ class ClaimRegistrationFragment : BaseFragment() {
                     })
                 } else {
                     Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                        .setTitle(Constant.NO_INTERNET)
+                        .setTitle(getString(R.string.no_internet_connection))
                         .sneakError()
                 }
             }
@@ -500,7 +500,7 @@ class ClaimRegistrationFragment : BaseFragment() {
             })
         } else {
             Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }*/
@@ -548,7 +548,7 @@ class ClaimRegistrationFragment : BaseFragment() {
             })
         } else {
             Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -600,7 +600,7 @@ class ClaimRegistrationFragment : BaseFragment() {
             })
         } else {
             Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -648,7 +648,7 @@ class ClaimRegistrationFragment : BaseFragment() {
             })
         } else {
             Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -699,7 +699,7 @@ class ClaimRegistrationFragment : BaseFragment() {
             })
         } else {
             Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -750,7 +750,7 @@ class ClaimRegistrationFragment : BaseFragment() {
             })
         } else {
             Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }

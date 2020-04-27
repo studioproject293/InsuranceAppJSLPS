@@ -17,9 +17,13 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
-import android.os.*
+import android.os.AsyncTask
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -33,7 +37,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.creativityapps.gmailbackgroundlibrary.BackgroundMail
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.irozon.sneaker.Sneaker
@@ -42,6 +45,7 @@ import com.jslps.bimaseva.DialogUtil
 import com.jslps.bimaseva.R
 import com.jslps.bimaseva.activity.adapter.MyCustomPagerAdapter
 import com.jslps.bimaseva.activity.adapter.MyCustomPagerAdapterReports
+import com.jslps.bimaseva.cache.PrefManager
 import com.jslps.bimaseva.model.welcomePageReports.BaseClassReportsWelcomwPage
 import com.jslps.bimaseva.model.welcomePageReports.Listdetails
 import com.jslps.bimaseva.network.LoginServiceNew
@@ -62,8 +66,13 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 class WelcomeActivity : AppCompatActivity() {
-    internal var images = intArrayOf(R.drawable.pmjby, R.drawable.pmsby, R.drawable.apy,R.drawable.images4,
-        R.drawable.images6,R.drawable.images8,R.drawable.images7,R.drawable.crop_padding)
+    internal var images = intArrayOf(
+        R.drawable.pmjby, R.drawable.pmsby, R.drawable.apy, R.drawable.images4,
+        R.drawable.images6, R.drawable.images8, R.drawable.images7, R.drawable.crop_padding
+    )
+    var button_bank_connection: RadioButton? = null
+    var button_brand_connection:RadioButton? = null
+    var radioGroup: RadioGroup? = null
     private var viewPager: ViewPager? = null
     private var registernewClaim: Button? = null
     private val myViewPagerAdapter: MyViewPagerAdapter? = null
@@ -88,6 +97,7 @@ class WelcomeActivity : AppCompatActivity() {
         super.onResume()
         forceUpdate()
     }
+
     internal var viewPagerPageChangeListener: ViewPager.OnPageChangeListener =
         object : ViewPager.OnPageChangeListener {
 
@@ -105,7 +115,26 @@ class WelcomeActivity : AppCompatActivity() {
         }
     var recyclerviewreports: ViewPager? = null
     val speedScroll = 150;
+    var btntg: ToggleButton? = null
     val handler: Handler? = null
+    private var myLocale: Locale? = null
+    var prefManager: PrefManager? = null
+    fun changeLang(lang: String) {
+        if (lang.equals("", ignoreCase = true)) return
+        myLocale = Locale(lang)
+        Locale.setDefault(myLocale)
+        val config = Configuration()
+        config.locale = myLocale
+        baseContext.resources.updateConfiguration(
+            config,
+            baseContext.resources.displayMetrics
+        )
+
+        val intent = Intent(this@WelcomeActivity, WelcomeActivity::class.java)
+        finish()
+        startActivity(intent)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar!!.hide()
@@ -120,8 +149,88 @@ class WelcomeActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.activity_welcome_new_designe)
+//        btntg = findViewById<View>(R.id.toggleButton1) as ToggleButton
+        prefManager = PrefManager.instance
         forceUpdate()
+        button_bank_connection = findViewById(R.id.english)
+        button_brand_connection = findViewById(R.id.hindi)
+        radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
+        if (!TextUtils.isEmpty(prefManager?.prefLangaugeSelection)) {
+            if (prefManager?.prefLangaugeSelection=="english"){
+                button_bank_connection?.setBackgroundResource(R.drawable.radio_button_style)
+                button_brand_connection?.setBackgroundResource(R.drawable.radio_background)
+                button_bank_connection?.setTextColor(resources.getColor(R.color.buttoncolor))
+                button_brand_connection?.setTextColor(resources.getColor(R.color.color_white))
+                val locale = Locale("en")
+                val res = resources
+                val dm = res.displayMetrics
+                val conf = res.configuration
+                conf.locale = locale
+                res.updateConfiguration(conf, dm)
+                prefManager?.prefLangaugeSelection = "english"
+            }else{
+                button_bank_connection?.setBackgroundResource(R.drawable.radio_background)
+                button_brand_connection?.setBackgroundResource(R.drawable.radio_button_style)
+                button_bank_connection?.setTextColor(resources.getColor(R.color.color_white))
+                button_brand_connection?.setTextColor(resources.getColor(R.color.buttoncolor))
+                val locale = Locale("hi")
+                val res = resources
+                val dm = res.displayMetrics
+                val conf = res.configuration
+                conf.locale = locale
+                res.updateConfiguration(conf, dm)
+                prefManager?.prefLangaugeSelection="hindi"
+            }
 
+        }else {
+            button_bank_connection?.setBackgroundResource(R.drawable.radio_button_style)
+            button_brand_connection?.setBackgroundResource(R.drawable.radio_background)
+            button_bank_connection?.setTextColor(resources.getColor(R.color.buttoncolor))
+            button_brand_connection?.setTextColor(resources.getColor(R.color.color_white))
+            val locale = Locale("en")
+            val res = resources
+            val dm = res.displayMetrics
+            val conf = res.configuration
+            conf.locale = locale
+            res.updateConfiguration(conf, dm)
+            prefManager?.prefLangaugeSelection = "english"
+        }
+        radioGroup?.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
+            // checkedId is the RadioButton selected
+            if (checkedId == R.id.english) {
+                button_bank_connection?.setBackgroundResource(R.drawable.radio_button_style)
+                button_brand_connection?.setBackgroundResource(R.drawable.radio_background)
+                button_bank_connection?.setTextColor(resources.getColor(R.color.buttoncolor))
+                button_brand_connection?.setTextColor(resources.getColor(R.color.color_white))
+                val locale = Locale("en")
+                val res = resources
+                val dm = res.displayMetrics
+                val conf = res.configuration
+                conf.locale = locale
+                res.updateConfiguration(conf, dm)
+                prefManager?.prefLangaugeSelection="english"
+                val intent = Intent(this@WelcomeActivity, WelcomeActivity::class.java)
+                finish()
+                startActivity(intent)
+
+            } else {
+                button_bank_connection?.setBackgroundResource(R.drawable.radio_background)
+                button_brand_connection?.setBackgroundResource(R.drawable.radio_button_style)
+                button_bank_connection?.setTextColor(resources.getColor(R.color.color_white))
+                button_brand_connection?.setTextColor(resources.getColor(R.color.buttoncolor))
+                val locale = Locale("hi")
+                val res = resources
+                val dm = res.displayMetrics
+                val conf = res.configuration
+                conf.locale = locale
+                res.updateConfiguration(conf, dm)
+                prefManager?.prefLangaugeSelection="hindi"
+                val intent = Intent(this@WelcomeActivity, WelcomeActivity::class.java)
+                finish()
+                startActivity(intent)
+
+            }
+        })
         viewPager = findViewById(R.id.view_pager)
         recyclerviewreports = findViewById(R.id.recyclerviewreports)
 //        recyclerviewreports = findViewById(R.id.recyclerviewreports)
@@ -302,7 +411,7 @@ class WelcomeActivity : AppCompatActivity() {
             })
         } else {
             Sneaker.with(this@WelcomeActivity) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -438,7 +547,6 @@ class WelcomeActivity : AppCompatActivity() {
                                                             MainActivity::class.java
                                                         )
                                                         startActivity(intent)
-                                                        finish()
                                                         return
                                                     }
                                                     SugarRecord.deleteAll(MasterLoginDb::class.java)
@@ -541,7 +649,7 @@ class WelcomeActivity : AppCompatActivity() {
                             })
                         } else {
                             Sneaker.with(this@WelcomeActivity) // Activity, Fragment or ViewGroup
-                                .setTitle(Constant.NO_INTERNET)
+                                .setTitle(getString(R.string.no_internet_connection))
                                 .sneakError()
                         }
                     }

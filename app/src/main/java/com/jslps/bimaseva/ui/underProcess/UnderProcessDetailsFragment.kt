@@ -37,7 +37,7 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
         val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
         toast.show()
         if (message != null) {
-            if (message.equals("Insurance Update Successfully")){
+            if (message == getString(R.string.InsuranceUpdateSuccessfully)){
                 val intent = Intent(activity, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -64,7 +64,7 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
     }
 
     override fun noInternet() {
-        val toast = Toast.makeText(context, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(context, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT)
         toast.show()
     }
 
@@ -202,7 +202,7 @@ class UnderProcessDetailsFragment : BaseFragment(), UnderProcessDetailsView,
         actionButton?.text = "Claim Settled"
         actionButton?.setOnClickListener {
             if (TextUtils.isEmpty(encodedBase64)) {
-                val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
+                val toast = Toast.makeText(activity, getString(R.string.select_image_validation), Toast.LENGTH_SHORT)
                 toast.show()
             } else {
                 showProgress()

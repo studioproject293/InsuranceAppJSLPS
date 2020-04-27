@@ -53,7 +53,7 @@ class DocumentListFragment : BaseFragment(), DocumentNotReadyView, OnFragmentLis
     }
 
     override fun noInternet() {
-        val toast = Toast.makeText(context, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(context, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT)
         toast.show()
     }
 

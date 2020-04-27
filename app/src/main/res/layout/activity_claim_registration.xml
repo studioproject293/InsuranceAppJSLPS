@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/layout_150dp"
                 android:layout_gravity="center"
-                android:text="Please select insureds category for registration (Bimit baykti key warg ka cunav karey)"
+                android:text="@string/insuredcategory"
                 android:gravity="center"
                 android:textColor="#000"
                 android:textStyle="bold"
@@ -89,7 +89,7 @@
                         android:layout_weight="0.8"
                         android:gravity="center_vertical"
                         android:paddingLeft="3dp"
-                        android:text="SHG Member"
+                        android:text="@string/selfhelpgroupmember"
                         android:textColor="#000"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -132,7 +132,7 @@
                         android:layout_weight="0.8"
                         android:gravity="center_vertical"
                         android:paddingLeft="3dp"
-                        android:text="SHG Member"
+                        android:text="@string/selfhelpgroupmember"
                         android:textColor="#000"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -179,7 +179,7 @@
                         android:layout_weight="0.8"
                         android:gravity="center_vertical"
                         android:paddingLeft="3dp"
-                        android:text="Family Member Of SHG"
+                        android:text="@string/FamilymemberofSelfhelpgroup"
                         android:textColor="#000"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -228,7 +228,7 @@
                         android:layout_weight="0.8"
                         android:gravity="center_vertical"
                         android:paddingLeft="3dp"
-                        android:text="Others"
+                        android:text="@string/Others"
                         android:textColor="#000"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -270,7 +270,7 @@
                         android:layout_weight="0.8"
                         android:gravity="center_vertical"
                         android:paddingLeft="3dp"
-                        android:text="Others"
+                        android:text="@string/Others"
                         android:textColor="#000"
                         android:textSize="18sp"
                         android:textStyle="bold" />

@@ -29,7 +29,7 @@ class ClaimRegistrationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_claim_registration)
-        supportActionBar?.title = "Registration Type";
+        supportActionBar?.title = getString(R.string.register_new_claim);
         linearLayout1 = findViewById(R.id.shgRegistration)
         linearLayout4 = findViewById(R.id.shgRegistration4)
         linearLayout2 = findViewById(R.id.shgFamilyregistration)
@@ -51,7 +51,7 @@ class ClaimRegistrationActivity : AppCompatActivity() {
                 startActivity(intent)
             } else
                 Sneaker.with(this@ClaimRegistrationActivity) // Activity, Fragment or ViewGroup
-                    .setTitle("Please Select Any Scheme")
+                    .setTitle(getString(R.string.PleaseSelectAnyScheme))
                     .sneakError()
         }
         linearLayout2?.setOnClickListener {
@@ -64,7 +64,7 @@ class ClaimRegistrationActivity : AppCompatActivity() {
                 startActivity(intent)
             } else
                 Sneaker.with(this@ClaimRegistrationActivity) // Activity, Fragment or ViewGroup
-                    .setTitle("Please Select Any Scheme")
+                    .setTitle(getString(R.string.PleaseSelectAnyScheme))
                     .sneakError()
         }
         linearLayout3?.setOnClickListener {
@@ -78,7 +78,7 @@ class ClaimRegistrationActivity : AppCompatActivity() {
                 startActivity(intent)
             } else
                 Sneaker.with(this@ClaimRegistrationActivity) // Activity, Fragment or ViewGroup
-                    .setTitle("Please Select Any Scheme")
+                    .setTitle(getString(R.string.PleaseSelectAnyScheme))
                     .sneakError()
         }
         linearLayout5?.setOnClickListener {
@@ -92,7 +92,7 @@ class ClaimRegistrationActivity : AppCompatActivity() {
                 startActivity(intent)
             } else
                 Sneaker.with(this@ClaimRegistrationActivity) // Activity, Fragment or ViewGroup
-                    .setTitle("Please Select Any Scheme")
+                    .setTitle(getString(R.string.PleaseSelectAnyScheme))
                     .sneakError()
         }
         linearLayout4?.setOnClickListener {
@@ -106,7 +106,7 @@ class ClaimRegistrationActivity : AppCompatActivity() {
                 startActivity(intent)
             } else
                 Sneaker.with(this@ClaimRegistrationActivity) // Activity, Fragment or ViewGroup
-                    .setTitle("Please Select Any Scheme")
+                    .setTitle(getString(R.string.PleaseSelectAnyScheme))
                     .sneakError()
         }
         val scheme = resources.getStringArray(R.array.schemeArray)

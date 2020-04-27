@@ -3,7 +3,7 @@ package com.jslps.bimaseva.base
 import android.app.Activity
 import com.jslps.bimaseva.cache.AppCache
 import com.jslps.bimaseva.Constant
-import com.twidpay.beta.cache.PrefManager
+import com.jslps.bimaseva.cache.PrefManager
 
 
 open class Presenter {
@@ -11,9 +11,7 @@ open class Presenter {
 
     }
 
-    fun getPref(activity: Activity): PrefManager {
-        return PrefManager.getInstance(activity)
-    }
+
 
     fun getAppCache(): AppCache {
         return AppCache.getCache()

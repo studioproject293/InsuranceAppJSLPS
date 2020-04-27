@@ -1,6 +1,7 @@
 package com.jslps.bimaseva
 
 import android.content.res.Configuration
+import com.jslps.bimaseva.cache.PrefManager
 import com.orm.SchemaGenerator
 import com.orm.SugarApp
 import com.orm.SugarContext
@@ -11,9 +12,11 @@ class SugarOrmTestApplication : SugarApp() {
     override fun onCreate() {
         super.onCreate()
         SugarContext.init(applicationContext)
+
         // create table if not exists
         val schemaGenerator = SchemaGenerator(this)
         schemaGenerator.createDatabase(SugarDb(this).db)
+        PrefManager.instance?.init(this)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {

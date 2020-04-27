@@ -13,6 +13,7 @@ import com.jslps.bimaseva.network.ServiceUpdateListner
 import com.jslps.bimaseva.network.UploadRegisterDocument
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.jslps.bimaseva.R
 import com.twidpay.beta.model.ApiRequest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -134,29 +135,23 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
                             val jsonObject = categoryObject?.getJSONObject(0)
                             val Result = jsonObject?.getString("RetValue")
                             if (Result.equals("1", ignoreCase = true)) {
-                                view?.showMessage("Insurance Update Successfully")
+                                view?.showMessage(context?.getString(R.string.InsuranceUpdateSuccessfully))
 
                             } else {
-                                /* Snackbar.with(getActivity(), null)
-                                     .type(Type.ERROR)
-                                     .message("Please try again")
-                                     .duration(Duration.SHORT)
-                                     .fillParent(true)
-                                     .textAlign(Align.CENTER)
-                                     .show()*/
+                                view?.showMessage(context?.getString(R.string.server_error))
                             }
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
                     } else {
                        DialogUtil.stopProgressDisplay()
-                        view?.showMessage("Server Error, Please Try Again")
+                        view?.showMessage(context?.getString(R.string.server_error))
                     }
                 }
 
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     DialogUtil.stopProgressDisplay()
-                    view?.showMessage("Server Error,Please Try Again")
+                    view?.showMessage(context?.getString(R.string.server_error))
                 }
             })
         } else {
@@ -222,21 +217,21 @@ class ClaimSetteledDetailsPresenter(view: ClaimSetteledDetailsView, context: Act
                             val jsonObject = categoryObject?.getJSONObject(0)
                             val Result = jsonObject?.getString("RetValue")
                             if (Result.equals("1", ignoreCase = true)) {
-                                view?.showMessage("Insurance Update Successfully")
+                                view?.showMessage(context?.getString(R.string.InsuranceUpdateSuccessfully))
                             } else {
-                                view?.showMessage("Server Error, Please Try Again")
+                                view?.showMessage(context?.getString(R.string.server_error))
                             }
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
                     } else {
                         DialogUtil.stopProgressDisplay()
-                        view?.showMessage("Server Error, Please Try Again")
+                        view?.showMessage(context?.getString(R.string.server_error))
                     }
                 }
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     DialogUtil.stopProgressDisplay()
-                    view?.showMessage("Server Error, Please Try Again")
+                    view?.showMessage(context?.getString(R.string.server_error))
                 }
             })
         } else {

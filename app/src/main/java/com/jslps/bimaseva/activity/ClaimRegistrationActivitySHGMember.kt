@@ -78,7 +78,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
         setId()
         val intent = intent
         val schemeID = intent.getStringExtra("schemeID")
-        supportActionBar?.title = "SHG Claim Registration";
+        supportActionBar?.title = getString(R.string.selfhelpgroupmember)
         checkBox1?.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked)
                 list.add(1)
@@ -245,7 +245,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
                     })
                 } else {
                     Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
-                        .setTitle(Constant.NO_INTERNET)
+                        .setTitle(getString(R.string.no_internet_connection))
                         .sneakError()
                 }
             }
@@ -370,7 +370,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
             })
         } else {
             Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -421,7 +421,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
             })
         } else {
             Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -472,7 +472,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
             })
         } else {
             Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -523,7 +523,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
             })
         } else {
             Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -574,7 +574,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
             })
         } else {
             Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -625,7 +625,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
             })
         } else {
             Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -676,7 +676,7 @@ class ClaimRegistrationActivitySHGMember : AppCompatActivity() {
             })
         } else {
             Sneaker.with(this@ClaimRegistrationActivitySHGMember) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }

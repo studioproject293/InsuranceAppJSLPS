@@ -148,7 +148,7 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
             "Registered" -> {
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall = apiServices.getTabletDownloadDataBCsakhi(
-                    "regprocesrpt", "0",
+                    "regprocesrpt", "1",
                     getAppCache().insuranceStepSend.toString(),
                     arraylistPanchyat.get(0).blockcode!!
                 )
@@ -188,7 +188,7 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
             "Document ready but not received by the branch" -> {
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall = apiServices.getTabletDownloadDataBCsakhi(
-                    "DocumentNotUprpt", "0",
+                    "DocumentNotUprpt", "1",
                     getAppCache().insuranceStepSend.toString(),
                     arraylistPanchyat.get(0).blockcode!!
                 )
@@ -227,7 +227,7 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
             "Under Process" -> {
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall = apiServices.getTabletDownloadDataBCsakhi(
-                    "underprocesrpt", "0",
+                    "underprocesrpt", "1",
                     getAppCache().insuranceStepSend.toString(),
                     arraylistPanchyat.get(0).blockcode!!
                 )
@@ -266,7 +266,7 @@ class SchemeDetailsPresenterReport(view: SchemeDetailsViewReport, context: Activ
             "Claim Settled" -> {
                 DialogUtil.displayProgress(context!!)
                 val changePhotoResponseModelCall = apiServices.getTabletDownloadDataBCsakhi(
-                    "csrpt", "0",
+                    "csrpt", "1",
                     getAppCache().insuranceStepSend.toString(),
                     arraylistPanchyat.get(0).blockcode!!
                 )

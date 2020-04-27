@@ -81,7 +81,7 @@
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:paddingRight="2dp"
-                                android:text="Name Of District"
+                                android:text="@string/nameofdistrict"
                                 android:textColor="#000"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -96,7 +96,7 @@
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:paddingRight="2dp"
-                                android:text="Name Of Block"
+                                android:text="@string/nameofblock"
                                 android:textColor="#000"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -111,7 +111,7 @@
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:paddingRight="2dp"
-                                android:text="Name Of Bank"
+                                android:text="@string/nameofbank"
                                 android:textColor="#000"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -126,7 +126,7 @@
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:paddingRight="2dp"
-                                android:text="Name Of Branch"
+                                android:text="@string/nameofbranch"
                                 android:textColor="#000"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -140,7 +140,7 @@
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:paddingLeft="5dp"
-                                android:text="Claim Registerd"
+                                android:text="@string/claimregisterd"
                                 android:textColor="#000"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -152,7 +152,7 @@
                                 android:background="@drawable/shape_border"
                                 android:gravity="center"
                                 android:padding="5dp"
-                                android:text="Document ready but not received by the branch"
+                                android:text="@string/Documentreadybutnotreceivedbythebranch"
                                 android:textColor="#000"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -164,7 +164,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/shape_border"
                                 android:gravity="center"
-                                android:text="Claim Under Process"
+                                android:text="@string/Underprocess"
                                 android:textColor="#000"
                                 android:textStyle="bold" />
 
@@ -176,19 +176,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/shape_border"
                                 android:gravity="center"
-                                android:text="Claim Settled"
-                                android:textColor="#000"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                        <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:background="@drawable/shape_border"
-                                android:gravity="center"
-                                android:text="Claim Rejected"
+                                android:text="@string/Claimsettled"
                                 android:textColor="#000"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -200,7 +188,19 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/shape_border"
                                 android:gravity="center"
-                                android:text="Total Claim Amount"
+                                android:text="@string/Rejected"
+                                android:textColor="#000"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                        <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:background="@drawable/shape_border"
+                                android:gravity="center"
+                                android:text="@string/totalclaimamount"
                                 android:textColor="#000"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />

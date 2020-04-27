@@ -201,7 +201,7 @@ class AssetsRegistrationOther : AppCompatActivity() {
                     })
                 } else {
                     Sneaker.with(this@AssetsRegistrationOther) // Activity, Fragment or ViewGroup
-                        .setTitle(Constant.NO_INTERNET)
+                        .setTitle(getString(R.string.no_internet_connection))
                         .sneakError()
                 }
             }
@@ -347,7 +347,7 @@ class AssetsRegistrationOther : AppCompatActivity() {
             })
         } else {
             Sneaker.with(this@AssetsRegistrationOther) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -398,7 +398,7 @@ class AssetsRegistrationOther : AppCompatActivity() {
             })
         } else {
             Sneaker.with(this@AssetsRegistrationOther) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -447,7 +447,7 @@ class AssetsRegistrationOther : AppCompatActivity() {
             })
         } else {
             Sneaker.with(this@AssetsRegistrationOther) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -498,7 +498,7 @@ class AssetsRegistrationOther : AppCompatActivity() {
             })
         } else {
             Sneaker.with(this@AssetsRegistrationOther) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -549,7 +549,7 @@ class AssetsRegistrationOther : AppCompatActivity() {
             })
         } else {
             Sneaker.with(this@AssetsRegistrationOther) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }

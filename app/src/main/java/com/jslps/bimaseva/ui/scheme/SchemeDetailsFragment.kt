@@ -54,7 +54,7 @@ class SchemeDetailsFragment : BaseFragment(), SchemeDetailsView, OnFragmentListI
     }
 
     override fun noInternet() {
-        val toast = Toast.makeText(activity, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(activity, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT)
         toast.show()
     }
 

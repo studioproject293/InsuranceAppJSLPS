@@ -15,6 +15,7 @@ import com.jslps.bimaseva.network.LoginService
 import com.jslps.bimaseva.network.ServiceUpdateListner
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.jslps.bimaseva.R
 import com.jslps.bimaseva.model.Master
 import com.orm.query.Select
 import com.twidpay.beta.model.ApiRequest
@@ -75,9 +76,9 @@ class SchemeAssertDetailsPresenter(view: SchemeDetailsAssertView, context: Activ
                                     Constant.ASSERT_INSURANCE_LIST,
                                     mStudentObject1.Master
                                 )
-                            } else view?.showMessage("You don't have any insurance,Please Add it.")
+                            } else view?.showMessage(context?.getString(R.string.youdont).toString())
                         } else {
-                            view?.showMessage("You don't have any insurance,Please Add it.")
+                            view?.showMessage(context?.getString(R.string.youdont).toString())
                         }
                     }
 
@@ -117,9 +118,9 @@ class SchemeAssertDetailsPresenter(view: SchemeDetailsAssertView, context: Activ
                                     Constant.DOCUMENT_LIST_FRAGMENT,
                                     mStudentObject1.Master
                                 )
-                            } else view?.showMessage("You don't have any insurance,Please Add it.")
+                            } else view?.showMessage(context?.getString(R.string.youdont).toString())
                         } else {
-                            view?.showMessage("You don't have any insurance,Please Add it.")
+                            view?.showMessage(context?.getString(R.string.youdont).toString())
                         }
                     }
 
@@ -154,9 +155,9 @@ class SchemeAssertDetailsPresenter(view: SchemeDetailsAssertView, context: Activ
                                     mStudentObject1.Master
                                 )
                             } else
-                                view?.showMessage("You don't have any insurance,Please Add it.")
+                                view?.showMessage(context?.getString(R.string.youdont).toString())
                         } else {
-                            view?.showMessage("You don't have any insurance,Please Add it.")
+                            view?.showMessage(context?.getString(R.string.youdont).toString())
 
                         }
                     }
@@ -193,9 +194,9 @@ class SchemeAssertDetailsPresenter(view: SchemeDetailsAssertView, context: Activ
                                     Constant.ASSERT_INSURANCE_LIST,
                                     mStudentObject1.Master
                                 )
-                            } else view?.showMessage("You don't have any insurance,Please Add it.")
+                            } else view?.showMessage(context?.getString(R.string.youdont).toString())
                         } else {
-                            view?.showMessage("You don't have any insurance,Please Add it.")
+                            view?.showMessage(context?.getString(R.string.youdont).toString())
 
                         }
                     }
@@ -232,9 +233,9 @@ class SchemeAssertDetailsPresenter(view: SchemeDetailsAssertView, context: Activ
                                     Constant.ASSERT_INSURANCE_LIST,
                                     mStudentObject1.Master
                                 )
-                            } else view?.showMessage("You don't have any insurance,Please Add it.")
+                            } else view?.showMessage(context?.getString(R.string.youdont).toString())
                         } else {
-                            view?.showMessage("You don't have any insurance,Please Add it.")
+                            view?.showMessage(context?.getString(R.string.youdont).toString())
                         }
                     }
 
@@ -269,9 +270,9 @@ class SchemeAssertDetailsPresenter(view: SchemeDetailsAssertView, context: Activ
                                     Constant.DOCUMENT_FALSE_LIST_FRAGMENT,
                                     mStudentObject1.Master
                                 )
-                            } else view?.showMessage("You don't have any insurance,Please Add it.")
+                            } else view?.showMessage(context?.getString(R.string.youdont).toString())
                         } else {
-                            view?.showMessage("You don't have any insurance,Please Add it.")
+                            view?.showMessage(context?.getString(R.string.youdont).toString())
                         }
                     }
 
@@ -306,13 +307,13 @@ class SchemeAssertDetailsPresenter(view: SchemeDetailsAssertView, context: Activ
 
     override fun resume() {
         val schemedata = ArrayList<String>()
-        schemedata.add("Registered")
-        schemedata.add("Document ready but not received by the branch")
-        schemedata.add("Under Process")
-        schemedata.add("Claim Settled")
-        schemedata.add("Rejected")
-        schemedata.add("Document False")
-        schemedata.add("Total Claim")
+        schemedata.add(context?.getString(R.string.Registered).toString())
+        schemedata.add(context?.getString(R.string.Documentreadybutnotreceivedbythebranch).toString())
+        schemedata.add(context?.getString(R.string.Underprocess).toString())
+        schemedata.add(context?.getString(R.string.Claimsettled).toString())
+        schemedata.add(context?.getString(R.string.Rejected).toString())
+        schemedata.add(context?.getString(R.string.documentfalse).toString())
+        schemedata.add(context?.getString(R.string.totalclaim).toString())
         view?.loadData(schemedata)
     }
 

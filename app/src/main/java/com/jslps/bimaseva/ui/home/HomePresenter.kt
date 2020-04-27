@@ -6,6 +6,7 @@ import com.jslps.bimaseva.base.Presenter
 import com.jslps.bimaseva.listener.OnFragmentListItemSelectListener
 import com.jslps.bimaseva.network.ServiceUpdateListner
 import com.jslps.bimaseva.Constant
+import com.jslps.bimaseva.R
 import com.jslps.bimaseva.model.Master
 import com.twidpay.beta.model.ApiRequest
 
@@ -16,15 +17,15 @@ class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presente
 
         getAppCache().insurancetype = data.toString()
         when {
-            data.toString() == "PMSBY" ->{
+            data.toString() == context?.getString(R.string.PMSBY).toString() ->{
                 getAppCache().insuranceStepSend = "1"
                 view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
             }
-            data.toString() == "PMJJBY" ->{
+            data.toString() == context?.getString(R.string.PMJJBY)?.toString() ->{
                 getAppCache().insuranceStepSend = "2"
                 view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
             }
-            data.toString() == "PMJAY" ->{
+            data.toString() == context?.getString(R.string.PMJAY).toString() ->{
                 getAppCache().insuranceStepSend = "3"
                 view?.gotoScreen(Constant.SCHEME_DETAILS_FRAGMENT, data)
             }
@@ -32,7 +33,7 @@ class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presente
                 getAppCache().insuranceStepSend = "4"
                 view?.gotoScreen(Constant.SCHEME_DETAILS_ASSERT_FRAGMENT, data)
             }
-            data.toString() == "Registered A New Claim"-> view?.gotoScreen(Constant.INSURANCE_CREATE_INSIDE, data)
+            data.toString() == context?.getString(R.string.register_new_claim).toString()-> view?.gotoScreen(Constant.INSURANCE_CREATE_INSIDE, data)
         }
 
 
@@ -56,11 +57,11 @@ class HomePresenter(view: HomeView, context: Activity) : BasePresenter, Presente
 
     override fun resume() {
         val schemedata = ArrayList<String>()
-        schemedata.add("Registered A New Claim")
-        schemedata.add("PMSBY")
-        schemedata.add("PMJJBY")
-        schemedata.add("PMJAY")
-        schemedata.add("Asset Insurance (Crop, Livestock, Others)")
+        schemedata.add(context?.getString(R.string.register_new_claim).toString())
+        schemedata.add(context?.getString(R.string.PMSBY).toString())
+        schemedata.add(context?.getString(R.string.PMJJBY).toString())
+        schemedata.add(context?.getString(R.string.PMJAY).toString())
+        schemedata.add("Asset Insurance(Crop, Livestock, Others)")
         view?.loadData(schemedata)
     }
 

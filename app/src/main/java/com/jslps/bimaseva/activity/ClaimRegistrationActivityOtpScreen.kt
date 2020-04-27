@@ -132,7 +132,7 @@ class ClaimRegistrationActivityOtpScreen : AppCompatActivity() {
                 })
             } else {
                 Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
-                    .setTitle(Constant.NO_INTERNET)
+                    .setTitle(getString(R.string.no_internet_connection))
                     .sneakError()
             }
         }
@@ -202,7 +202,7 @@ class ClaimRegistrationActivityOtpScreen : AppCompatActivity() {
 
                         } else {
                             Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
-                                .setTitle(Constant.NO_INTERNET)
+                                .setTitle(getString(R.string.no_internet_connection))
                                 .sneakError()
                         }
                     } else {
@@ -268,7 +268,7 @@ class ClaimRegistrationActivityOtpScreen : AppCompatActivity() {
 
                         } else {
                             Sneaker.with(this@ClaimRegistrationActivityOtpScreen) // Activity, Fragment or ViewGroup
-                                .setTitle(Constant.NO_INTERNET)
+                                .setTitle(getString(R.string.no_internet_connection))
                                 .sneakError()
                         }
                     }

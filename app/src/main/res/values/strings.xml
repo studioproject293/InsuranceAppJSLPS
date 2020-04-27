@@ -35,9 +35,7 @@
         <item>Jquery</item>
     </string-array>
     <string name="youAreNotUpdatedMessage" translatable="false">A new version of BIMA SEWA app is available. Please update to new version now.</string>
-    <string name="update">Update</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="Asset_Insured">
         <item>Goat</item>
         <item>Pig</item>
@@ -45,4 +43,88 @@
         <item>Buffalo</item>
         <item>Poultry bird</item>
     </string-array>
+    <string name="update" >Update</string>
+    <string name="btn_en">English</string>
+    <string name="btn_hi">हिंदी</string>
+    <string name="save_message">Data Save Successfully</string>
+    <string name="report">Reports</string>
+    <string name="edit">Edit</string>
+    <string name="sync_with_server">Sync With Server</string>
+    <string name="feedback">Feedback</string>
+    <string name="log_out">Log Out</string>
+    <string name="type_of_beneficiary">Type Of Beneficiary</string>
+    <string name="no_of_beni">No. of Beni.</string>
+    <string name="no_of_meal_in_month">No. of meal in month</string>
+    <string name="unit_rate">Unit Rate</string>
+    <string name="amount">Amount</string>
+    <string name="total">Total :</string>
+    <string name="write_your_remarks_here">Write Your remarks here</string>
+    <string name="attach_receipt">Attach Receipt</string>
+    <string name="save_data">Save Data</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="no_supply_in_month">No supply in month</string>
+    <string name="update_data">Update Data</string>
+    <string name="select">Select</string>
+    <string name="no_of_record_to_be_sync">No of record to be sync</string>
+    <string name="panchyat_name">Panchyat Name</string>
+    <string name="upload_data">Upload Data</string>
+    <string name="select_select_image_validation">Please Upload  Image</string>
+    <string name="choose_aaganwari">Choose Anganwadi</string>
+    <string name="month_validation">Please select future month</string>
+    <string name="select_image_validation">Can not upload more than 2 items</string>
+    <string name="choose_panchyat">Choose Panchayat</string>
+    <string name="delete_sucessfully">Data delete successfully</string>
+    <string name="vo_choose">Choose Village Organization</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="already_record">You have already record in this month</string>
+    <string name="total_anganwadi">Total Anganwadi</string>
+    <string name="no_record">No Record Found</string>
+    <string name="no_record_sync">No Record Found</string>
+    <string name="entryform_edit">Entry Form Edit</string>
+    <string name="name_validaion">Please enter  name</string>
+    <string name="download_data">Download</string>
+    <string name="no_internet_connection">Unable to connect. Please check your Internet Connection.</string>
+    <string name="update_data_toServer">Data Update Successfully</string>
+    <string name="data_download_from_server">Data Download From Server</string>
+    <string name="login">Log in</string>
+    <string name="register_new_claim">Registered a new claim</string>
+    <string name="district">District</string>
+    <string name="bank">Bank</string>
+    <string name="allreport">All reports</string>
+    <string name="reporttype">Report Type</string>
+    <string name="nameofdistrict">Name Of District</string>
+    <string name="reportlist">Reports list</string>
+    <string name="totalclaim">Total Claim</string>
+    <string name="documentfalse">Document false</string>
+    <string name="Rejected">Rejected</string>
+    <string name="Claimsettled">Claim settled</string>
+    <string name="Underprocess">Under process</string>
+    <string name="Documentreadybutnotreceivedbythebranch">Document ready but not received by the branch</string>
+    <string name="Registered">Registered</string>
+    <string name="FamilymemberofSelfhelpgroup">Family member of SHG group</string>
+    <string name="selfhelpgroupmember">SHG member</string>
+    <string name="AllScheme">All Scheme</string>
+    <string name="insuredcategory">Please select insureds category for registration (Bimit baykti key warg ka cunav karey)</string>
+    <string name="Rememberme">Remember me</string>
+    <string name="showpassword">Show password</string>
+    <string name="password">Password</string>
+    <string name="pleaseenterusername">Please enter user name</string>
+    <string name="signin">Sign in</string>
+    <string name="PMSBY">PMSBY</string>
+    <string name="PMJJBY">PMJJBY</string>
+    <string name="PMJAY">PMJAY</string>
+    <string name="nameofblock">Name Of Block</string>
+    <string name="nameofbank">Name Of Bank</string>
+    <string name="nameofbranch">Name Of Branch</string>
+    <string name="claimregisterd">Claim Registered</string>
+    <string name="totalclaimamount">Total Claim Amount</string>
+    <string name="districtreport">District Wise Report</string>
+    <string name="PleaseSelectAnyScheme">Please Select Any Scheme</string>
+    <string name="Others">Others</string>
+    <string name="InsuranceUpdateSuccessfully">Insurance Update Successfully</string>
+    <string name="server_error">Server Error, Please Try Again</string>
+    <string name="amountvalidation">Please Enter Amount</string>
+    <string name="rejectreason">Write Reject Reason for Rejection</string>
+    <string name="youdont">You do not have any insurance, Please Add it.</string>
 </resources>

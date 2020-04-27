@@ -36,7 +36,7 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView,
         val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
         toast.show()
         if (message != null) {
-            if (message.equals("Insurance Update Successfully")) {
+            if (message.equals(getString(R.string.InsuranceUpdateSuccessfully))) {
                 val intent = Intent(activity, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -63,7 +63,7 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView,
     }
 
     override fun noInternet() {
-        val toast = Toast.makeText(context, Constant.NO_INTERNET, Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(context, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT)
         toast.show()
     }
 
@@ -263,7 +263,7 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView,
         actionButton?.setOnClickListener {
             if (TextUtils.isEmpty(rejectReason?.text.toString())) {
                 val toast =
-                    Toast.makeText(activity, "Please Write Reject Reason", Toast.LENGTH_SHORT)
+                    Toast.makeText(activity, getString(R.string.rejectreason), Toast.LENGTH_SHORT)
                 toast.show()
             } else {
                 showProgress()
@@ -273,10 +273,10 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView,
         claimSetteled?.setOnClickListener {
 
             if (TextUtils.isEmpty(encodedBase64)) {
-                val toast = Toast.makeText(activity, "Please Upload Document", Toast.LENGTH_SHORT)
+                val toast = Toast.makeText(activity, getString(R.string.select_image_validation), Toast.LENGTH_SHORT)
                 toast.show()
             } else if (TextUtils.isEmpty(amount?.text.toString())) {
-                val toast = Toast.makeText(activity, "Please Enter Amount", Toast.LENGTH_SHORT)
+                val toast = Toast.makeText(activity, getString(R.string.amountvalidation), Toast.LENGTH_SHORT)
                 toast.show()
             } else {
                 showProgress()

@@ -10,7 +10,7 @@ import com.jslps.bimaseva.cache.AppCache
 import com.jslps.bimaseva.listener.OnFragmentInteractionListener
 import com.jslps.bimaseva.Constant
 import com.jslps.bimaseva.DialogUtil
-import com.twidpay.beta.cache.PrefManager
+import com.jslps.bimaseva.cache.PrefManager
 
 open class BaseFragment : Fragment() {
     internal var mListener: OnFragmentInteractionListener? = null
@@ -73,7 +73,7 @@ open class BaseFragment : Fragment() {
     }
 
     fun getPref(activity: Activity): PrefManager {
-        return PrefManager.getInstance(activity)
+        return PrefManager.instance!!
     }
 
     fun getAppCache(): AppCache {

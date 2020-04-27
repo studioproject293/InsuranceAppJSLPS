@@ -4,4 +4,6 @@
     <color name="colorTransparent">#2E2C8F</color>
     <color name="colorPrimaryDark">#2E2C8F</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="buttoncolor">#d67601</color>
+    <color name="color_white">#FFF</color>
 </resources>

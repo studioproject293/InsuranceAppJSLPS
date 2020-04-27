@@ -86,8 +86,8 @@ class ClaimRegistrationFragmentOthers : BaseFragment() {
         super.onResume()
         mListener?.onFragmentUpdate(
             Constant.setTitle,
-            HeaderData(false, "Other Claim Registration")
-        )
+            HeaderData(false, getString(R.string.Others)))
+
     }
 
     override fun onCreateView(
@@ -268,7 +268,7 @@ class ClaimRegistrationFragmentOthers : BaseFragment() {
                     })
                 } else {
                     Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                        .setTitle(Constant.NO_INTERNET)
+                        .setTitle(getString(R.string.no_internet_connection))
                         .sneakError()
                 }
             }

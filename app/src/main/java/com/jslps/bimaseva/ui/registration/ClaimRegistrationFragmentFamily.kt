@@ -82,7 +82,7 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
     var genderId: Int? = null
     override fun onResume() {
         super.onResume()
-        mListener?.onFragmentUpdate(Constant.setTitle,HeaderData(false,"Family Member Of SHG Claim Registration"))
+        mListener?.onFragmentUpdate(Constant.setTitle,HeaderData(false,getString(R.string.FamilymemberofSelfhelpgroup)))
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -276,7 +276,7 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
                     })
                 } else {
                     Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                        .setTitle(Constant.NO_INTERNET)
+                        .setTitle(getString(R.string.no_internet_connection))
                         .sneakError()
                 }
             }
@@ -530,7 +530,7 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
             })
         } else {
             Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -581,7 +581,7 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
             })
         } else {
             Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -631,7 +631,7 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
             })
         } else {
             Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -681,7 +681,7 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
             })
         } else {
             Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -731,7 +731,7 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
             })
         } else {
             Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -781,7 +781,7 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
             })
         } else {
             Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }
@@ -831,7 +831,7 @@ class ClaimRegistrationFragmentFamily : BaseFragment() {
             })
         } else {
             Sneaker.with(activity!!) // activity!!, Fragment or ViewGroup
-                .setTitle(Constant.NO_INTERNET)
+                .setTitle(getString(R.string.no_internet_connection))
                 .sneakError()
         }
     }

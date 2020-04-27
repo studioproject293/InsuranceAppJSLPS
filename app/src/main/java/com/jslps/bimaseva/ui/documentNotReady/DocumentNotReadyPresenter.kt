@@ -12,6 +12,7 @@ import com.jslps.bimaseva.network.ServiceUpdateListner
 import com.jslps.bimaseva.network.UploadRegisterDocument
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.jslps.bimaseva.R
 import com.twidpay.beta.model.ApiRequest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -137,10 +138,9 @@ class DocumentNotReadyPresenter(view: DocumentNotReadyView, context: Activity) :
                             val jsonObject = categoryObject?.getJSONObject(0)
                             val Result = jsonObject?.getString("RetValue")
                             if (Result.equals("1", ignoreCase = true)) {
-                                view?.showMessage("Insurance Update Successfully")
+                                view?.showMessage(context?.getString(R.string.InsuranceUpdateSuccessfully))
                             } else {
-                                view?.showMessage("Please try again")
-                            }
+                                view?.showMessage(context?.getString(R.string.server_error))                            }
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
