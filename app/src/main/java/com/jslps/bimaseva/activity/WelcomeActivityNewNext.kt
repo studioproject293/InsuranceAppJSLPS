@@ -46,101 +46,7 @@ class WelcomeActivityNewNext : AppCompatActivity() {
         sppiner_scheme = findViewById(R.id.sppiner_scheme)
         val intent = intent
         val name = intent.getStringExtra("clicktype")// Activity, Fragment or ViewGroup
-        when {
-            name.equals("Insurance2") -> {
-                branch?.visibility = View.GONE
-                block?.visibility = View.GONE
-                bank?.visibility = View.GONE
-                district?.visibility = View.VISIBLE
-                frameLayout?.visibility = View.VISIBLE
-                supportActionBar?.title = getString(R.string.districtreport);
 
-            }
-            name.equals("Insurance1") -> {
-                branch?.visibility = View.VISIBLE
-                bank?.visibility = View.VISIBLE
-                block?.visibility = View.VISIBLE
-                district?.visibility = View.VISIBLE
-                frameLayout?.visibility = View.VISIBLE
-                supportActionBar?.title = getString(R.string.allreport);
-                /* bank?.text = "Bank Name"
-                 branch?.text = "Branch Name"*/
-            }
-            name.equals("Insurance3") -> {
-                branch?.visibility = View.GONE
-                bank?.visibility = View.VISIBLE
-                block?.visibility = View.GONE
-                district?.visibility = View.GONE
-                frameLayout?.visibility = View.VISIBLE
-                supportActionBar?.title = "Bank Wise Report";
-                /*if (name.equals("Insurance3")) {
-                    if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
-                        DialogUtil.displayProgress(this@WelcomeActivityNewNext)
-                        val gson = GsonBuilder().setLenient().create()
-                        val interceptor = HttpLoggingInterceptor()
-                        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                        val builder = OkHttpClient.Builder()
-                        //comment in live build and uncomment in uat
-                        builder.interceptors().add(interceptor)
-                        builder.connectTimeout(250, TimeUnit.SECONDS)
-                        builder.readTimeout(250, TimeUnit.SECONDS)
-                        val client = builder.build()
-                        val retrofit =
-                            Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
-                                .addConverterFactory(
-                                    ScalarsConverterFactory.create()
-                                ).client(client).build()
-                        val apiServices = retrofit.create(ReportsEntryService::class.java)
-                        val changePhotoResponseModelCall =
-                            apiServices.getReportsEntryService("Insurance3","")
-                        changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                            override fun onResponse(
-                                call: Call<String>,
-                                response: Response<String>
-                            ) {
-                                DialogUtil.stopProgressDisplay()
-                                val gson = Gson()
-                                val fullResponse = response.body()
-                                val XmlString =
-                                    fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                                val result = XmlString?.replace(("</string>").toRegex(), "")
-                                val mStudentObject1 =
-                                    gson.fromJson(result, BaseClassReports::class.java)
-                                System.out.println("vvh" + gson.toJson(mStudentObject1))
-                                val benifisheryRowRecyclerviewAdapter =
-                                    EntryReportsRecyclerviewAdapter(
-                                        this@WelcomeActivityNewNext,
-                                        mStudentObject1.master as ArrayList<MasterReports>,
-                                        name
-                                    )
-                                recyclerView?.adapter = benifisheryRowRecyclerviewAdapter
-
-                            }
-
-                            override fun onFailure(call: Call<String>, t: Throwable) {
-                                DialogUtil.stopProgressDisplay()
-                                Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                    .setTitle("Server error,Please Try Again")
-                                    .sneakError()
-                            }
-                        })
-                    } else {
-
-                        Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                            .setTitle(getString(R.string.no_internet_connection))
-                            .sneakError()
-                    }
-                }*/
-            }
-            /* name.equals("Insurance4") -> {
-                 branch?.visibility = View.GONE
-                 bank?.visibility = View.VISIBLE
-                 block?.visibility = View.GONE
-                 district?.visibility = View.GONE
-                 frameLayout?.visibility = View.VISIBLE
-
-             }*/
-        }
         recyclerView = findViewById(R.id.recyclerviewreports)
 
         recyclerView?.setLayoutManager(
@@ -167,60 +73,153 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                     0 -> {
 
                         if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
-                                DialogUtil.displayProgress(this@WelcomeActivityNewNext)
-                                val gson = GsonBuilder().setLenient().create()
-                                val interceptor = HttpLoggingInterceptor()
-                                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                                val builder = OkHttpClient.Builder()
-                                //comment in live build and uncomment in uat
-                                builder.interceptors().add(interceptor)
-                                builder.connectTimeout(250, TimeUnit.SECONDS)
-                                builder.readTimeout(250, TimeUnit.SECONDS)
-                                val client = builder.build()
-                                val retrofit =
-                                    Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
-                                        .addConverterFactory(
-                                            ScalarsConverterFactory.create()
-                                        ).client(client).build()
-                                val apiServices = retrofit.create(ReportsEntryService::class.java)
-                                val changePhotoResponseModelCall =
-                                    apiServices.getReportsEntryService("Insurance1",schemeId.toString())
-                                changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                                    override fun onResponse(
-                                        call: Call<String>,
-                                        response: Response<String>) {
-                                        DialogUtil.stopProgressDisplay()
-                                        val gson = Gson()
-                                        val fullResponse = response.body()
-                                        val XmlString =
-                                            fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                                        val result = XmlString?.replace(("</string>").toRegex(), "")
-                                        val mStudentObject1 =
-                                            gson.fromJson(result, BaseClassReports::class.java)
-                                        System.out.println("vvh" + gson.toJson(mStudentObject1))
-                                        val benifisheryRowRecyclerviewAdapter =
-                                            EntryReportsRecyclerviewAdapter(
-                                                this@WelcomeActivityNewNext,
-                                                mStudentObject1.master as ArrayList<MasterReports>,
-                                                name
-                                            )
-                                        recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+                            DialogUtil.displayProgress(this@WelcomeActivityNewNext)
+                            val gson = GsonBuilder().setLenient().create()
+                            val interceptor = HttpLoggingInterceptor()
+                            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+                            val builder = OkHttpClient.Builder()
+                            //comment in live build and uncomment in uat
+                            builder.interceptors().add(interceptor)
+                            builder.connectTimeout(250, TimeUnit.SECONDS)
+                            builder.readTimeout(250, TimeUnit.SECONDS)
+                            val client = builder.build()
+                            val retrofit =
+                                Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
+                                    .addConverterFactory(
+                                        ScalarsConverterFactory.create()
+                                    ).client(client).build()
+                            val apiServices = retrofit.create(ReportsEntryService::class.java)
+                            when {
+                                name.equals("Insurance2") -> {
+                                    branch?.visibility = View.GONE
+                                    block?.visibility = View.GONE
+                                    bank?.visibility = View.GONE
+                                    district?.visibility = View.VISIBLE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = getString(R.string.districtreport);
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance2","")
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
 
-                                    }
+                                        }
 
-                                    override fun onFailure(call: Call<String>, t: Throwable) {
-                                        DialogUtil.stopProgressDisplay()
-                                        Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                            .setTitle("Server error,Please Try Again")
-                                            .sneakError()
-                                    }
-                                })
-                            } else {
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
+                                }
+                                name.equals("Insurance1") -> {
+                                    branch?.visibility = View.VISIBLE
+                                    bank?.visibility = View.VISIBLE
+                                    block?.visibility = View.VISIBLE
+                                    district?.visibility = View.VISIBLE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = getString(R.string.allreport);
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance1","")
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
 
-                                Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                    .setTitle(getString(R.string.no_internet_connection))
-                                    .sneakError()
+                                        }
+
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
+                                }
+                                name.equals("Insurance3") -> {
+                                    branch?.visibility = View.GONE
+                                    bank?.visibility = View.VISIBLE
+                                    block?.visibility = View.GONE
+                                    district?.visibility = View.GONE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = "Bank Wise Report";
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance3","")
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+
+                                        }
+
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
+                                }
+
                             }
+
+
+                        } else {
+
+                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                .setTitle(getString(R.string.no_internet_connection))
+                                .sneakError()
+                        }
                         }
 
                     1 -> {
@@ -243,42 +242,437 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                                         ScalarsConverterFactory.create()
                                     ).client(client).build()
                             val apiServices = retrofit.create(ReportsEntryService::class.java)
-                            val changePhotoResponseModelCall =
-                                apiServices.getReportsEntryService(
-                                    "Insurance1",
-                                    schemeId.toString()
-                                )
-                            changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                                override fun onResponse(
-                                    call: Call<String>,
-                                    response: Response<String>
-                                ) {
-                                    DialogUtil.stopProgressDisplay()
-                                    val gson = Gson()
-                                    val fullResponse = response.body()
-                                    val XmlString =
-                                        fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                                    val result = XmlString?.replace(("</string>").toRegex(), "")
-                                    val mStudentObject1 =
-                                        gson.fromJson(result, BaseClassReports::class.java)
-                                    System.out.println("vvh" + gson.toJson(mStudentObject1))
-                                    val benifisheryRowRecyclerviewAdapter =
-                                        EntryReportsRecyclerviewAdapter(
-                                            this@WelcomeActivityNewNext,
-                                            mStudentObject1.master as ArrayList<MasterReports>,
-                                            name
-                                        )
-                                    recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+                            when {
+                                name.equals("Insurance2") -> {
+                                    branch?.visibility = View.GONE
+                                    block?.visibility = View.GONE
+                                    bank?.visibility = View.GONE
+                                    district?.visibility = View.VISIBLE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = getString(R.string.districtreport);
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance2",schemeId.toString())
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
 
+                                        }
+
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
+                                }
+                                name.equals("Insurance1") -> {
+                                    branch?.visibility = View.VISIBLE
+                                    bank?.visibility = View.VISIBLE
+                                    block?.visibility = View.VISIBLE
+                                    district?.visibility = View.VISIBLE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = getString(R.string.allreport);
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance1",schemeId.toString())
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+
+                                        }
+
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
+                                }
+                                name.equals("Insurance3") -> {
+                                    branch?.visibility = View.GONE
+                                    bank?.visibility = View.VISIBLE
+                                    block?.visibility = View.GONE
+                                    district?.visibility = View.GONE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = "Bank Wise Report";
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance3",schemeId.toString())
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+
+                                        }
+
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
                                 }
 
-                                override fun onFailure(call: Call<String>, t: Throwable) {
-                                    DialogUtil.stopProgressDisplay()
-                                    Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                        .setTitle("Server error,Please Try Again")
-                                        .sneakError()
+                            }
+
+
+                        } else {
+
+                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                .setTitle(getString(R.string.no_internet_connection))
+                                .sneakError()
+                        }
+
+                    }
+                    2 -> {
+                        schemeId = "2"
+
+                        if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
+                            DialogUtil.displayProgress(this@WelcomeActivityNewNext)
+                            val gson = GsonBuilder().setLenient().create()
+                            val interceptor = HttpLoggingInterceptor()
+                            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+                            val builder = OkHttpClient.Builder()
+                            //comment in live build and uncomment in uat
+                            builder.interceptors().add(interceptor)
+                            builder.connectTimeout(250, TimeUnit.SECONDS)
+                            builder.readTimeout(250, TimeUnit.SECONDS)
+                            val client = builder.build()
+                            val retrofit =
+                                Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
+                                    .addConverterFactory(
+                                        ScalarsConverterFactory.create()
+                                    ).client(client).build()
+                            val apiServices = retrofit.create(ReportsEntryService::class.java)
+                            when {
+                                name.equals("Insurance2") -> {
+                                    branch?.visibility = View.GONE
+                                    block?.visibility = View.GONE
+                                    bank?.visibility = View.GONE
+                                    district?.visibility = View.VISIBLE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = getString(R.string.districtreport);
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance2",schemeId.toString())
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+
+                                        }
+
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
                                 }
-                            })
+                                name.equals("Insurance1") -> {
+                                    branch?.visibility = View.VISIBLE
+                                    bank?.visibility = View.VISIBLE
+                                    block?.visibility = View.VISIBLE
+                                    district?.visibility = View.VISIBLE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = getString(R.string.allreport);
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance1",schemeId.toString())
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+
+                                        }
+
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
+                                }
+                                name.equals("Insurance3") -> {
+                                    branch?.visibility = View.GONE
+                                    bank?.visibility = View.VISIBLE
+                                    block?.visibility = View.GONE
+                                    district?.visibility = View.GONE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = "Bank Wise Report";
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance3",schemeId.toString())
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+
+                                        }
+
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
+                                }
+
+                            }
+
+
+                        } else {
+
+                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                .setTitle(getString(R.string.no_internet_connection))
+                                .sneakError()
+                        }
+
+                    }
+                    3 -> {
+                        schemeId = "3"
+
+                        if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
+                            DialogUtil.displayProgress(this@WelcomeActivityNewNext)
+                            val gson = GsonBuilder().setLenient().create()
+                            val interceptor = HttpLoggingInterceptor()
+                            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+                            val builder = OkHttpClient.Builder()
+                            //comment in live build and uncomment in uat
+                            builder.interceptors().add(interceptor)
+                            builder.connectTimeout(250, TimeUnit.SECONDS)
+                            builder.readTimeout(250, TimeUnit.SECONDS)
+                            val client = builder.build()
+                            val retrofit =
+                                Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
+                                    .addConverterFactory(
+                                        ScalarsConverterFactory.create()
+                                    ).client(client).build()
+                            val apiServices = retrofit.create(ReportsEntryService::class.java)
+                            when {
+                                name.equals("Insurance2") -> {
+                                    branch?.visibility = View.GONE
+                                    block?.visibility = View.GONE
+                                    bank?.visibility = View.GONE
+                                    district?.visibility = View.VISIBLE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = getString(R.string.districtreport);
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance2",schemeId.toString())
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+
+                                        }
+
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
+                                }
+                                name.equals("Insurance1") -> {
+                                    branch?.visibility = View.VISIBLE
+                                    bank?.visibility = View.VISIBLE
+                                    block?.visibility = View.VISIBLE
+                                    district?.visibility = View.VISIBLE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = getString(R.string.allreport);
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance1",schemeId.toString())
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+
+                                        }
+
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
+                                }
+                                name.equals("Insurance3") -> {
+                                    branch?.visibility = View.GONE
+                                    bank?.visibility = View.VISIBLE
+                                    block?.visibility = View.GONE
+                                    district?.visibility = View.GONE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = "Bank Wise Report";
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance3",schemeId.toString())
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+
+                                        }
+
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
+                                }
+
+                            }
+
+
                         } else {
 
                             Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
@@ -286,189 +680,157 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                                 .sneakError()
                         }
                     }
-                    2 -> {
-                        schemeId = "2"
-
-                            if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
-                                DialogUtil.displayProgress(this@WelcomeActivityNewNext)
-                                val gson = GsonBuilder().setLenient().create()
-                                val interceptor = HttpLoggingInterceptor()
-                                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                                val builder = OkHttpClient.Builder()
-                                //comment in live build and uncomment in uat
-                                builder.interceptors().add(interceptor)
-                                builder.connectTimeout(250, TimeUnit.SECONDS)
-                                builder.readTimeout(250, TimeUnit.SECONDS)
-                                val client = builder.build()
-                                val retrofit =
-                                    Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
-                                        .addConverterFactory(
-                                            ScalarsConverterFactory.create()
-                                        ).client(client).build()
-                                val apiServices = retrofit.create(ReportsEntryService::class.java)
-                                val changePhotoResponseModelCall =
-                                    apiServices.getReportsEntryService("Insurance1",schemeId.toString())
-                                changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                                    override fun onResponse(
-                                        call: Call<String>,
-                                        response: Response<String>
-                                    ) {
-                                        DialogUtil.stopProgressDisplay()
-                                        val gson = Gson()
-                                        val fullResponse = response.body()
-                                        val XmlString =
-                                            fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                                        val result = XmlString?.replace(("</string>").toRegex(), "")
-                                        val mStudentObject1 =
-                                            gson.fromJson(result, BaseClassReports::class.java)
-                                        System.out.println("vvh" + gson.toJson(mStudentObject1))
-                                        val benifisheryRowRecyclerviewAdapter =
-                                            EntryReportsRecyclerviewAdapter(
-                                                this@WelcomeActivityNewNext,
-                                                mStudentObject1.master as ArrayList<MasterReports>,
-                                                name
-                                            )
-                                        recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
-
-                                    }
-                                    override fun onFailure(call: Call<String>, t: Throwable) {
-                                        DialogUtil.stopProgressDisplay()
-                                        Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                            .setTitle("Server error,Please Try Again")
-                                            .sneakError()
-                                    }
-                                })
-                            } else {
-
-                                Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                    .setTitle(getString(R.string.no_internet_connection))
-                                    .sneakError()
-                            }
-
-                    }
-                    3 -> {
-                        schemeId = "3"
-
-                        if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
-                                DialogUtil.displayProgress(this@WelcomeActivityNewNext)
-                                val gson = GsonBuilder().setLenient().create()
-                                val interceptor = HttpLoggingInterceptor()
-                                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                                val builder = OkHttpClient.Builder()
-                                //comment in live build and uncomment in uat
-                                builder.interceptors().add(interceptor)
-                                builder.connectTimeout(250, TimeUnit.SECONDS)
-                                builder.readTimeout(250, TimeUnit.SECONDS)
-                                val client = builder.build()
-                                val retrofit =
-                                    Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
-                                        .addConverterFactory(
-                                            ScalarsConverterFactory.create()).client(client).build()
-                                val apiServices = retrofit.create(ReportsEntryService::class.java)
-                                val changePhotoResponseModelCall =
-                                    apiServices.getReportsEntryService("Insurance1",schemeId.toString())
-                                changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                                    override fun onResponse(
-                                        call: Call<String>,
-                                        response: Response<String>) {
-                                        DialogUtil.stopProgressDisplay()
-                                        val gson = Gson()
-                                        val fullResponse = response.body()
-                                        val XmlString =
-                                            fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                                        val result = XmlString?.replace(("</string>").toRegex(), "")
-                                        val mStudentObject1 =
-                                            gson.fromJson(result, BaseClassReports::class.java)
-                                        System.out.println("vvh" + gson.toJson(mStudentObject1))
-                                        val benifisheryRowRecyclerviewAdapter =
-                                            EntryReportsRecyclerviewAdapter(
-                                                this@WelcomeActivityNewNext,
-                                                mStudentObject1.master as ArrayList<MasterReports>,
-                                                name
-                                            )
-                                        recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
-
-                                    }
-
-                                    override fun onFailure(call: Call<String>, t: Throwable) {
-                                        DialogUtil.stopProgressDisplay()
-                                        Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                            .setTitle("Server error,Please Try Again")
-                                            .sneakError()
-                                    }
-                                })
-                            } else {
-
-                                Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                    .setTitle(getString(R.string.no_internet_connection))
-                                    .sneakError()
-                            }
-
-                    }
                     4 -> {
                         schemeId = "4"
 
-                            if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
-                                DialogUtil.displayProgress(this@WelcomeActivityNewNext)
-                                val gson = GsonBuilder().setLenient().create()
-                                val interceptor = HttpLoggingInterceptor()
-                                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                                val builder = OkHttpClient.Builder()
-                                //comment in live build and uncomment in uat
-                                builder.interceptors().add(interceptor)
-                                builder.connectTimeout(250, TimeUnit.SECONDS)
-                                builder.readTimeout(250, TimeUnit.SECONDS)
-                                val client = builder.build()
-                                val retrofit =
-                                    Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
-                                        .addConverterFactory(
-                                            ScalarsConverterFactory.create()
-                                        ).client(client).build()
-                                val apiServices = retrofit.create(ReportsEntryService::class.java)
-                                val changePhotoResponseModelCall =
-                                    apiServices.getReportsEntryService("Insurance1",schemeId.toString())
-                                changePhotoResponseModelCall.enqueue(object : Callback<String> {
-                                    override fun onResponse(
-                                        call: Call<String>,
-                                        response: Response<String>
-                                    ) {
-                                        DialogUtil.stopProgressDisplay()
-                                        val gson = Gson()
-                                        val fullResponse = response.body()
-                                        val XmlString =
-                                            fullResponse?.substring(fullResponse.indexOf("\">") + 2)
-                                        val result = XmlString?.replace(("</string>").toRegex(), "")
-                                        val mStudentObject1 =
-                                            gson.fromJson(result, BaseClassReports::class.java)
-                                        System.out.println("vvh" + gson.toJson(mStudentObject1))
-                                        if (mStudentObject1!= null){
-                                        val benifisheryRowRecyclerviewAdapter =
-                                            EntryReportsRecyclerviewAdapter(
-                                                this@WelcomeActivityNewNext,
-                                                mStudentObject1.master as ArrayList<MasterReports>,
-                                                name
-                                            )
+                        if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
+                            DialogUtil.displayProgress(this@WelcomeActivityNewNext)
+                            val gson = GsonBuilder().setLenient().create()
+                            val interceptor = HttpLoggingInterceptor()
+                            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+                            val builder = OkHttpClient.Builder()
+                            //comment in live build and uncomment in uat
+                            builder.interceptors().add(interceptor)
+                            builder.connectTimeout(250, TimeUnit.SECONDS)
+                            builder.readTimeout(250, TimeUnit.SECONDS)
+                            val client = builder.build()
+                            val retrofit =
+                                Retrofit.Builder().baseUrl(Constant.API_BASE_URL)
+                                    .addConverterFactory(
+                                        ScalarsConverterFactory.create()
+                                    ).client(client).build()
+                            val apiServices = retrofit.create(ReportsEntryService::class.java)
+                            when {
+                                name.equals("Insurance2") -> {
+                                    branch?.visibility = View.GONE
+                                    block?.visibility = View.GONE
+                                    bank?.visibility = View.GONE
+                                    district?.visibility = View.VISIBLE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = getString(R.string.districtreport);
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance2",schemeId.toString())
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
                                             recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
-                                    }else{
-                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                                .setTitle("No Data Available")
-                                                .sneakError()
+
                                         }
 
-                                    }
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
+                                }
+                                name.equals("Insurance1") -> {
+                                    branch?.visibility = View.VISIBLE
+                                    bank?.visibility = View.VISIBLE
+                                    block?.visibility = View.VISIBLE
+                                    district?.visibility = View.VISIBLE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = getString(R.string.allreport);
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance1",schemeId.toString())
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
 
-                                    override fun onFailure(call: Call<String>, t: Throwable) {
-                                        DialogUtil.stopProgressDisplay()
-                                        Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                            .setTitle("Server error,Please Try Again")
-                                            .sneakError()
-                                    }
-                                })
-                            } else {
-                                Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
-                                    .setTitle(getString(R.string.no_internet_connection))
-                                    .sneakError()
+                                        }
+
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
+                                }
+                                name.equals("Insurance3") -> {
+                                    branch?.visibility = View.GONE
+                                    bank?.visibility = View.VISIBLE
+                                    block?.visibility = View.GONE
+                                    district?.visibility = View.GONE
+                                    frameLayout?.visibility = View.VISIBLE
+                                    supportActionBar?.title = "Bank Wise Report";
+                                    val changePhotoResponseModelCall =
+                                        apiServices.getReportsEntryService("Insurance3",schemeId.toString())
+                                    changePhotoResponseModelCall.enqueue(object : Callback<String> {
+                                        override fun onResponse(
+                                            call: Call<String>,
+                                            response: Response<String>) {
+                                            DialogUtil.stopProgressDisplay()
+                                            val gson = Gson()
+                                            val fullResponse = response.body()
+                                            val XmlString =
+                                                fullResponse?.substring(fullResponse.indexOf("\">") + 2)
+                                            val result = XmlString?.replace(("</string>").toRegex(), "")
+                                            val mStudentObject1 =
+                                                gson.fromJson(result, BaseClassReports::class.java)
+                                            System.out.println("vvh" + gson.toJson(mStudentObject1))
+                                            val benifisheryRowRecyclerviewAdapter =
+                                                EntryReportsRecyclerviewAdapter(
+                                                    this@WelcomeActivityNewNext,
+                                                    mStudentObject1.master as ArrayList<MasterReports>,
+                                                    name
+                                                )
+                                            recyclerView?.setAdapter(benifisheryRowRecyclerviewAdapter)
+
+                                        }
+
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            DialogUtil.stopProgressDisplay()
+                                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                                .setTitle("Server error,Please Try Again")
+                                                .sneakError()
+                                        }
+                                    })
+                                }
+
                             }
+
+
+                        } else {
+
+                            Sneaker.with(this@WelcomeActivityNewNext) // Activity, Fragment or ViewGroup
+                                .setTitle(getString(R.string.no_internet_connection))
+                                .sneakError()
+                        }
 
                     }
                 }

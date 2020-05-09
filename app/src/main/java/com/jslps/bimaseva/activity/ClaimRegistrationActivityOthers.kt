@@ -119,27 +119,27 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                     .sneakError()
             } else if (TextUtils.isEmpty(distirctCode)) {
                 Sneaker.with(this@ClaimRegistrationActivityOthers) // Activity, Fragment or ViewGroup
-                    .setTitle("Please select district")
+                    .setTitle("Please enter name of district")
                     .sneakError()
             } else if (TextUtils.isEmpty(blockCode)) {
                 Sneaker.with(this@ClaimRegistrationActivityOthers) // Activity, Fragment or ViewGroup
-                    .setTitle("Please select block")
+                    .setTitle("Please enter name of block")
                     .sneakError()
             } else if (TextUtils.isEmpty(clustercode)) {
                 Sneaker.with(this@ClaimRegistrationActivityOthers) // Activity, Fragment or ViewGroup
-                    .setTitle("Please select panchayat")
+                    .setTitle("Please enter name of panchayat")
                     .sneakError()
             } else if (TextUtils.isEmpty(villageCode)) {
                 Sneaker.with(this@ClaimRegistrationActivityOthers) // Activity, Fragment or ViewGroup
-                    .setTitle("Please select village")
+                    .setTitle("Please enter name of village")
                     .sneakError()
             } else if (TextUtils.isEmpty(bankCode)) {
                 Sneaker.with(this@ClaimRegistrationActivityOthers) // Activity, Fragment or ViewGroup
-                    .setTitle("Please select bank")
+                    .setTitle("Please enter name of bank")
                     .sneakError()
             } else if (TextUtils.isEmpty(branchCode)) {
                 Sneaker.with(this@ClaimRegistrationActivityOthers) // Activity, Fragment or ViewGroup
-                    .setTitle("Please select branch")
+                    .setTitle("Please enter name of branch")
                     .sneakError()
             } else if (datePicker?.text.toString().isEmpty()) {
                 Sneaker.with(this@ClaimRegistrationActivityOthers) // Activity, Fragment or ViewGroup
@@ -147,7 +147,7 @@ class ClaimRegistrationActivityOthers : AppCompatActivity() {
                     .sneakError()
             } /*else if (list.size == 0) {
                 Sneaker.with(this@ClaimRegistrationActivityOthers) // Activity, Fragment or ViewGroup
-                    .setTitle("Please select type of insurance")
+                    .setTitle("Please enter name of type of insurance")
                     .sneakError()
             }*/ else if (nameofcaller?.text.toString().isEmpty()) {
                 Sneaker.with(this@ClaimRegistrationActivityOthers) // Activity, Fragment or ViewGroup
