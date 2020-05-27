@@ -71,7 +71,6 @@ class WelcomeActivityNewNext : AppCompatActivity() {
                 view: View, position: Int, id: Long) {
                 when (position) {
                     0 -> {
-
                         if (DialogUtil.isConnectionAvailable(this@WelcomeActivityNewNext)) {
                             DialogUtil.displayProgress(this@WelcomeActivityNewNext)
                             val gson = GsonBuilder().setLenient().create()

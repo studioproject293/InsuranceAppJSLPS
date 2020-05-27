@@ -61,7 +61,7 @@
                 android:layout_height="120dp"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
-                android:src="@drawable/logo" />
+                android:src="@drawable/bima_sewa_logo" />
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -35,7 +35,7 @@ class DocumentNotReadyDetailsFragment : BaseFragment(), DocumentNotReadyView, On
         val toast = Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
         toast.show()
         if (message != null) {
-            if (message.equals(getString(R.string.InsuranceUpdateSuccessfully))){
+            if (message == getString(R.string.InsuranceUpdateSuccessfully)){
                 val intent = Intent(activity, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -153,7 +153,7 @@ class DocumentNotReadyDetailsFragment : BaseFragment(), DocumentNotReadyView, On
         val block: TextView? = rootView?.findViewById(R.id.block)
         val village: TextView? = rootView?.findViewById(R.id.village)
         document = rootView?.findViewById(R.id.doucment)
-        var actionButton: Button? = rootView?.findViewById(R.id.actionButton)
+        val actionButtond: Button? = rootView?.findViewById(R.id.actionButtond)
         val uploadDocument: Button? = rootView?.findViewById(R.id.uploadDocument)
         val bankbranch: TextView? = rootView?.findViewById(R.id.bankbranch)
         nomineeName?.text = insuranceNameeee?.name
@@ -163,7 +163,7 @@ class DocumentNotReadyDetailsFragment : BaseFragment(), DocumentNotReadyView, On
         bankbranch?.text = insuranceNameeee?.branchName
         nameOfInsurance?.text = AppCache.getCache().insurancetype
         presenter = DocumentNotReadyPresenter(this, activity as Activity)
-        actionButton?.setOnClickListener {
+        actionButtond?.setOnClickListener {
             if (TextUtils.isEmpty(encodedBase64)) {
                 val toast = Toast.makeText(activity, getString(R.string.select_image_validation), Toast.LENGTH_SHORT)
                 toast.show()
@@ -265,6 +265,12 @@ class DocumentNotReadyDetailsFragment : BaseFragment(), DocumentNotReadyView, On
                     val imageUri = data.data as Uri
                     val imageStream = activity?.contentResolver?.openInputStream(imageUri) as InputStream
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
+                    val toast = Toast.makeText(
+                        context as Activity,
+                        "Image Uploaded Successfully",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
                     document?.setImageBitmap(selectedImage)
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     selectedImage.compress(Bitmap.CompressFormat.JPEG, 10, byteArrayOutputStream)
@@ -277,6 +283,12 @@ class DocumentNotReadyDetailsFragment : BaseFragment(), DocumentNotReadyView, On
                     if (data != null) {
                         //onCaptureImageResult(data)
                         val photo = data.extras!!.get("data") as Bitmap
+                        val toast = Toast.makeText(
+                            context as Activity,
+                            "Image Uploaded Successfully",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
                         document?.setImageBitmap(photo)
                         val byteArrayOutputStream = ByteArrayOutputStream()
                         photo.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)

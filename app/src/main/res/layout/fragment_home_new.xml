@@ -34,11 +34,11 @@
                 android:tint="#FFF" />
         <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="250dp"
                 android:layout_gravity="center|top"
                 android:layout_marginTop="@dimen/spacing_large"
                 android:padding="@dimen/spacing_large"
-                android:src="@drawable/logo"
+                android:src="@drawable/bima_sewa_logo"
                 />
 
 

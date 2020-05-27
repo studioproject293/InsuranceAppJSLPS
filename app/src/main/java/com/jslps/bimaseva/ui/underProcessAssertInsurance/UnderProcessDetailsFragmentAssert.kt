@@ -533,6 +533,12 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
                     val imageStream =
                         activity?.contentResolver?.openInputStream(imageUri) as InputStream
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
+                    val toast = Toast.makeText(
+                        context as Activity,
+                        "Image Uploaded Successfully",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
                     documentAnimal?.setImageBitmap(selectedImage)
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
@@ -545,6 +551,12 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
                     if (data != null) {
                         //onCaptureImageResult(data)
                         val photo = data.extras!!.get("data") as Bitmap
+                        val toast = Toast.makeText(
+                            context as Activity,
+                            "Image Uploaded Successfully",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
                         documentAnimal?.setImageBitmap(photo)
                         val byteArrayOutputStream = ByteArrayOutputStream()
                         photo.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
@@ -563,6 +575,12 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
                     val imageStream =
                         activity?.contentResolver?.openInputStream(imageUri) as InputStream
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
+                    val toast = Toast.makeText(
+                        context as Activity,
+                        "Image Uploaded Successfully",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
                     documentPanchnama?.setImageBitmap(selectedImage)
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
@@ -575,6 +593,12 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
                     if (data != null) {
                         //onCaptureImageResult(data)
                         val photo = data.extras!!.get("data") as Bitmap
+                        val toast = Toast.makeText(
+                            context as Activity,
+                            "Image Uploaded Successfully",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
                         documentPanchnama?.setImageBitmap(photo)
                         val byteArrayOutputStream = ByteArrayOutputStream()
                         photo.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
@@ -593,6 +617,12 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
                     val imageStream =
                         activity?.contentResolver?.openInputStream(imageUri) as InputStream
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
+                    val toast = Toast.makeText(
+                        context as Activity,
+                        "Image Uploaded Successfully",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
                     documentpostmatem?.setImageBitmap(selectedImage)
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
@@ -605,6 +635,12 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
                     if (data != null) {
                         //onCaptureImageResult(data)
                         val photo = data.extras!!.get("data") as Bitmap
+                        val toast = Toast.makeText(
+                            context as Activity,
+                            "Image Uploaded Successfully",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
                         documentpostmatem?.setImageBitmap(photo)
                         val byteArrayOutputStream = ByteArrayOutputStream()
                         photo.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
@@ -623,6 +659,12 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
                     val imageStream =
                         activity?.contentResolver?.openInputStream(imageUri) as InputStream
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
+                    val toast = Toast.makeText(
+                        context as Activity,
+                        "Image Uploaded Successfully",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
                     documentTag?.setImageBitmap(selectedImage)
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
@@ -635,6 +677,12 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
                     if (data != null) {
                         //onCaptureImageResult(data)
                         val photo = data.extras!!.get("data") as Bitmap
+                        val toast = Toast.makeText(
+                            context as Activity,
+                            "Image Uploaded Successfully",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
                         documentTag?.setImageBitmap(photo)
                         val byteArrayOutputStream = ByteArrayOutputStream()
                         photo.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
@@ -653,6 +701,12 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
                     val imageStream =
                         activity?.contentResolver?.openInputStream(imageUri) as InputStream
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
+                    val toast = Toast.makeText(
+                        context as Activity,
+                        "Image Uploaded Successfully",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
                     documentClaimImage?.setImageBitmap(selectedImage)
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
@@ -665,6 +719,12 @@ class UnderProcessDetailsFragmentAssert : BaseFragment(), UnderProcessDetailsVie
                     if (data != null) {
                         //onCaptureImageResult(data)
                         val photo = data.extras!!.get("data") as Bitmap
+                        val toast = Toast.makeText(
+                            context as Activity,
+                            "Image Uploaded Successfully",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
                         documentClaimImage?.setImageBitmap(photo)
                         val byteArrayOutputStream = ByteArrayOutputStream()
                         photo.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)

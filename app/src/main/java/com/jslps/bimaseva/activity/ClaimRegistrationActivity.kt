@@ -42,11 +42,8 @@ class ClaimRegistrationActivity : AppCompatActivity() {
         cardView5 = findViewById(R.id.card5)
         linearLayout1?.setOnClickListener {
             if (!TextUtils.isEmpty(schemeId)) {
-                val intent = Intent(
-
-                    this@ClaimRegistrationActivity,
-                    ClaimRegistrationActivitySHGMember::class.java
-                )
+                val intent = Intent(this@ClaimRegistrationActivity,
+                    ClaimRegistrationActivitySHGMember::class.java)
                 intent.putExtra("schemeID", schemeId)
                 startActivity(intent)
             } else

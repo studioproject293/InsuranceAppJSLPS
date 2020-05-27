@@ -181,7 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="Please Select Panchyat"
+                android:hint="Please enter name of Panchyat"
                 android:textColorHint="#000">
 
             <AutoCompleteTextView
@@ -200,7 +200,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="Please Select Village"
+                android:hint="Please enter name of Village"
                 android:textColorHint="#000">
 
             <AutoCompleteTextView
@@ -219,7 +219,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="Please Select SHG"
+                android:hint="Please enter name of SHG"
                 android:textColorHint="#000">
 
             <AutoCompleteTextView
@@ -272,7 +272,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="Please Select Bank"
+                android:hint="Please enter name of Bank"
                 android:textColorHint="#000">
 
             <AutoCompleteTextView
@@ -291,7 +291,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="Please Select Branch"
+                android:hint="Please enter name of Branch"
                 android:textColorHint="#000">
 
             <AutoCompleteTextView

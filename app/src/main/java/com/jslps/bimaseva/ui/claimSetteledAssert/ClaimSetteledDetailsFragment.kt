@@ -394,6 +394,12 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView,
                     val imageStream =
                         activity?.contentResolver?.openInputStream(imageUri) as InputStream
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
+                    val toast = Toast.makeText(
+                        context as Activity,
+                        "Image Uploaded Successfully",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
                     document?.setImageBitmap(selectedImage)
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
@@ -406,6 +412,12 @@ class ClaimSetteledDetailsFragment : BaseFragment(), ClaimSetteledDetailsView,
                     if (data != null) {
                         //onCaptureImageResult(data)
                         val photo = data.extras!!.get("data") as Bitmap
+                        val toast = Toast.makeText(
+                            context as Activity,
+                            "Image Uploaded Successfully",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
                         document?.setImageBitmap(photo)
                         val byteArrayOutputStream = ByteArrayOutputStream()
                         photo.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)

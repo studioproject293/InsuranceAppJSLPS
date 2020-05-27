@@ -176,6 +176,12 @@ class RejectDetailsFragment : BaseFragment(), UnderProcessDetailsView, OnFragmen
                     val imageStream = activity?.contentResolver?.openInputStream(imageUri) as InputStream
                     val selectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
                     document?.setImageBitmap(selectedImage)
+                    val toast = Toast.makeText(
+                        context as Activity,
+                        "Image Uploaded Successfully",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
                     val imagedata = byteArrayOutputStream.toByteArray()
@@ -187,6 +193,12 @@ class RejectDetailsFragment : BaseFragment(), UnderProcessDetailsView, OnFragmen
                     if (data != null) {
                         //onCaptureImageResult(data)
                         val photo = data.extras!!.get("data") as Bitmap
+                        val toast = Toast.makeText(
+                            context as Activity,
+                            "Image Uploaded Successfully",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
                         document?.setImageBitmap(photo)
                         val byteArrayOutputStream = ByteArrayOutputStream()
                         photo.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream)
